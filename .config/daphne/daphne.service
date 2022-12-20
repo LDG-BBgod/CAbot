@@ -6,7 +6,7 @@ User=root
 Group=root
 WorkingDirectory=/home/ubuntu/CAbot/CAbot/
 
-Environment="DJANGO_SETTINGS_MODULE=mysite.settings"
+Environment="DJANGO_SETTINGS_MODULE=CAbot.settings"
 ExecStart=/home/ubuntu/CAbot/venv/bin/daphne -b 0.0.0.0 -p 8080 CAbot.asgi:application
 
 ExecReload=/bin/kill -s HUP $MAINPID
