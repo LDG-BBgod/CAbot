@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block header %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/caHome.css' %}?ver=1">
+<script defer src="{% static 'js/caHome.js' %}?ver=1"></script>
+{% endblock %}
+
+{% block contents %}
+    <div class="section1">
+        {% for chatRoomName in chatRoomNames %}
+        <a class="test" href="/caHome/{{ chatRoomName.userIP }}">{{ chatRoomName.userIP }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}

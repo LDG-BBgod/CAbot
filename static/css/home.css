@@ -1,0 +1,351 @@
+/***** COMMON *****/
+
+.positionBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 100px 0;
+}
+
+/***** COMMON *****/
+
+/***** SECTION FIX *****/
+
+.sectionFix{
+    z-index: 9001;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+}
+.sectionFix .chatBox{
+    height: 750px;
+    width: 400px;
+    border-radius: 30px;
+    background-color: #EAF4FF;
+}
+.sectionFix .chatBox .chatBoxHead{
+    height: 50px;
+    width: 100%;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background-color: #5B8DEF;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.sectionFix .chatBox .chatBoxHead img{
+    height: 20px;
+    margin-right: 20px;
+}
+.sectionFix .chatBox .chatBoxMiddle{
+    box-sizing: border-box;
+    height: 640px;
+    width: 100%;
+    padding: 20px 20px 0 20px;
+    overflow-y: scroll;
+}
+.sectionFix .chatBox .chatBoxMiddle .item:last-child .msgContainer{
+    margin-bottom: 0;
+}
+.sectionFix .chatBox .chatBoxMiddle .myItem{
+    text-align: right;
+}
+.sectionFix .chatBox .chatBoxMiddle .msgContainer{
+    display: inline-block;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    max-width: 70%;
+
+}
+.sectionFix .chatBox .chatBoxMiddle .myMsgContainer{
+    background-color: #22D800;
+}
+.sectionFix .chatBox .chatBoxMiddle .msg{
+    word-break: break-all;
+    font-size: 16px;
+    line-height: 21px;
+}
+.sectionFix .chatBox .chatBoxMiddle .myMsg{
+    text-align: left;
+}
+.sectionFix .chatBox .chatBoxFoot{
+    box-sizing: border-box;
+    height: 60px;
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sectionFix .chatBox .chatBoxFoot input{
+    width: 100%;
+    height: 30px;
+    padding-left: 15px;
+    border: solid 1px #717171;
+    border-radius: 28px;
+    font-size: 16px;
+}
+/***** SECTION FIX *****/
+
+
+/***** SECTION 1 *****/
+.section1{
+    padding-top: 80px;
+    height: 100%;
+    background-color: #5B8DEF;
+
+}
+.section1 .positionBox{
+
+}
+.section1 .positionBox .title{
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 65px;
+    color: #fff;
+}
+.section1 .positionBox img{
+    margin: 60px 0;
+}
+.section1 .positionBox button{
+    font-size: 25px;
+    background-color: #22D800;
+    color: #fff;
+}
+/***** SECTION 1 *****/
+
+
+/***** SECTION 2 *****/
+
+.section2{
+
+}
+.section2 .positionBox{
+
+}
+.section2 .positionBox .title{
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 65px;
+    color: #353535;
+}
+.section2 .positionBox img{
+    margin: 60px 0;
+}
+.section2 .positionBox .buttonGroup{
+    display: flex;
+}
+.section2 .positionBox .buttonGroup button{
+    font-size: 25px;
+    background-color: #5B8DEF;
+    color: #fff;
+    padding: 0.6em 0;
+    width: 240px;
+    margin: 0 40px;
+}
+
+/***** SECTION 2 *****/
+
+
+/***** SECTION 3 *****/
+
+.section3{
+    background-color: #F1F6FF;
+}
+.section3 .positionBox{
+
+}
+.section3 .positionBox .title{
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 65px;
+    color: #353535;
+}
+.section3 .positionBox ul{
+    margin-top: 60px;
+    width: 1400px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.section3 .positionBox ul li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.section3 .positionBox ul li .subTitle{
+    font-size: 30px;
+    font-weight: bold;
+    color: #5B8DEF;
+}
+.section3 .positionBox ul li img{
+    margin-top: 40px;
+    height: 520px;
+}
+/***** SECTION 3 *****/
+
+
+/***** SECTION 4 *****/
+
+.section4{
+
+}
+.section4 .positionBox{
+
+}
+.section4 .positionBox .title{
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 65px;
+    color: #353535;
+}
+.section4 .positionBox ul{
+    margin-top: 60px;
+    width: 900px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.section4 .positionBox ul li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.section4 .positionBox ul li .subTitle{
+    font-size: 30px;
+    font-weight: bold;
+    color: #5B8DEF;
+}
+.section4 .positionBox ul li img{
+    margin-top: 40px;
+    height: 300px;
+}
+.section4 .positionBox ul li .content{
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 40px;
+    width: 250px;
+    color: #7B7B7B;
+    text-align: center;
+}
+.section4 .positionBox ul li .subContent{
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #FF5246;
+    text-align: center;
+}
+/***** SECTION 4 *****/
+
+
+/***** SECTION 5 *****/
+
+.section5{
+
+}
+.section5 .box1{
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #e9e9e9;
+}
+.section5 .box1 .title{
+    font-size: 26px;
+    font-weight: bold;
+    color: #7B7B7B;
+}
+.section5 .box1 .subTitle{
+    margin-top: 30px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #5B8DEF;
+}
+.section5 .box2{
+    background-color: #EAF4FF;
+}
+.section5 .box3{
+    background-color: #D7E9FD;
+}
+.section5 .box4{
+    background-color: #EEEAFC;
+}
+.section5 .gridBox{
+    display: flex;
+    justify-content: center;
+}
+.section5 .gridBox ul{
+    padding: 100px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 1100px;
+}
+.section5 .gridBox ul li{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+.section5 .gridBox ul li img{
+    margin-left: 50px;
+    height: 320px;
+}
+.section5 .gridBox ul li .title{
+    font-size: 35px;
+    font-weight: bold;
+    color: #3F3D56;
+    text-align: left;
+}
+.section5 .gridBox ul li .content{
+    margin-top: 30px;
+    font-size: 18px;
+    line-height: 30px;
+    color: #7B7B7B;
+    text-align: left;
+    width: 90%;
+}
+/***** SECTION 5 *****/
+
+
+/***** SECTION 6 *****/
+
+.section6{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+.section6 .positionBox{
+    margin: 0 70px;
+}
+.section6 .positionBox .title{
+    font-size: 30px;
+    font-weight: bold;
+    color: #5B8DEF;
+}
+.section6 .positionBox .subTitle{
+    margin-top: 16px;
+    font-size: 22px;
+    color: #7B7B7B;
+    margin-bottom: 50px;
+}
+.section6 .positionBox button{
+    color: #fff;
+    font-size: 24px;
+    padding: 0px;
+    height: 75px;
+    width: 380px;
+    background-color: #5B8DEF;
+}
+.section6 .positionBox:last-child .title{
+    color: #34464B;
+}
+.section6 .positionBox:last-child button{
+    background-color: #34464B;
+}
+/***** SECTION 6 *****/

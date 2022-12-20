@@ -1,0 +1,128 @@
+body{
+    word-break: keep-all;
+}
+section{
+    position: relative;
+}
+a {
+    text-decoration: none;
+}
+.inner{
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position:  relative;
+}
+.mask{
+    position: fixed;
+    z-index: 9000;
+    background-color: #000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.3;
+}
+.hover:hover{
+    cursor: pointer;
+}
+
+/* FLOAT CLEARFIX */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: block;
+}
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
+/***** Button *****/
+.button{
+    display: block;
+    padding: 0.6em 2.2em;
+    border-radius: 0.7em;
+    border: none;
+    font-weight: bold;
+    box-shadow: 3px 3px 10px #60606060;
+}
+
+/***** 헤더 *****/
+header{
+    background: #fff;
+    position: fixed;    
+    top: 0;
+    left: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    box-shadow: 0 1px 10px #6b6b6b7e;
+}
+header .inner{
+    height: 80px;
+}
+header .logo{
+    display: flex;
+    height: 100%;
+    align-items: center;
+
+}
+header .logo .logo-name{
+    color: #5B8DEF;
+    font-weight: bold;
+    font-size: 30px;
+    margin-right: 10px;
+}
+header .logo img{
+    margin-top: 5px;
+    height: 28px;
+}
+header .menu{
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+header .menu a{
+    display: flex;
+    margin-left: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    align-items: center;
+    justify-content: center;
+}
+
+/***** 푸터 *****/
+footer{
+    background: #34464B;
+    height: 150px;
+}
+footer .inner{
+    padding-top: 20px;
+}
+footer .left-side{
+
+}
+footer .left-side p{
+    margin-top: 8px;
+    color: #ccc;
+    font-size: 12px;
+}
+
+footer .right-side{
+    text-align: right;
+}
+footer .right-side p{
+    margin-top: 8px;
+    color: #ccc;
+    font-size: 12px;
+}
+footer .right-side a{
+    display: inline-block;
+    margin-top: 8px;
+    margin-left: 5px;
+    color: #ccc;
+    font-size: 12px;
+}

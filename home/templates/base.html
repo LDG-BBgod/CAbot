@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="{% static 'js/main.js' %}"></script>
+
+    {% block header %}
+    {% endblock %}
+    
+    <title>CAbot</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="inner clearfix">
+                <div class="logo float-left">
+                    <a class="logo-name" href="/">보험비서</a>
+                    <a class="" href="/"><img src="../../static/img/logo.svg" alt="logo"></a>
+                </div>
+                <ul class="menu float-right">
+                    <a href="/">자동차보험료 Self비교</a>
+                    <a href="/">전화상담 가입</a>
+                    <a href="/">실시간 채팅상담</a>
+                </ul>
+            </div>
+        </header>
+        {% block contents %}
+        {% endblock %}
+        <footer style="display: none;">
+            <div class="inner">
+                <div class="left-side float-left">
+                    <p>엠금융서비스 준법 22-06-04(2022.06.18-2023.06.17)</p>
+                    <p>보험비서 GABOT | 대표 설계사 고유등록 번호 : 20150593100001</p>
+                    <p>엠금융서비스 보험대리점 | 협회등록번호 : 2009028021</p>
+                    <p>상호 : ㈜엠금융서비스 세종사업본부 계룡지점</p>
+                </div>
+                <div class="right-side float-right">
+                    <p>상담 접수 : 주중 10:00 ~17:00 | 대표번호 : 010-7770-2696</p>
+                    <p>개인정보 책임 관리자 : 이동진</p>
+                    <p>Copyright 엠금융서비스 세종사업본부. All rights Reserved</p>
+                    <!-- <a href="service/" target="_blank">[서비스 이용약관]</a> -->
+                    <a href="agreement/" target="_blank">[개인정보 처리방침]</a>
+                    <a href="company/" target="_blank">[대리-중개 보험회사]</a>
+                </div>
+                <div class="logo"></div>
+            </div>
+        </footer>
+    </div>    
+</body>
+</html>
