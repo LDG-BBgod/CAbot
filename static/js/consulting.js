@@ -297,19 +297,19 @@ function submitFunction() {
             document.getElementById('form_id_phone').value = dataArr[3]
             document.getElementById('form_id_consultingDate').value = dataArr[0]
             document.getElementById('form_id_consultingTime').value = dataArr[1]
-            // $.ajax({
-            //     type: 'GET',
-            //     url: '/sendmessage/',
-            //     dataType: 'json',
-            //     async: false,
-            //     data: {
-            //         'dataType': 'consulting',
-            //         'selectType': dataArr[2],
-            //         'phone': dataArr[3],
-            //         'consultingDate': dataArr[0],
-            //         'consultingTime': dataArr[1],
-            //     }
-            // })
+            $.ajax({
+                type: 'GET',
+                url: '/sendmessage/',
+                dataType: 'json',
+                async: false,
+                data: {
+                    'dataType': 'consulting',
+                    'selectType': dataArr[2],
+                    'phone': dataArr[3],
+                    'consultingDate': dataArr[0],
+                    'consultingTime': dataArr[1],
+                }
+            })
             alert('예약이 완료되었습니다.')
     
             var form = document.form

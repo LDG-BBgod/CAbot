@@ -11,6 +11,10 @@ urlpatterns = [
     path('consulting/', homeViews.ConsultingView.as_view()),
     path('consulting/consultingdata/', homeViews.ConsultingDataView),
 
+    #API
+    path('sendmessage/', homeViews.SendMessageAPI),
+
+    # 추가페이지
     path('company/', homeViews.CompanyView),
     path('agreement/', homeViews.AgreementView),
 ]

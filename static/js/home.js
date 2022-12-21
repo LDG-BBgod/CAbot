@@ -96,3 +96,18 @@ function resize(obj, e) {
     }
 
 }
+
+
+//임시
+document.getElementsByClassName('alert')[0].addEventListener('click', () => {
+    console.log('test')
+    alert('서비스 준비중입니다.')
+})
+document.getElementsByClassName('alert')[1].addEventListener('click', () => {
+    console.log('test')
+    alert('서비스 준비중입니다.')
+})
+document.getElementsByClassName('alert')[2].addEventListener('click', () => {
+    console.log('test')
+    alert('서비스 준비중입니다.')
+})
