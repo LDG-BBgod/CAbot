@@ -136,6 +136,7 @@ pymysql.install_as_MySQLdb()
 #         }
 #     }
 # }
+# phoneNumber = '01054088229'
 
 
 #배포환경
@@ -162,5 +163,5 @@ DATABASES = {
         }
     }
 }
-
+phoneNumber = '01050487229'
 

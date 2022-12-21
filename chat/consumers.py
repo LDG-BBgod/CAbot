@@ -3,6 +3,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 from asgiref.sync import sync_to_async
 from home.models import ChatRoomName, ChatLog
+from home.apis import sendMessageFunc
 
 
 @sync_to_async
@@ -85,6 +86,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         try:
             connectCheck = text_data_json['connectCheck']
             messages = ['채팅상담원이 연결되고있습니다. 잠시만 기다려주세요.(최대 1분)', '연결중...']
+            
+            content = '카봇 실시간채팅상담\n유저아이피 : ' + username
+            sendMessageFunc(content)
+            
             for i in range(2):
                 await self.send(text_data=json.dumps({
                     'message': messages[i],
