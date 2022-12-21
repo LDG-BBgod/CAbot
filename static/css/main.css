@@ -39,6 +39,7 @@ a {
 .float-right {
     float: right;
 }
+
 /***** Button *****/
 .button{
     display: block;
@@ -47,6 +48,14 @@ a {
     border: none;
     font-weight: bold;
     box-shadow: 3px 3px 10px #60606060;
+}
+
+/***** Input *****/
+input:focus{
+    outline: none;
+}
+textarea:focus{
+    outline: none;
 }
 
 /***** 헤더 *****/

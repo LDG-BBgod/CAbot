@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from .models import ChatRoomName, ChatLog
 from django.http import HttpResponse
+from django.views.generic.edit import FormView
+from django.core import serializers
+
+from .forms import ConsultingForm
+from .models import ChatRoomName, ChatLog, Consulting
 
 
 def HomeView(request):
@@ -14,6 +18,7 @@ def HomeView(request):
         return ip
 
     userIP = get_client_ip(request)
+    request.session['user'] = userIP
 
     response = render(request, 'home.html', {'userIP': userIP})
     response.set_cookie(key='user', value='user')
@@ -41,3 +46,40 @@ def CAChatView(request, userIP):
     response.set_cookie(key='user', value='LDJ')
 
     return response
+
+
+class ConsultingView(FormView):
+    template_name = 'consulting.html'
+    form_class = ConsultingForm
+    success_url = '/'
+
+    def get_form_kwargs(self, **kwargs):
+        kw = super().get_form_kwargs(**kwargs)
+        kw.update({
+            'request': self.request
+        })
+        return kw
+
+
+def ConsultingDataView(request):
+    data = request.GET.get('data')
+    consultingObject = Consulting.objects.filter(consultingDate=data)
+    responseData = serializers.serialize('json', consultingObject)
+
+    return HttpResponse(responseData, content_type="text/json-comment-filtered")
+
+
+
+
+def CompanyView(request):
+    
+    return render(request, 'addCompany.html')
+
+def AgreementView(request):
+    
+    return render(request, 'addAgreement.html')
+
+
+
+
+

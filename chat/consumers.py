@@ -54,7 +54,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
         await self.accept()
-        print(self.room_name)
         await save_chatRoomName(self.room_name)
 
         messages = ['안녕하세요! 보험비서 카봇입니다.', '실시간 채팅서비스 이용 가능시간은 평일 10:00 ~ 18:00 입니다.', '질문을 입력해주세요.']
@@ -98,7 +97,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         try:
             mType = text_data_json['type']
             await self.send(text_data=json.dumps({
-                'message': '연결불가',
+                'message': '죄송합니다. 현재 상담접수량이 많아 대응이 어렵습니다.  전화상담을 이용해주세요. 광고 영업 일절 없습니다.',
                 'username': 'Admin',
                 }))
         except:
