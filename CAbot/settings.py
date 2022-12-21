@@ -143,7 +143,8 @@ pymysql.install_as_MySQLdb()
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    '*'
+    'cabot.co.kr',
+    'www.cabot.co.kr',
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -151,7 +152,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME' : 'cabot_exp',
+        'NAME' : 'cabot_dep',
         'USER' : 'bbgod',
         'PASSWORD' : 'ldg8410229!',
         'HOST': 'database-1.cev2vmz85jni.ap-northeast-2.rds.amazonaws.com',
