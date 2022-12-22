@@ -4,7 +4,7 @@ from CAbot.settings import phoneNumber
 
 
 def sendMessageFunc (content):
-        
+    print('문자보냈슴!')
     def getSigningKey():
 
         timestamp = str(int(time.time() * 1000))
