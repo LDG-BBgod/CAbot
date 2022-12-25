@@ -10,6 +10,7 @@ urlpatterns = [
     path('caHome/<str:userIP>', homeViews.CAChatView),
     path('consulting/', homeViews.ConsultingView.as_view()),
     path('consulting/consultingdata/', homeViews.ConsultingDataView),
+    path('selfCompareHome/', homeViews.SelfCompareHomeView),
 
     #API
     path('sendmessage/', homeViews.SendMessageAPI),

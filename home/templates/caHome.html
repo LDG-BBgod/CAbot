@@ -10,7 +10,7 @@
 {% block contents %}
     <div class="section1">
         {% for chatRoomName in chatRoomNames %}
-        <a class="test" href="/caHome/{{ chatRoomName.userIP }}">{{ chatRoomName.userIP }}</a>
+        <a href="/caHome/{{ chatRoomName.userIP }}">{{ chatRoomName.userIP }}</a>
         {% endfor %}
     </div>
 {% endblock %}

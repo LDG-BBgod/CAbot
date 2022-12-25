@@ -1,33 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="327.408" height="558.977" viewBox="0 0 327.408 558.977">
-  <defs>
-    <filter id="사각형_871" x="45.203" y="437.988" width="244" height="76" filterUnits="userSpaceOnUse">
-      <feOffset dx="3" dy="3" input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="3.5" result="blur"/>
-      <feFlood flood-opacity="0.161"/>
-      <feComposite operator="in" in2="blur"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
-  </defs>
-  <g id="그룹_372" data-name="그룹 372" transform="translate(-308.297 -1785.512)">
-    <g id="그룹_288" data-name="그룹 288" transform="translate(308.297 1785.512)">
-      <path id="패스_654" data-name="패스 654" d="M279.9,558.977H48.519c-25.085,0-45.493-21.4-45.493-47.7V47.7C3.027,21.4,23.435,0,48.519,0H279.9c25.084,0,45.492,21.4,45.492,47.7V511.276c0,26.3-20.408,47.7-45.492,47.7h0Z" fill="#3f3d56"/>
-      <path id="패스_655" data-name="패스 655" d="M341.036,170.518a2.02,2.02,0,0,0-2.018,2.018v64.575a2.018,2.018,0,0,0,4.036,0V172.536a2.02,2.02,0,0,0-2.018-2.018Z" transform="translate(-15.646)" fill="#3f3d56"/>
-      <path id="패스_656" data-name="패스 656" d="M320.85,47.7V511.268c0,22.894-16.971,41.62-38.43,43.073,0,0-208.7-.461-234.643,0S7.728,528.424,7.564,511.268s0-463.567,0-463.567c0-23.842,18.4-43.164,41.112-43.164H73.22a7.659,7.659,0,0,1,7.409,7.315c.029.272.058.545.106.817a8.455,8.455,0,0,0,8.313,7H239.367a8.455,8.455,0,0,0,8.313-7c.048-.272.077-.545.106-.817a7.659,7.659,0,0,1,7.409-7.315h24.544c22.708,0,41.112,19.322,41.112,43.164h0Z" transform="translate(0)" fill="#fff"/>
-      <path id="패스_657" data-name="패스 657" d="M2.018,122.087A2.02,2.02,0,0,0,0,124.1v16.144a2.018,2.018,0,0,0,4.036,0V124.1a2.02,2.02,0,0,0-2.018-2.018Z" fill="#3f3d56"/>
-      <path id="패스_658" data-name="패스 658" d="M2.018,170.518A2.02,2.02,0,0,0,0,172.536v31.278a2.018,2.018,0,0,0,4.036,0V172.536A2.02,2.02,0,0,0,2.018,170.518Z" fill="#3f3d56"/>
-      <path id="패스_659" data-name="패스 659" d="M2.018,214.913A2.02,2.02,0,0,0,0,216.931v31.278a2.018,2.018,0,0,0,4.036,0V216.931A2.02,2.02,0,0,0,2.018,214.913Z" fill="#3f3d56"/>
-      <rect id="사각형_611" data-name="사각형 611" width="32.35" height="5.045" rx="2.522" transform="translate(40.828 11.604)" fill="#3f3d56"/>
-      <circle id="타원_151" data-name="타원 151" cx="4.036" cy="4.036" r="4.036" transform="translate(265.355 8.576)" fill="#3f3d56"/>
-      <circle id="타원_152" data-name="타원 152" cx="4.036" cy="4.036" r="4.036" transform="translate(276.454 8.576)" fill="#3f3d56"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="327.408" height="558.977" viewBox="0 0 327.408 558.977">
+  <g id="그룹_387" data-name="그룹 387" transform="translate(20757.703 14112.488)">
+    <g id="undraw_hooked_re_vl59" transform="translate(-20757.703 -14112.488)">
+      <g id="그룹_288" data-name="그룹 288">
+        <path id="패스_654" data-name="패스 654" d="M279.9,558.977H48.519c-25.085,0-45.493-21.4-45.493-47.7V47.7C3.027,21.4,23.435,0,48.519,0H279.9c25.084,0,45.492,21.4,45.492,47.7V511.276c0,26.3-20.408,47.7-45.492,47.7h0Z" fill="#3f3d56"/>
+        <path id="패스_655" data-name="패스 655" d="M341.036,170.518a2.02,2.02,0,0,0-2.018,2.018v64.575a2.018,2.018,0,0,0,4.036,0V172.536a2.02,2.02,0,0,0-2.018-2.018Z" transform="translate(-15.646)" fill="#3f3d56"/>
+        <path id="패스_656" data-name="패스 656" d="M320.85,47.7V511.268c0,22.894-16.971,41.62-38.43,43.073,0,0-208.7-.461-234.643,0S7.728,528.424,7.564,511.268s0-463.567,0-463.567c0-23.842,18.4-43.164,41.112-43.164H73.22a7.659,7.659,0,0,1,7.409,7.315c.029.272.058.545.106.817a8.455,8.455,0,0,0,8.313,7H239.367a8.455,8.455,0,0,0,8.313-7c.048-.272.077-.545.106-.817a7.659,7.659,0,0,1,7.409-7.315h24.544c22.708,0,41.112,19.322,41.112,43.164h0Z" transform="translate(0)" fill="#fff"/>
+        <path id="패스_657" data-name="패스 657" d="M2.018,122.087A2.02,2.02,0,0,0,0,124.1v16.144a2.018,2.018,0,0,0,4.036,0V124.1a2.02,2.02,0,0,0-2.018-2.018Z" fill="#3f3d56"/>
+        <path id="패스_658" data-name="패스 658" d="M2.018,170.518A2.02,2.02,0,0,0,0,172.536v31.278a2.018,2.018,0,0,0,4.036,0V172.536A2.02,2.02,0,0,0,2.018,170.518Z" fill="#3f3d56"/>
+        <path id="패스_659" data-name="패스 659" d="M2.018,214.913A2.02,2.02,0,0,0,0,216.931v31.278a2.018,2.018,0,0,0,4.036,0V216.931A2.02,2.02,0,0,0,2.018,214.913Z" fill="#3f3d56"/>
+        <rect id="사각형_611" data-name="사각형 611" width="32.35" height="5.045" rx="2.522" transform="translate(40.828 11.604)" fill="#3f3d56"/>
+        <circle id="타원_151" data-name="타원 151" cx="4.036" cy="4.036" r="4.036" transform="translate(265.355 8.576)" fill="#3f3d56"/>
+        <circle id="타원_152" data-name="타원 152" cx="4.036" cy="4.036" r="4.036" transform="translate(276.454 8.576)" fill="#3f3d56"/>
+      </g>
     </g>
     <text id="광고전화는_가지않습니다_" data-name="광고전화는
-가지않습니다!" transform="translate(472 1903)" fill="#5b8def" font-size="30" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="-75" y="0">광고전화는</tspan><tspan y="0" font-family="SegoeUIBlack, Segoe UI"></tspan><tspan x="-95.493" y="50">가지않습니다</tspan><tspan y="50" font-family="SegoeUIBlack, Segoe UI">!</tspan></text>
-    <ellipse id="Ellipse_18" data-name="Ellipse 18" cx="63.104" cy="60.593" rx="63.104" ry="60.593" transform="translate(408.895 2019.814)" fill="#5b8def"/>
-    <path id="패스_1142" data-name="패스 1142" d="M0,0,5.124.1,6,43.017l-5.124-.1Z" transform="translate(454.674 2067.316) rotate(-45)" fill="#fff"/>
-    <path id="패스_1143" data-name="패스 1143" d="M.871.1,5.995,0,5.124,42.912,0,43.016Z" transform="translate(485.088 2063.078) rotate(45)" fill="#fff"/>
-    <g transform="matrix(1, 0, 0, 1, 308.3, 1785.51)" filter="url(#사각형_871)">
-      <rect id="사각형_871-2" data-name="사각형 871" width="223" height="55" rx="16" transform="translate(52.7 445.49)" fill="#22d800"/>
-    </g>
-    <text id="휴대폰_인증" data-name="휴대폰 인증" transform="translate(473 2269)" fill="#fff" font-size="25" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="-65.948" y="0">휴대폰</tspan><tspan y="0" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"> </tspan><tspan y="0">인증</tspan></text>
+가지않습니다!" transform="translate(-20594 -13947)" fill="#5b8def" font-size="30" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="-75" y="0">광고전화는</tspan><tspan y="0" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"></tspan><tspan x="-94.907" y="50">가지않습니다</tspan><tspan y="50" font-family="SegoeUI-Bold, Segoe UI" font-weight="700">!</tspan></text>
+    <ellipse id="Ellipse_18" data-name="Ellipse 18" cx="73.518" cy="70.593" rx="73.518" ry="70.593" transform="translate(-20667.52 -13826.186)" fill="#5b8def"/>
+    <path id="패스_1140" data-name="패스 1140" d="M0,0,5.969.121,6.984,50.116l-5.969-.121Z" transform="translate(-20614.188 -13770.844) rotate(-45)" fill="#fff"/>
+    <path id="패스_1141" data-name="패스 1141" d="M1.015.121,6.984,0,5.97,49.994,0,50.116Z" transform="translate(-20578.754 -13775.781) rotate(45)" fill="#fff"/>
   </g>
 </svg>

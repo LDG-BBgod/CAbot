@@ -93,7 +93,7 @@ header .menu{
     height: 100%;
     align-items: center;
 }
-header .menu a{
+header .menu .menuContent{
     display: flex;
     margin-left: 50px;
     font-size: 18px;
@@ -102,7 +102,21 @@ header .menu a{
     align-items: center;
     justify-content: center;
 }
-
+header .menu .menuGroup{
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+header .menu .menuBar,
+header .menu .menuX{
+    display: none;
+}
+header .menu .on{
+    display: block !important;
+}
+header .menu .off{
+    display: none !important;
+}
 /***** 푸터 *****/
 footer{
     background: #34464B;
@@ -134,4 +148,103 @@ footer .right-side a{
     margin-left: 5px;
     color: #ccc;
     font-size: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 600px) {
+
+    /***** 헤더 *****/
+    header{
+        padding: 0 15px;
+    }
+    header .inner{
+        height: 60px;
+    }
+    header .logo{
+        display: flex;
+        height: 100%;
+        align-items: center;
+    }
+    header .logo .logo-name{
+        display: none;
+    }
+    header .logo img{
+        margin-top: 5px;
+        height: 28px;
+    }
+    header .menu{
+        height: 100%;
+        align-items: center;
+    }
+    header .menu .menuGroup,
+    header .menu .menuX{
+        display: none;
+    }
+    header .menu .menuBar{
+        display: block;
+    }
+    header .menu .menuGroup{
+        width: calc(100% + 30px);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        margin-left: -15px;
+        background: #fff;
+        height: 150px;
+    }
+    header .menu .menuContent{
+        display: block;
+        margin-left: 15px;
+        margin-right: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #5B8DEF;
+        padding: 15px 0;
+        border-bottom: solid 1px #a5a5a5;
+    }
+    header .menu .menuContent:last-child{
+        border-bottom: none;
+    }
+    /******** footer ********/
+    footer{
+        height: 320px;
+    }
+    footer .inner{
+        padding-top: 20px 20px 0 20px;
+        text-align: center;
+    }
+    footer .left-side{
+        float: none;
+    }
+    footer .left-side p{
+        margin-top: 8px;
+        color: #ccc;
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    footer .right-side{
+        float: none;
+        text-align: center;
+    }
+    footer .right-side p{
+        margin-top: 8px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    footer .right-side a{
+    }
 }

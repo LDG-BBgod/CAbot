@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.edit import FormView
 from django.core import serializers
@@ -39,8 +39,12 @@ def CAHomeView(request):
 
 def CAChatView(request, userIP):
 
-    chatLogs = ChatLog.objects.filter(chatRoomNameObject = ChatRoomName.objects.get(userIP=userIP))
     
+    try:
+        chatLogs = ChatLog.objects.filter(chatRoomNameObject = ChatRoomName.objects.get(userIP=userIP))
+
+    except:
+        return redirect('/caHome/')
     contents = {
         'userIP': userIP,
         'chatLogs': chatLogs,
@@ -72,6 +76,11 @@ def ConsultingDataView(request):
 
     return HttpResponse(responseData, content_type="text/json-comment-filtered")
 
+def SelfCompareHomeView(request):
+
+    return render(request, 'selfCompareHome.html')
+
+
 
 
 
@@ -90,6 +99,9 @@ def SendMessageAPI(request):
     sendMessageFunc(content)
 
     return HttpResponse()
+
+
+
 
 
 # 추가페이지

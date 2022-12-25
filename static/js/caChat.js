@@ -8,6 +8,11 @@ setTimeout(() => {
     }))
 }, 500);
 
+document.querySelector('#message').onkeyup = (e) => {
+    if (e.keyCode === 13) {
+        document.querySelector('#sendButton').click()
+    }
+}
 
 socket.addEventListener('message', (e) => {
     const message = JSON.parse(e.data).message
@@ -22,6 +27,11 @@ socket.addEventListener('message', (e) => {
 document.getElementById('sendButton').addEventListener('click', () => {
     const message = document.getElementById('message').value
     document.getElementById('message').value = ''
+
+    const textarea = document.getElementById('message')
+    textarea.style.height = '40px'
+    document.getElementsByClassName('chatBoxMiddle')[0].style.height = '640px'
+    
     $('.chatBoxMiddle').append('<div class="item myItem"><div class="msgContainer myMsgContainer"><div class="msg myMsg">' + message + '</div></div></div>')
 
     socket.send(JSON.stringify({
@@ -29,3 +39,19 @@ document.getElementById('sendButton').addEventListener('click', () => {
         'username': 'LDJ'
     }))
 })
+
+// textarea 설정
+function resize(obj, e) {
+
+    obj.style.height = '0px'
+    obj.style.height = obj.scrollHeight + 'px'
+
+    const chatBoxMiddle = document.getElementsByClassName('chatBoxMiddle')[0] 
+    chatBoxMiddle.style.height = 680 - obj.scrollHeight + 'px'
+    chatBoxMiddle.scrollTop = chatBoxMiddle.scrollHeight
+
+    if (e.keyCode == 13){
+        e.returnValue = false
+    }
+
+}

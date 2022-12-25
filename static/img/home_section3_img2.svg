@@ -1,15 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="327.408" height="558.977" viewBox="0 0 327.408 558.977">
-  <defs>
-    <filter id="사각형_874" x="45.637" y="437.988" width="244" height="76" filterUnits="userSpaceOnUse">
-      <feOffset dx="3" dy="3" input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="3.5" result="blur"/>
-      <feFlood flood-opacity="0.161"/>
-      <feComposite operator="in" in2="blur"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
-  </defs>
-  <g id="그룹_370" data-name="그룹 370" transform="translate(-796.297 -1785.512)">
-    <g id="undraw_hooked_re_vl59" transform="translate(796.297 1785.512)">
+<svg xmlns="http://www.w3.org/2000/svg" width="327.408" height="558.977" viewBox="0 0 327.408 558.977">
+  <g id="그룹_386" data-name="그룹 386" transform="translate(20279.137 14125.488)">
+    <g id="undraw_hooked_re_vl59" transform="translate(-20279.137 -14125.488)">
       <g id="그룹_288" data-name="그룹 288">
         <path id="패스_654" data-name="패스 654" d="M279.9,558.977H48.519c-25.085,0-45.493-21.4-45.493-47.7V47.7C3.027,21.4,23.435,0,48.519,0H279.9c25.084,0,45.492,21.4,45.492,47.7V511.276c0,26.3-20.408,47.7-45.492,47.7h0Z" fill="#3f3d56"/>
         <path id="패스_655" data-name="패스 655" d="M341.036,170.518a2.02,2.02,0,0,0-2.018,2.018v64.575a2.018,2.018,0,0,0,4.036,0V172.536a2.02,2.02,0,0,0-2.018-2.018Z" transform="translate(-15.646)" fill="#3f3d56"/>
@@ -22,7 +13,7 @@
         <circle id="타원_152" data-name="타원 152" cx="4.036" cy="4.036" r="4.036" transform="translate(276.454 8.576)" fill="#3f3d56"/>
       </g>
     </g>
-    <g id="그룹_367" data-name="그룹 367" transform="translate(900.051 1870)">
+    <g id="그룹_366" data-name="그룹 366" transform="translate(-20175.383 -13995)">
       <g id="그룹_310" data-name="그룹 310" transform="translate(0 0)">
         <g id="그룹_307" data-name="그룹 307" transform="translate(0 64.464)">
           <g id="undraw_order_ride_re_372k">
@@ -45,18 +36,18 @@
         </g>
       </g>
     </g>
-    <text id="신규계약" transform="translate(908.434 2079)" font-size="26" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="0" y="0">신규계약</tspan></text>
-    <text id="보험시작일" transform="translate(864.434 2137.427)" font-size="13" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="-32.5" y="0">보험시작일</tspan></text>
-    <text id="보험종료일" transform="translate(864.434 2185.5)" font-size="13" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="-32.5" y="0">보험종료일</tspan></text>
-    <g id="사각형_872" data-name="사각형 872" transform="translate(937.434 2116)" fill="#fff" stroke="#919191" stroke-width="1">
+    <text id="신규계약" transform="translate(-20167 -13786)" font-size="26" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="0" y="0">신규계약</tspan></text>
+    <text id="보험시작일" transform="translate(-20211 -13731)" font-size="13" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="-32.5" y="0">보험시작일</tspan></text>
+    <text id="보험종료일" transform="translate(-20211 -13684)" font-size="13" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="-32.5" y="0">보험종료일</tspan></text>
+    <g id="사각형_864" data-name="사각형 864" transform="translate(-20138 -13749)" fill="#fff" stroke="#919191" stroke-width="1">
       <rect width="150" height="32" rx="5" stroke="none"/>
       <rect x="0.5" y="0.5" width="149" height="31" rx="4.5" fill="none"/>
     </g>
-    <g id="사각형_873" data-name="사각형 873" transform="translate(937.434 2165)" fill="#fff" stroke="#919191" stroke-width="1">
+    <g id="사각형_865" data-name="사각형 865" transform="translate(-20138 -13700)" fill="#fff" stroke="#919191" stroke-width="1">
       <rect width="150" height="30" rx="5" stroke="none"/>
       <rect x="0.5" y="0.5" width="149" height="29" rx="4.5" fill="none"/>
     </g>
-    <g id="office-monthly-calendar" transform="translate(1060.848 2123.662)">
+    <g id="office-monthly-calendar" transform="translate(-20014.584 -13741.338)">
       <g id="그룹_51" data-name="그룹 51" transform="translate(0)">
         <path id="패스_91" data-name="패스 91" d="M18.6,45.333h-1.71a.57.57,0,1,0,0,1.14h1.14V59.2H3.973V46.473h1.52a.57.57,0,1,0,0-1.14H3.4a.572.572,0,0,0-.57.57V59.772a.572.572,0,0,0,.57.57H18.6a.572.572,0,0,0,.57-.57V45.9A.572.572,0,0,0,18.6,45.333Z" transform="translate(-2.833 -43.813)" fill="#5b8def"/>
         <path id="패스_92" data-name="패스 92" d="M206.185,45.333H204.57a.57.57,0,0,0,0,1.14h1.615a.57.57,0,0,0,0-1.14Z" transform="translate(-197.255 -43.813)" fill="#5b8def"/>
@@ -72,11 +63,7 @@
         <path id="패스_102" data-name="패스 102" d="M318.473,0h-.57a.572.572,0,0,0-.57.57V3.23a.572.572,0,0,0,.57.57h.57a.572.572,0,0,0,.57-.57V.57A.572.572,0,0,0,318.473,0Z" transform="translate(-306.788)" fill="#5b8def"/>
       </g>
     </g>
-    <text id="_2022-11-29" data-name="2022-11-29" transform="translate(981 2137)" fill="#353535" font-size="12" font-family="SegoeUI, Segoe UI"><tspan x="-30.674" y="0">2022-11-29</tspan></text>
-    <text id="_2023-11-29" data-name="2023-11-29" transform="translate(981 2185)" fill="#353535" font-size="12" font-family="SegoeUI, Segoe UI"><tspan x="-30.674" y="0">2023-11-29</tspan></text>
-    <g transform="matrix(1, 0, 0, 1, 796.3, 1785.51)" filter="url(#사각형_874)">
-      <rect id="사각형_874-2" data-name="사각형 874" width="223" height="55" rx="16" transform="translate(53.14 445.49)" fill="#5b8def"/>
-    </g>
-    <text id="보험료_비교" data-name="보험료 비교" transform="translate(961.434 2269)" fill="#fff" font-size="25" font-family="MalgunGothicBold, Malgun Gothic"><tspan x="-65.948" y="0">보험료</tspan><tspan y="0" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"> </tspan><tspan y="0">비교</tspan></text>
+    <text id="_2022-11-29" data-name="2022-11-29" transform="translate(-20095 -13730)" fill="#353535" font-size="10" font-family="SegoeUI, Segoe UI"><tspan x="-25.562" y="0">2022-11-29</tspan></text>
+    <text id="_2023-11-29" data-name="2023-11-29" transform="translate(-20095 -13683)" fill="#353535" font-size="10" font-family="SegoeUI, Segoe UI"><tspan x="-25.562" y="0">2023-11-29</tspan></text>
   </g>
 </svg>

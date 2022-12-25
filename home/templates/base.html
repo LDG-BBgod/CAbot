@@ -26,9 +26,13 @@
                     <a class="" href="/"><img src="../../static/img/logo.svg" alt="logo"></a>
                 </div>
                 <ul class="menu float-right">
-                    <a href="#" class="alert">자동차보험료 Self비교</a>
-                    <a href="/consulting">전화상담 가입</a>
-                    <a href="/#section2">실시간 채팅상담</a>
+                    <img class="menuBar hover" src="../../static/img/menu_bar.svg" alt="메뉴바" onclick="OpenMenu()">
+                    <img class="menuX hover" src="../../static/img/menu_x.svg" alt="메뉴x" onclick="CloseMenu()">
+                    <div class="menuGroup">
+                        <a class="menuContent alert" href="#" >자동차보험료 Self비교</a>
+                        <a class="menuContent" href="/consulting">전화상담 가입</a>
+                        <div class="menuContent hover" onclick="OpenChat()">실시간 채팅상담</div>
+                    </div>
                 </ul>
             </div>
         </header>
