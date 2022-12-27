@@ -387,7 +387,8 @@
 
     }
     .section3 .positionBox{
-
+        display: block;
+        padding: 70px 0;
     }
     .section3 .positionBox .title{
         font-size: 18px;
@@ -399,7 +400,7 @@
     }
     .section3 .positionBox ul{
         margin-top: 60px;
-        width: 1200px;
+        width: 300vw;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         transition: 0.5s;

@@ -1,6 +1,3 @@
-
-
-
 //section3 aroowButton
 let section3ImgNum = 1
 
@@ -14,8 +11,8 @@ document.getElementsByClassName('arrowRight')[0].addEventListener('click', () =>
 function Section3scroll(num){
     const marginMap = {
         '1': '0',
-        '2': '-400px',
-        '3': '-800px'
+        '2': -window.innerWidth + 'px',
+        '3': -2*window.innerWidth + 'px'
     }
     const section = document.getElementById('section3Imgs')
     if(num == 1 && section3ImgNum < 3) {
