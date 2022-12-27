@@ -1,0 +1,472 @@
+/***** COMMON *****/
+.stepInner{
+    max-width: 1000px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position:  relative;
+}
+.radio{
+    height: 24px;
+    width: 24px;
+    background: url(../img/disagree.svg) no-repeat;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+.radio:checked{
+    background: url(../img/agree.svg) no-repeat;
+}
+.inputText{
+    border: solid 1px #919191;
+    width: 100%;
+    margin: 0 10px;
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 8px;
+}
+select{
+    border: solid 1px #919191;
+    padding-left: 8px;
+    border-radius: 5px;
+    width: 100%;
+    height: 30px;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+	color: rgba(0, 0, 0, 0);
+	opacity: 1;
+	display: block;
+	background: url(../img/calendar.svg)
+		center/80% no-repeat white;
+	width: 20px;
+	height: 20px;
+	border-width: thin;
+	cursor: pointer;
+}
+.noneDate::-webkit-calendar-picker-indicator {
+    display: none !important;
+}
+/***** COMMON *****/
+
+
+/***** STEP *****/
+
+.step{
+    padding-top: 80px;
+}
+.step .section1{
+    margin-top: 50px;
+}
+.step .section1 .titleGroup{
+    padding-bottom: 15px;
+    border-bottom: solid 3px #707070;
+}
+.step .section1 .titleGroup .title{
+    font-size: 35px;
+    font-weight: bold;
+    color: #5b8def;
+}
+.step .section1 .titleGroup .titleSide{
+    margin-left: 8px;
+    font-size: 20px;
+    color: #FF0000;
+}
+.step .section1 img{
+    margin-top: 50px;
+}
+
+/***** STEP *****/
+
+
+/***** 스탭1 *****/
+
+.step1 .section2{
+ margin-top: 80px;
+}
+.step1 .section2 .titleGroup{
+
+}
+.step1 .section2 .titleGroup .title{
+    margin-top: 15px;
+    font-size: 35px;
+    font-weight: bold;
+    color: #5b8def;
+}
+.step1 .section2 .titleGroup button{
+    color: #fff;
+    background: #5b8def;
+    font-size: 20px;
+    height: 50px;
+}
+.step1 .section2 .contentGroup{
+    margin-top: 15px;
+    padding: 40px 0;
+    border-top: solid 3px #707070;
+    border-bottom: solid 2px #707070;
+}
+.step1 .section2 .contentGroup .content{
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+.step1 .section2 .contentGroup .content:first-child{
+    margin-top: 0;
+}
+.step1 .section2 .contentGroup .content a{
+    margin-right: auto;
+    font-size: 20px;
+    color: #000;
+}
+.step1 .section2 .contentGroup .content .authGroup{
+    display: flex;
+    align-items: center;
+}
+.step1 .section2 .contentGroup .content .authGroup input{
+    margin-left: 20px;
+}
+.step1 .section2 .contentGroup .content .authGroup label{
+    margin-top: 4px;
+    margin-left: 5px;
+    font-size: 20px;
+    color: #919191;
+}
+.step1 .section2 .contentSide{
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 24px;
+    color: #FF0000;
+}
+
+
+.step1 .section3{
+    margin-top: 80px;
+}
+.step1 .section3 .title{
+    font-size: 35px;
+    font-weight: bold;
+    color: #5b8def;
+}
+.step1 .section3 .contentGroup{
+    margin-top: 15px;
+    padding: 40px 0;
+    border-top: solid 3px #707070;
+    border-bottom: solid 2px #707070;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+}
+.step1 .section3 .contentGroup .leftSide{
+    box-sizing: border-box;
+    padding-right: 20px;
+}
+.step1 .section3 .contentGroup .leftSide button{
+    font-size: 25px;
+    font-weight: bold;
+    width: 100%;
+    color: #fff;
+    background: #5b8def;
+}
+.step1 .section3 .contentGroup .leftSide .content{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+.step1 .section3 .contentGroup .leftSide .content input{
+
+}
+.step1 .section3 .contentGroup .leftSide .content label{
+    margin-left: 8px;
+    margin-right: auto;
+}
+.step1 .section3 .contentGroup .leftSide .content a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 80px;
+    color: #919191;
+    border: solid 1px #919191;
+}
+.step1 .section3 .contentGroup .rightSide{
+    margin-left: 40px;
+}
+.step1 .section3 .contentGroup .rightSide ul{
+    height: 373px;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    grid-template-rows: 1fr 1fr 1fr 2fr 1fr;
+}
+.step1 .section3 .contentGroup .rightSide li{
+    border-bottom: solid 1px #CCCCCC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.step1 .section3 .contentGroup .rightSide li:nth-child(odd){
+    border-right: solid 1px #CCCCCC;
+    background: #D7E9FD;
+}
+.step1 .section3 .contentGroup .rightSide li:first-child,
+.step1 .section3 .contentGroup .rightSide li:nth-child(2){
+    border-top: solid 1px #CCCCCC;
+}
+.step1 .section3 .contentGroup .rightSide ul li .subTitle{
+    font-size: 18px;
+}
+.step1 .section3 .contentGroup .rightSide ul li .listUL{
+    width: 90%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.step1 .section3 .contentGroup .rightSide ul li .listLI{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.step1 .section3 .contentGroup .rightSide ul li .listLI label{
+    margin-left: 6px;
+    font-size: 14px;
+}
+.step1 .section3 .phoneSubmit{
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    padding: 0;
+    font-size: 25px;
+    color: #fff;
+    background: #5b8def;
+    width: 155px;
+    height: 55px;
+}
+
+
+.step1 .section4{
+    margin-bottom: 100px;
+}
+.step1 .section4 .stepInner{
+    height: 120px;
+    background: #D7E9FD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.step1 .section4 .title{
+    font-size: 24px;
+    font-weight: 700;
+}
+.step1 .section4 input{
+    margin-left: 20px;
+    margin-right: 50px;
+    width: 200px;
+}
+.step1 .section4 button{
+    margin: 0 10px;
+}
+.step1 .section4 button:nth-child(3){
+    color: #fff;
+    background: #5b8def;
+    border-radius: 3px;
+}
+.step1 .section4 button:nth-child(4){
+    color: #5b8def;
+    background: #fff;
+    border-radius: 3px;
+}
+.step1 .section4 .error{
+    position: absolute;
+    top: 82px;
+    left: 300px;
+    font-size: 12px;
+    color: #FF0000;
+}
+/***** 스탭1 *****/
+
+
+/***** 스탭2 *****/
+
+.step2 .section2{
+    margin-top: 130px;
+    margin-bottom: 120px;
+}
+.step2 .section2 ul{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.step2 .section2 ul li{
+    border: solid 1px #CCCCCC;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 650px;
+}
+.step2 .section2 ul li:first-child{
+    margin-right: 40px;
+}
+.step2 .section2 ul li:last-child{
+    border-top: solid 5px #5b8def;
+    margin-left: 40px;
+}
+.step2 .section2 ul li img{
+    margin-top: 50px;
+}
+.step2 .section2 ul li .title{
+    margin-top: 40px;
+    font-size: 35px;
+    font-weight: bold;
+}
+.step2 .section2 ul li .contentGroup{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.step2 .section2 ul li .contentGroup .content{
+    text-align: center;
+    font-size: 20px;
+    line-height: 40px;
+}
+.step2 .section2 ul li .contentGroup .contentBox{
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.step2 .section2 ul li .contentGroup .contentBox .text1{
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 40px;
+}
+.step2 .section2 ul li .contentGroup .contentBox input{
+    box-sizing: border-box;
+    width: 190px;
+    height: 40px;
+    padding: 0 8px 0 12px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+}
+.step2 .section2 ul li .contentGroup .text2{
+    font-size: 16px;
+    margin-top: 10px;
+    color: #919191;
+}
+.step2 .section2 ul li .contentGroup button{
+    margin-top: 20px;
+    padding: 0;
+    font-size: 25px;
+    font-weight: 700;
+    color: #fff;
+    background: #5b8def;
+    width: 330px;
+    height: 55px;
+}
+
+
+.step2 .section3{
+    margin-top: 80px;
+}
+.step2 .section3 .stepInner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.step2 .section3 .subTitle{
+    color: #919191;
+}
+.step2 .section3 .contentGroup{
+    width: 100%;
+    margin-top: 40px;
+}
+.step2 .section3 .contentGroup .content{
+    width: 100%;
+}
+.step2 .section3 .contentGroup .content .title{
+    width: 100%;
+    height: 70px;
+    color: #5E5E5E;
+    background: #F4F4F4;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 70px;
+    padding-left: 20px;
+    border-top: solid 1px #CCCCCC;
+    border-bottom: solid 1px #CCCCCC;
+}
+.step2 .section3 .contentGroup .content ul{
+    width: 1020px;
+    max-height: 350px;
+    overflow: auto;
+}
+.step2 .section3 .contentGroup .content ul li{
+    box-sizing: border-box;
+    padding-left: 20px;
+    width: 100%;
+    height: 70px;
+    border-bottom: solid 1px #CCCCCC;
+    display: flex;
+    align-items: center;
+}
+.step2 .section3 .contentGroup .content ul li:last-child{
+    border-bottom: none;
+}
+.step2 .section3 .contentGroup .content ul li .box{
+    box-sizing: border-box;
+    width: 24px;
+    height: 24px;
+    border: solid 2px #919191;
+    border-radius: 5px;
+}
+.step2 .section3 .contentGroup .content ul li .text1{
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #5E5E5E;
+}
+
+
+.step2 .section4{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.step2 .section4 .contentGroup{
+    width: 650px;
+    margin-top: 80px;
+    padding: 20px;
+    border: solid 1px #707070;
+    border-top: solid 6px #5b8def;
+}
+.step2 .section4 .contentGroup ul{
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+.step2 .section4 .contentGroup li{
+    line-height: 20px;
+    word-break: break-all;
+    display: inline;
+    width: 500px;
+    vertical-align: middle;
+    margin: 10px 0;
+}
+.step2 .section4 .contentGroup li:nth-child(odd){
+    width: 100px;
+    font-size: 20px;
+    color: #5b8def;
+    font-weight: 600;
+}
+.step2 .section4 button{
+    margin-top: 40px;
+    margin-bottom: 80px;
+    padding: 0;
+    width: 400px;
+    height: 90px;
+    font-size: 35px;
+    font-weight: bold;
+    color: #fff;
+    background: #5b8def;
+    border-radius: 15px;
+}
+/***** 스탭2 *****/

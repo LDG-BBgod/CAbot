@@ -8,7 +8,7 @@ a {
     text-decoration: none;
 }
 .inner{
-    max-width: 1200px;
+    max-width: 1320px;
     margin: 0 auto;
     box-sizing: border-box;
     position:  relative;
@@ -23,8 +23,22 @@ a {
     width: 100%;
     opacity: 0.3;
 }
+.loading-img{
+    position: fixed;
+    z-index: 9999;
+    top: 50vh;
+    left: 50vw;
+    height: 10vh;
+    transform: translate(-50%, -50%);
+}
 .hover:hover{
     cursor: pointer;
+}
+.br{
+    display: none;
+}
+.rbr{
+    display: block;
 }
 
 /* FLOAT CLEARFIX */
@@ -42,6 +56,7 @@ a {
 
 /***** Button *****/
 .button{
+    box-sizing: border-box;
     display: block;
     padding: 0.6em 2.2em;
     border-radius: 0.7em;
@@ -123,6 +138,7 @@ footer{
     height: 150px;
 }
 footer .inner{
+    height: 150px;
     padding-top: 20px;
 }
 footer .left-side{
@@ -133,7 +149,12 @@ footer .left-side p{
     color: #ccc;
     font-size: 12px;
 }
-
+footer img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 footer .right-side{
     text-align: right;
 }
@@ -152,6 +173,96 @@ footer .right-side a{
 
 
 
+/***** 채팅상담 *****/
+.sectionFix{
+    z-index: 9001;
+    position: fixed;
+    bottom: 30px;
+    right: 50px;
+}
+.sectionFix .chatBox{
+    height: 750px;
+    width: 400px;
+    border-radius: 30px;
+    background-color: #EAF4FF;
+}
+.sectionFix .chatBox .chatBoxHead{
+    height: 50px;
+    width: 100%;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background-color: #5B8DEF;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.sectionFix .chatBox .chatBoxHead img{
+    height: 20px;
+    margin-right: 20px;
+}
+.sectionFix .chatBox .chatBoxMiddle{
+    box-sizing: border-box;
+    height: 640px;
+    width: 100%;
+    padding: 20px 20px 0 20px;
+    overflow-y: auto;
+}
+.sectionFix .chatBox .chatBoxMiddle .item:last-child .msgContainer{
+    margin-bottom: 0;
+}
+.sectionFix .chatBox .chatBoxMiddle .myItem{
+    text-align: right;
+}
+.sectionFix .chatBox .chatBoxMiddle .msgContainer{
+    display: inline-block;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    max-width: 70%;
+
+}
+.sectionFix .chatBox .chatBoxMiddle .myMsgContainer{
+    background-color: #22D800;
+}
+.sectionFix .chatBox .chatBoxMiddle .msg{
+    word-break: break-all;
+    font-size: 16px;
+    line-height: 21px;
+}
+.sectionFix .chatBox .chatBoxMiddle .myMsg{
+    text-align: left;
+}
+.sectionFix .chatBox .chatBoxFoot{
+    position: relative;
+    box-sizing: border-box;
+    height: 60px;
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sectionFix .chatBox .chatBoxFoot textarea{
+    word-break: break-all;
+    position: absolute;
+    box-sizing: border-box;
+    top: 10px;
+    resize: none;
+    width: calc(100% - 40px);
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px 0 15px;
+    border: solid 1px #c8c8c8;
+    border-radius: 15px;
+    font-size: 16px;
+    overflow-y: hidden;
+}
+.sectionFix .chatBox .chatBoxFoot button{
+    display: none;
+}
+/***** 채팅상담 *****/
+
 
 
 
@@ -166,6 +277,13 @@ footer .right-side a{
 
 @media (max-width: 600px) {
 
+    .br{
+        display: block;
+    }
+    .rbr{
+        display: none;
+    }
+    
     /***** 헤더 *****/
     header{
         padding: 0 15px;
@@ -220,10 +338,11 @@ footer .right-side a{
     }
     /******** footer ********/
     footer{
-        height: 320px;
+        height: 400px;
     }
     footer .inner{
-        padding-top: 20px 20px 0 20px;
+        height: 400px;
+        padding: 100px 20px 0 20px;
         text-align: center;
     }
     footer .left-side{
@@ -235,7 +354,12 @@ footer .right-side a{
         font-size: 12px;
         line-height: 18px;
     }
-
+    footer img{
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
     footer .right-side{
         float: none;
         text-align: center;
@@ -246,5 +370,109 @@ footer .right-side a{
         line-height: 18px;
     }
     footer .right-side a{
+    }
+
+    /******** 채팅상담 ********/
+    .sectionFix{
+        z-index: 9001;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+    .sectionFix .chatBox{
+        height: 100vh;
+        width: 100vw;
+        border-radius: 0;
+    }
+    .sectionFix .chatBox .chatBoxHead{
+        height: 40px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+    .sectionFix .chatBox .chatBoxHead img{
+        height: 17px;
+        margin-right: 20px;
+    }
+    .sectionFix .chatBox .chatBoxMiddle{
+        box-sizing: border-box;
+        height: calc(100vh - 40px - 40px);
+        width: 100%;
+        padding: 20px 15px 0 15px;
+        overflow-y: auto;
+    }
+    .sectionFix .chatBox .chatBoxMiddle .item:last-child .msgContainer{
+        margin-bottom: 10px;
+    }
+    .sectionFix .chatBox .chatBoxMiddle .myItem{
+        text-align: right;
+    }
+    .sectionFix .chatBox .chatBoxMiddle .msgContainer{
+        display: inline-block;
+        padding: 6px 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: #fff;
+        max-width: 70%;
+
+    }
+    .sectionFix .chatBox .chatBoxMiddle .myMsgContainer{
+        background-color: #22D800;
+    }
+    .sectionFix .chatBox .chatBoxMiddle .msg{
+        word-break: break-all;
+        font-size: 14px;
+        line-height: 20px;
+    }
+    .sectionFix .chatBox .chatBoxMiddle .myMsg{
+        text-align: left;
+    }
+    .sectionFix .chatBox .chatBoxFoot{
+        position: relative;
+        box-sizing: border-box;
+        height: 40px;
+        width: 100%;
+        padding: 0 0;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+    }
+    .sectionFix .chatBox .chatBoxFoot textarea{
+        word-break: break-all;
+        position: absolute;
+        box-sizing: border-box;
+        top: 0;
+        resize: none;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 40px 0 15px;
+        border: none;
+        border-radius: 0;
+        font-size: 16px;
+        overflow-y: hidden;
+    }
+    .sectionFix .chatBox .chatBoxFoot button{
+        padding: 0;
+        border: none;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 40px;
+
+    }
+    .sectionFix .chatBox .chatBoxFoot button img{
+        width: 35px;
+        height: 40px;
+    }
+    /******** 채팅상담 ********/
+}
+
+@media (max-width: 420px){
+    footer{
+        height: 450px;
+    }
+    footer .inner{
+        height: 450px;
     }
 }

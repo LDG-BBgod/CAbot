@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block header %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/selfCompareStep.css' %}?ver=2">
+<script defer src="{% static 'js/userChat.js' %}?ver=2"></script>
+<script defer src="{% static 'js/selfCompare.js' %}?ver=1"></script>
+{% endblock %}
+
+{% block contents %}
+<section class="sectionFix" style="display: none;">
+    <div class="chatBox">
+        <div class="chatBoxHead">
+            <img class="hover" src="../../static/img/home_chatBack.svg" alt="뒤로가기" onclick="closeChat()">
+        </div>
+        <div class="chatBoxMiddle">
+            
+        </div>
+        <div class="chatBoxFoot">
+            <textarea id="message" type="text" oninput="resize(this, event)" spellcheck="false" placeholder="메세지를 입력해주세요"></textarea>
+            <button id="sendButton"><img src="../../static/img/sendButton.svg" alt=""></button>
+        </div>
+    </div>
+</section>
+<div class="step step1" style="display: block;">
+    <section class="section1">
+        <div class="inner">
+            <div class="titleGroup">
+                <span class="title">개인용 자동차 보험비교</span>
+                <span class="titleSide">(갱신계약은 만기30일 이내만 조회)</span>
+            </div>
+            <img src="../../static/img/selfCompare_step1.svg" alt="">
+        </div>
+    </section>
+    <section class="section2">
+        <div class="stepInner">
+            <div class="titleGroup clearfix">
+                <span class="title float-left">정보동의</span>
+                <button class="button hover float-right">전체 동의</button>
+            </div>
+            <div class="contentGroup">
+                <div class="content">
+                    <a href="#" class="left-side">개인(신용)정보의 수집 · 이용에 관한 사항</a>
+                    <div class="authGroup right-side">
+                        <input class="radio" type="radio" name="auth1" id="infoA1">
+                        <label class="hover" for="infoA1">동의</label>
+                        <input class="radio" type="radio" name="auth1" id="infoB1">
+                        <label class="hover" for="infoB1">동의 안함</label>
+                    </div>
+                </div>
+                <div class="content">
+                    <a href="#" class="left-side">개인(신용)정보의 조회에 관한 사항</a>
+                    <div class="authGroup right-side">
+                        <input class="radio" type="radio" name="auth2" id="infoA2">
+                        <label class="hover" for="infoA2">동의</label>
+                        <input class="radio" type="radio" name="auth2" id="infoB2">
+                        <label class="hover" for="infoB2">동의 안함</label>
+                    </div>
+                </div>
+                <div class="content">
+                    <a href="#" class="left-side">개인(신용)정보의 제공에 관한 사항</a>
+                    <div class="authGroup right-side">
+                        <input class="radio" type="radio" name="auth3" id="infoA3">
+                        <label class="hover" for="infoA3">동의</label>
+                        <input class="radio" type="radio" name="auth3" id="infoB3">
+                        <label class="hover" for="infoB3">동의 안함</label>
+                    </div>
+                </div>
+                <div class="content">
+                    <a href="#" class="left-side">민감정보의 처리에 관한 사항</a>
+                    <div class="authGroup right-side">
+                        <input class="radio" type="radio" name="auth4" id="infoA4">
+                        <label class="hover" for="infoA4">동의</label>
+                        <input class="radio" type="radio" name="auth4" id="infoB4">
+                        <label class="hover" for="infoB4">동의 안함</label>
+                    </div>
+                </div>
+                <div class="content">
+                    <a href="#" class="left-side">고유식별정보의 처리에 관한 사항</a>
+                    <div class="authGroup right-side">
+                        <input class="radio" type="radio" name="auth5" id="infoA5">
+                        <label class="hover" for="infoA5">동의</label>
+                        <input class="radio" type="radio" name="auth5" id="infoB5">
+                        <label class="hover" for="infoB5">동의 안함</label>
+                    </div>
+                </div>
+            </div>
+            <div class="contentSide">본 동의를 거부하시는 경우에는 정상적인 서비스제공이 불가능하며 본 동의서에 의한 개인(신용) 정보 조회는 귀하의 신용등급에 영향을 주지 않습니다. 또한, 동의하시더라도 보험사 고객센터(대표번호)를 통해 철회를 요청하실 수 있습니다.</div>
+        </div>
+    </section>
+    <section class="section3">
+        <div class="stepInner">
+            <div class="title">휴대폰 인증</div>
+            <div class="contentGroup">
+                <div class="leftSide">
+                    <button class="button hover">전체동의</button>
+                    <div class="content">
+                        <input class="radio" type="checkbox" id="phoneA1">
+                        <label class="hover" for="phoneA1">개인정보 수집 · 이용/취급위탁 동의	</label>
+                        <a href="#">전문보기</a>
+                    </div>
+                    <div class="content">
+                        <input class="radio" type="checkbox" id="phoneA2">
+                        <label class="hover" for="phoneA2">본인확인서비스 이용약관 동의</label>
+                        <a href="#">전문보기</a>
+                    </div>
+                    <div class="content">
+                        <input class="radio" type="checkbox" id="phoneA3">
+                        <label class="hover" for="phoneA3">고유식별정보처리 동의</label>
+                        <a href="#">전문보기</a>
+                    </div>
+                    <div class="content">
+                        <input class="radio" type="checkbox" id="phoneA4">
+                        <label class="hover" for="phoneA4">통신사 이용약관 동의</label>
+                        <a href="#">전문보기</a>
+                    </div>
+                    <div class="content">
+                        <input class="radio" type="checkbox" id="phoneA5">
+                        <label class="hover" for="phoneA5">(SKT 알뜰폰) 개인정보 제3자 제공동의</label>
+                        <a href="#">전문보기</a>
+                    </div>
+                </div>
+                <div class="rightSide">
+                    <ul>
+                        <li>
+                            <div class="subTitle">이름</div>
+                        </li>
+                        <li>
+                            <input class="inputText" type="text" id="userName">
+                        </li>
+                        <li>
+                            <div class="subTitle">성별</div>
+                        </li>
+                        <li>
+                            <div class="listUL">
+                                <div class="listLI">
+                                    <input class="radio" type="radio" id="male" name="gender" value="male">
+                                    <label for="male">남</label>
+                                </div>
+                                <div class="listLI">
+                                    <input class="radio" type="radio" id="female" name="gender" value="female">
+                                    <label for="female">여</label>
+                                </div>
+                                <div class="listLI">
+                                    <select name="foreigner" id="foreigner">
+                                        <option value="내국인">내국인</option>
+                                        <option value="외국인">외국인</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="subTitle">주민등록번호</div>
+                        </li>
+                        <li>
+                            <input class="inputText" type="number" id="ssmFront">
+                            <input class="inputText" type="number" id="ssmBack">
+                        </li>
+                        <li>
+                            <div class="subTitle">통신사</div>
+                        </li>
+                        <li>
+                            <div class="listUL">
+                                <div class="listLI">
+                                    <input class="radio" type="radio" name="phone" id="skt" value="skt">
+                                    <label for="skt">SKT</label>
+                                </div>
+                                <div class="listLI">
+                                    <input class="radio" type="radio" name="phone" id="kt" value="kt">
+                                    <label for="kt">KT</label>
+                                </div>
+                                <div class="listLI">
+                                    <input class="radio" type="radio" name="phone" id="lg" value="lg">
+                                    <label for="lg">LGU+</label>
+                                </div>
+                                <div class="listLI">
+                                    <input class="radio" type="radio" name="phone" id="skt+" value="skt+">
+                                    <label for="skt+">SKT알뜰폰</label>
+                                </div>
+                                <div class="listLI">
+                                    <input class="radio" type="radio" name="phone" id="kt+" value="kt+">
+                                    <label for="kt+">KT알뜰폰</label>
+                                </div>
+                                <div class="listLI">
+                                    <input class="radio" type="radio" name="phone" id="lg+" value="lg+">
+                                    <label for="lg+">LGU+알뜰폰</label>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="subTitle">휴대폰번호</div>
+                        </li>
+                        <li>
+                            <input class="inputText" type="number" id="phone1">
+                            <input class="inputText" type="number" id="phone2">
+                            <input class="inputText" type="number" id="phone3">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button class="button hover phoneSubmit" onclick="SendAuth()">확 인</button>
+        </div>
+    </section>
+    <section class="section4" style="display: none;" id="sectionAuth">
+        <div class="stepInner">
+            <div class="title">인증번호</div>
+            <input class="inputText" type="number" placeholder="3분이내 입력해주세요" id="authNum">
+            <button class="button hover" onclick="AuthSubmit()">인증 확인</button>
+            <button class="button hover" style="display: none;">재전송</button>
+            <div class="error"></div>
+        </div>
+    </section>
+</div>
+<div class="step step2" style="display: none;">
+    <section class="section1">
+        <div class="inner">
+            <div class="titleGroup">
+                <span class="title">개인용 자동차 보험비교</span>
+                <span class="titleSide">(갱신계약은 만기30일 이내만 조회)</span>
+            </div>
+            <img src="../../static/img/selfCompare_step2.svg" alt="">
+        </div>
+    </section>
+    <section class="section2">
+        <div class="stepInner">
+            <ul>
+                <li>
+                    <img src="../../static/img/selfCompare_step2_img1.svg" alt="">
+                    <div class="title">갱신계약</div>
+                    <div class="contentGroup">
+                        <div class="content">서비스 준비중입니다.<br>전화상담이나 채팅상담을 이용해주세요.</div>
+                    </div>
+                </li>
+                <li>
+                    <img src="../../static/img/selfCompare_step2_img2.svg" alt="">
+                    <div class="title">신규계약</div>
+                    <div class="contentGroup">
+                        <div class="contentBox">
+                            <div class="text1">보험 시작일</div>
+                            <input class="inputText" type="date" id="nowDate" onchange="ChangeNextDate()">
+                        </div>
+                        <div class="contentBox">
+                            <div class="text1">보험 종료일</div>
+                            <input class="inputText noneDate" type="date" id="nextDate">
+                        </div>
+                        <div class="text2">보험기간은 보험시작일로 부터 1년입니다.</div>
+                        <button class="button hover" onclick="ChangeStep2Section()">보험료 비교하기</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <section class="section3" style="display: none;">
+        <div class="stepInner">
+            <div class="subTitle">신차 또는 구입예정 자동차에 대한 정보를 선택하세요. 승차정원은 10인 이하의 개인 승용차 입니다.</div>
+            <div class="contentGroup">
+                <div class="content content1">
+                    <div class="title hover">제조사를 선택하세요.</div>
+                    <ul class="hover">
+                        <li>
+                            <div class="box"></div>
+                            <div class="text1">현대</div>
+                        </li>
+                        <li>
+                            2
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="content content2">
+                    <div class="title hover">자동차명을 선택하세요.</div>
+                    <ul class="hover">
+
+                    </ul>
+                </div>
+                <div class="content content3">
+                    <div class="title hover">자동차 등록년도를 선택하세요.</div>
+                    <ul class="hover">
+
+                    </ul>
+                </div>
+                <div class="content content4">
+                    <div class="title hover">세부차명을 선택하세요.</div>
+                    <ul class="hover">
+
+                    </ul>
+                </div>
+                <div class="content content5">
+                    <div class="title hover">세부항목을 선택하세요.</div>
+                    <ul class="hover">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section4" style="display: none;">
+        <div class="contentGroup">
+            <ul>
+                <li>제조사</li>
+                <li>test</li>
+                <li>자동차명</li>
+                <li>test</li>
+                <li>등록년도</li>
+                <li></li>
+                <li>세부차명</li>
+                <li></li>
+                <li>세부항목</li>
+                <li>saetseasearfsadfsafeafsafsdaefsaasdfsdafawsefsaefsdafsdafwseaffsedfaefseafsdafsdfaswefsaedfda</li>
+            </ul>
+        </div>
+        <button class="button hover">다음 단계</button>
+    </section>
+</div>
+<div class="step step3" style="display: none;">
+    <section class="section1">
+        <div class="inner">
+            <div class="titleGroup">
+                <span class="title">개인용 자동차 보험비교</span>
+                <span class="titleSide">(갱신계약은 만기30일 이내만 조회)</span>
+            </div>
+            <img src="../../static/img/selfCompare_step3.svg" alt="">
+        </div>
+    </section>
+    <section class="section2">
+    
+    </section>
+</div>
+<div class="step step4" style="display: none;">
+    <section class="section1">
+        <div class="inner">
+            <div class="titleGroup">
+                <span class="title">개인용 자동차 보험비교</span>
+                <span class="titleSide">(갱신계약은 만기30일 이내만 조회)</span>
+            </div>
+            <img src="../../static/img/selfCompare_step4.svg" alt="">
+        </div>
+    </section>
+    <section class="section2">
+    
+    </section>
+</div>
+<div class="step step5" style="display: none;">
+    <section class="section1">
+        <div class="inner">
+            <div class="titleGroup">
+                <span class="title">개인용 자동차 보험비교</span>
+                <span class="titleSide">(갱신계약은 만기30일 이내만 조회)</span>
+            </div>
+            <img src="../../static/img/selfCompare_step5.svg" alt="">
+        </div>
+    </section>
+    <section class="section2">
+    
+    </section>
+</div>
+{% endblock %}

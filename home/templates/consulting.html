@@ -3,10 +3,28 @@
 {% block header %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/consulting.css' %}?ver=2">
+<script>
+    const userIP = "{{ userIP }}"
+</script>
+<script defer src="{% static 'js/userChat.js' %}?ver=2"></script>
 <script defer src="{% static 'js/consulting.js' %}?ver=1"></script>
 {% endblock %}
 
 {% block contents %}
+<section class="sectionFix" style="display: none;">
+    <div class="chatBox">
+        <div class="chatBoxHead">
+            <img class="hover" src="../../static/img/home_chatBack.svg" alt="뒤로가기" onclick="closeChat()">
+        </div>
+        <div class="chatBoxMiddle">
+            
+        </div>
+        <div class="chatBoxFoot">
+            <textarea id="message" type="text" oninput="resize(this, event)" spellcheck="false" placeholder="메세지를 입력해주세요"></textarea>
+            <button id="sendButton"><img src="../../static/img/sendButton.svg" alt=""></button>
+        </div>
+    </div>
+</section>
 <section class="section1">
     <a class="logo-box" href="/"><img src="../../static/img/logo.svg" alt="로고"></a>
     <div class="content-box">
@@ -66,10 +84,10 @@
                 <a href="/agreement/" target="_blank">[보기]</a>                
             </div>
             <div class="bottom-content">
-                <div class="button-tool selectType-list0">전화</div>
-                <div class="button-tool selectType-list1">카톡</div>
+                <div class="button-tool selectType-list0 select" style="display: none;">전화</div>
+                <div class="button-tool selectType-list1" style="display: none;">카톡</div>
                 <div class="text-box">
-                    <input id="input-selectType" type="text" placeholder="상담 수단을 선택해 주세요">
+                    <input id="input-selectType" type="text" placeholder="전화번호를 입력해주세요.">
                     <div class="input-bottom-text">상담 이후 광고, 영업성 연락은 절대 가지 않습니다!</div>
                 </div>          
                 <div class="button-submit">

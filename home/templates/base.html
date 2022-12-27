@@ -19,6 +19,8 @@
 </head>
 <body>
     <div class="container">
+        <div class="mask" id="mask" style="display: none;"></div>
+        <img class="loading-img" id="loadingImg" style="display: none;" src="../../static/img/loadingShort.svg">
         <header>
             <div class="inner clearfix">
                 <div class="logo float-left">
@@ -26,13 +28,17 @@
                     <a class="" href="/"><img src="../../static/img/logo.svg" alt="logo"></a>
                 </div>
                 <ul class="menu float-right">
+                    {% if request.session.superUser %}
+                    <a class="menuContent" href="/caLogout" style="border: solid 2px #5b8def; padding: 8px 20px; border-radius: 5px; color: #5b8def;">관리자 로그아웃</a>
+                    {% else %}
                     <img class="menuBar hover" src="../../static/img/menu_bar.svg" alt="메뉴바" onclick="OpenMenu()">
                     <img class="menuX hover" src="../../static/img/menu_x.svg" alt="메뉴x" onclick="CloseMenu()">
                     <div class="menuGroup">
-                        <a class="menuContent alert" href="#" >자동차보험료 Self비교</a>
-                        <a class="menuContent" href="/consulting">전화상담 가입</a>
-                        <div class="menuContent hover" onclick="OpenChat()">실시간 채팅상담</div>
+                        <a class="menuContent alert" href="#" onclick="CountButton('selfCompareCount')">자동차보험료 Self비교</a>
+                        <a class="menuContent" href="/consulting" onclick="CountButton('consultingCount')">전화상담 가입</a>
+                        <div class="menuContent hover" onclick="OpenChat(); CountButton('chatCount')">실시간 채팅상담</div>
                     </div>
+                    {% endif %}
                 </ul>
             </div>
         </header>
@@ -47,6 +53,7 @@
                     <p>엠금융서비스 보험대리점 | 협회등록번호 : 2009028021</p>
                     <p>상호 : ㈜엠금융서비스 세종사업본부 계룡지점</p>
                 </div>
+                <img src="../../static/img/logo_gray.svg" alt="">
                 <div class="right-side float-right">
                     <p>상담 접수 : 주중 10:00 ~17:00 | 대표번호 : 010-7770-2696</p>
                     <p>개인정보 책임 관리자 : 이동진</p>

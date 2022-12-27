@@ -2,7 +2,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 from asgiref.sync import sync_to_async
-from home.models import ChatRoomName, ChatLog
+from home.models import ChatRoomName, ChatLog, SaveLog
 from home.apis import sendMessageFunc
 
 
@@ -18,7 +18,23 @@ def save_chatRoomName(userIP):
 
 
 @sync_to_async
-def del_chatRoomName(userIP):
+def del_chatRoomName(userIP, chatRoomNameObject):
+
+    try:
+        chatLogs = ChatLog.objects.filter(userIP = chatRoomNameObject.userIP)
+        logs = ""
+
+        for chatLog in chatLogs:
+            logs = logs + chatLog.username + " : "+ chatLog.log
+
+        saveLogObj = SaveLog(
+            userIP = userIP,
+            log = logs
+        )
+        saveLogObj.save()
+
+    except:
+        pass
 
     chatRoomName = ChatRoomName.objects.get(userIP=userIP)
 
@@ -33,8 +49,10 @@ def get_object(userIP):
 
 @sync_to_async
 def save_log(chatRoomNameObject, username, log):
+
     log = ChatLog(
         chatRoomNameObject = chatRoomNameObject,
+        userIP = chatRoomNameObject.userIP,
         username = username,
         log = log
     )
@@ -69,7 +87,36 @@ class ChatConsumer(AsyncWebsocketConsumer):
         user = self.scope['cookies']['user']
 
         if (user == 'user'):
-            await del_chatRoomName(self.room_name)
+            try:
+                await self.channel_layer.group_send(
+                        
+                    self.room_group_name,
+                    {
+                        'type': 'chat_message',
+                        'message': '고객님이 채팅방을 나갔습니다.',
+                        'username': user,
+                    }
+                )
+            except:
+                pass
+
+            chatRoomNameObject = await get_object(self.room_name)
+            await del_chatRoomName(self.room_name, chatRoomNameObject)
+        
+        else:
+            try:
+                await self.channel_layer.group_send(
+                        
+                    self.room_group_name,
+                    {
+                        'type': 'chat_message',
+                        'message': '상담원이 채팅방을 나갔습니다.',
+                        'username': user,
+                    }
+                )
+            except:
+                pass
+
 
         # 룸 그룹 나가기
         await self.channel_layer.group_discard(
