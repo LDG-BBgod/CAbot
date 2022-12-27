@@ -24,7 +24,7 @@ function OpenChat() {
     //상담원 연결 안됬을시 소캣연결
     if (!connectCheck) {
         document.getElementsByClassName('chatBoxMiddle')[0].innerHTML = ""
-        socket = new WebSocket(`ws://${window.location.host}/ws/${userIP}/`)
+        socket = new WebSocket(`wss://${window.location.host}/ws/${userIP}/`)
     }
 
     socket.addEventListener('message', (e) => {

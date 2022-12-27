@@ -1,4 +1,4 @@
-let socket = new WebSocket(`ws://${window.location.host}/ws/${userIP}/`)
+let socket = new WebSocket(`wss://${window.location.host}/ws/${userIP}/`)
 
 
 setTimeout(() => {
