@@ -12,12 +12,25 @@ function closeChat() {
 
 
 function OpenChat() {
-    document.querySelector('#message').focus()
-    document.querySelector('#message').onkeyup = (e) => {
-        if (e.keyCode === 13) {
-            document.querySelector('#sendButton').click()
+    if (window.innerWidth > 600) {
+        document.querySelector('#message').focus()
+        document.querySelector('#message').onkeyup = (e) => {
+            if (e.keyCode === 13) {
+                document.querySelector('#sendButton').click()
+            }
         }
+        
     }
+    else{
+        document.querySelector('#messageMobile').focus()
+        document.querySelector('#messageMobile').onkeyup = (e) => {
+            if (e.keyCode === 13) {
+                document.querySelector('#sendButtonMobile').click()
+            }
+        }
+        document.getElementsByClassName('mobileChatsection')[0].style.display = 'block'
+    }
+
     document.getElementById('mask').style.display = 'block'
     document.getElementsByClassName('sectionFix')[0].style.display = 'block'
     
@@ -43,7 +56,7 @@ function OpenChat() {
     })
 } 
 
-
+// pc 버전
 document.getElementById('sendButton').addEventListener('click', () => {
 
     const message = document.getElementById('message').value
@@ -58,9 +71,53 @@ document.getElementById('sendButton').addEventListener('click', () => {
             document.getElementsByClassName('chatBoxMiddle')[0].style.height = '640px'
         }
         else {
-            textarea.style.height = '40px'
-            document.getElementsByClassName('chatBoxMiddle')[0].style.height = `calc(100% - 40px - 40px)`
+            // textarea.style.height = '40px'
+            // document.getElementsByClassName('chatBoxMiddle')[0].style.height = `calc(100% - 40px - 40px)`
         }
+
+
+        $('.chatBoxMiddle').append('<div class="item myItem"><div class="msgContainer myMsgContainer"><div class="msg myMsg">' + message + '</div></div></div>')
+        document.getElementsByClassName('chatBoxMiddle')[0].scrollTop = document.getElementsByClassName('chatBoxMiddle')[0].scrollHeight
+
+        if(!connectCheck) {
+            // 문자 보내는 api 작성
+            socket.send(JSON.stringify({
+                'message': message,
+                'username': userIP,
+                'connectCheck': 'false',
+            }))
+            rejectMessage = setTimeout(() => {
+                socket.send(JSON.stringify({
+                    'message': '',
+                    'username': userIP,
+                    'type': 'reject',
+                }))
+            }, 60000); //60초간 대기후 상담원 열결 안될시 함수실행
+        }
+        else {
+            socket.send(JSON.stringify({
+                'message': message,
+                'username': userIP
+            }))
+        }
+    }
+})
+
+
+// 모바일 버전
+document.getElementById('sendButtonMobile').addEventListener('click', () => {
+
+    const message = document.getElementById('messageMobile').value
+
+    if (message != '') {
+
+        document.getElementById('messageMobile').value = ''
+
+        const textarea = document.getElementById('messageMobile')
+
+        textarea.style.height = '40px'
+        document.getElementsByClassName('chatBoxMiddle')[0].style.height = `calc(100% - 40px - 40px)`
+
 
 
         $('.chatBoxMiddle').append('<div class="item myItem"><div class="msgContainer myMsgContainer"><div class="msg myMsg">' + message + '</div></div></div>')
@@ -104,7 +161,6 @@ function resize(obj, e) {
         chatBoxMiddle.scrollTop = chatBoxMiddle.scrollHeight
     }
     else {
-        console.log(`calc(100% -40px - ${obj.scrollHeight}px)`)
         chatBoxMiddle.style.height = window.innerHeight - 140 - obj.scrollHeight + 'px'
         chatBoxMiddle.scrollTop = chatBoxMiddle.scrollHeight
     }

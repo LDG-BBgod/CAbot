@@ -41,18 +41,18 @@ window.addEventListener('resize', () => {
     }
     else {
         
-        document.getElementsByClassName('sectionFix')[0].style.marginBottom = '0'
-        document.getElementsByClassName('chatBox')[0].style.scale = 1
+        // document.getElementsByClassName('sectionFix')[0].style.marginBottom = '0'
+        // document.getElementsByClassName('chatBox')[0].style.scale = 1
 
-        obj = document.getElementById('message')
+        // obj = document.getElementById('message')
 
-        // obj.style.height = '0px'
-        // obj.style.height = obj.scrollHeight + 'px'
+        // // obj.style.height = '0px'
+        // // obj.style.height = obj.scrollHeight + 'px'
 
-        const chatBoxMiddle = document.getElementsByClassName('chatBoxMiddle')[0]
+        // const chatBoxMiddle = document.getElementsByClassName('chatBoxMiddle')[0]
 
-        chatBoxMiddle.style.height = `calc(100% -80px - ${obj.scrollHeight}px)`
-        chatBoxMiddle.scrollTop = chatBoxMiddle.scrollHeight
+        // chatBoxMiddle.style.height = `calc(100% -80px - ${obj.scrollHeight}px)`
+        // chatBoxMiddle.scrollTop = chatBoxMiddle.scrollHeight
 
     }
 })

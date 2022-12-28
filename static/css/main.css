@@ -264,6 +264,15 @@ footer .right-side a{
 /***** 채팅상담 *****/
 
 
+/******** 모바일 채팅입력칸 ********/
+
+.mobileChatsection{
+    display: none;
+}
+
+/******** 모바일 채팅입력칸 ********/
+
+
 
 
 
@@ -427,12 +436,12 @@ footer .right-side a{
         text-align: left;
     }
     .sectionFix .chatBox .chatBoxFoot{
+        display: none;
         position: relative;
         box-sizing: border-box;
         height: 40px;
         width: 100%;
         padding: 0 0;
-        display: flex;
         justify-content: start;
         align-items: center;
     }
@@ -466,6 +475,47 @@ footer .right-side a{
         height: 40px;
     }
     /******** 채팅상담 ********/
+
+    /******** 모바일 채팅입력칸 ********/
+
+    .mobileChatsection{
+        z-index: 9990;
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    .mobileChatsection .chatGroup{
+        position: relative;
+    }
+    .mobileChatsection .chatGroup textarea{
+        word-break: break-all;
+        position: absolute;
+        box-sizing: border-box;
+        bottom: 0;
+        left: 0;
+        resize: none;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 40px 0 15px;
+        border: none;
+        border-radius: 0;
+        font-size: 16px;
+        overflow-y: hidden;
+    }
+    .mobileChatsection .chatGroup button{
+        padding: 0;
+        border: none;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 40px;
+    }
+
+    /******** 모바일 채팅입력칸 ********/
 }
 
 @media (max-width: 420px){
