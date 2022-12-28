@@ -37,7 +37,7 @@ function OpenChat() {
                 clearTimeout(rejectMessage)
             }
             $('.chatBoxMiddle').append('<div class="item"><div class="msgContainer"><div class="msg">' + message + '</div></div></div>')
-            
+
             document.getElementsByClassName('chatBoxMiddle')[0].scrollTop = document.getElementsByClassName('chatBoxMiddle')[0].scrollHeight
         }        
     })
@@ -59,7 +59,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
         }
         else {
             textarea.style.height = '40px'
-            document.getElementsByClassName('chatBoxMiddle')[0].style.height = window.innerHeight - (40+40) + 'px'
+            document.getElementsByClassName('chatBoxMiddle')[0].style.height = `calc(100% - 40px - 40px)`
         }
 
 
@@ -104,10 +104,11 @@ function resize(obj, e) {
         chatBoxMiddle.scrollTop = chatBoxMiddle.scrollHeight
     }
     else {
-        chatBoxMiddle.style.height = window.innerHeight - 40 - obj.scrollHeight + 'px'
+        console.log(`calc(100% -40px - ${obj.scrollHeight}px)`)
+        chatBoxMiddle.style.height = window.innerHeight - 140 - obj.scrollHeight + 'px'
         chatBoxMiddle.scrollTop = chatBoxMiddle.scrollHeight
     }
-
+        
 
     if (e.keyCode == 13){
         e.returnValue = false

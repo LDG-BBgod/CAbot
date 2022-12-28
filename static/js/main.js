@@ -52,7 +52,6 @@ window.addEventListener('resize', () => {
         const chatBoxMiddle = document.getElementsByClassName('chatBoxMiddle')[0]
 
         chatBoxMiddle.style.height = `calc(100% -80px - ${obj.scrollHeight}px)`
-        // chatBoxMiddle.style.height = window.innerHeight - 40 - obj.scrollHeight + 'px'
         chatBoxMiddle.scrollTop = chatBoxMiddle.scrollHeight
 
     }
