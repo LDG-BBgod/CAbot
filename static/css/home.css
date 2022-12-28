@@ -369,9 +369,10 @@
         margin: 50px 0;
     }
     .section2 .positionBox .buttonGroup{
-
+        box-sizing: border-box;
     }
     .section2 .positionBox .buttonGroup button{
+        box-sizing: border-box;
         font-size: 14px;
         padding: 0.6em 0;
         width: 140px;
@@ -395,10 +396,12 @@
         line-height: 35px;
     }
     .section3 .positionBox .ulBox{
-        width: 400px;
+        box-sizing: border-box;
+        width: 100vw;
         overflow: hidden;
     }
     .section3 .positionBox ul{
+        box-sizing: border-box;
         margin-top: 60px;
         width: 300vw;
         display: grid;
@@ -406,6 +409,7 @@
         transition: 0.5s;
     }
     .section3 .positionBox ul li{
+        box-sizing: border-box;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -576,4 +580,17 @@
         background-color: #34464B;
     }
     /***** SECTION 6 *****/
+}
+
+@media (max-width: 400px) {
+    .section1 .positionBox img{
+        height: 100px;
+    }
+    .section2 .positionBox .buttonGroup button{
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 0.6em 0;
+        width: 130px;
+        margin: 0 10px;
+    }
 }
