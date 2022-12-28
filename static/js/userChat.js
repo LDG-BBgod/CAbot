@@ -37,6 +37,7 @@ function OpenChat() {
                 clearTimeout(rejectMessage)
             }
             $('.chatBoxMiddle').append('<div class="item"><div class="msgContainer"><div class="msg">' + message + '</div></div></div>')
+            
             document.getElementsByClassName('chatBoxMiddle')[0].scrollTop = document.getElementsByClassName('chatBoxMiddle')[0].scrollHeight
         }        
     })
