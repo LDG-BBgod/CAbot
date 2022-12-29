@@ -146,10 +146,14 @@ browsers = {}
 def selfCompareAPIInit(request):
 
     userIP = request.session.get('user')
-    
-    subprocess.Popen(r'C:\Program Files\Google\Chrome\Application\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\chrometemp"')
+
     options = webdriver.ChromeOptions()
+
+    subprocess.Popen(r'C:\Program Files\Google\Chrome\Application\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\chrometemp"')
     options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+    options.add_argument('user-agent=' + user_agent)
     # options.add_experimental_option("excludeSwitches", ["enable-logging"])
     # options.add_experimental_option("detach", True)
 
@@ -162,16 +166,20 @@ def selfCompareAPIInit(request):
 
     browser.get('https://www.e-insmarket.or.kr/')
     browser.implicitly_wait(5)
-
-    browser.find_element(By.CSS_SELECTOR, '#slick-slide00 > div > div > div > a').click()
+    time.sleep(1)
+    browser.find_element(By.CSS_SELECTOR, '#slick-slide00 > div > div > div > a').send_keys(Keys.ENTER)
     browser.implicitly_wait(5)
 
 
-    browser.find_element(By.CSS_SELECTOR, '#allTermAgreeButton').click()
-    browser.find_element(By.CSS_SELECTOR, '#story3_btn > button.mobile').click()
+    browser.find_element(By.CSS_SELECTOR, '#allTermAgreeButton').send_keys(Keys.ENTER)
+    time.sleep(0.1)
+    browser.find_element(By.CSS_SELECTOR, '#story3_btn > button.mobile').send_keys(Keys.ENTER)
     browser.implicitly_wait(5)
-    browser.find_element(By.CSS_SELECTOR, '#authInfo > div.terms > button').click()
+    time.sleep(0.1)
+    browser.find_element(By.CSS_SELECTOR, '#authInfo > div.terms > button').send_keys(Keys.ENTER)
+    time.sleep(0.1)
     browser.find_element(By.CSS_SELECTOR, '#agreeChk5').click()
+    time.sleep(0.1)
 
     return HttpResponse(json.dumps({}))
 
@@ -203,21 +211,31 @@ def selfCompareAPIStep1(request):
 
 
     browser.find_element(By.ID, 'name').send_keys(userName)
+    time.sleep(0.1)
     browser.find_element(By.NAME, 'jumin1').send_keys(ssmFront)
+    time.sleep(0.1)
     browser.find_element(By.NAME, 'jumin2').send_keys(ssmBack)
+    time.sleep(0.1)
     browser.find_element(By.NAME, 'phoneNum2').send_keys(phone2)
+    time.sleep(0.1)
     browser.find_element(By.NAME, 'phoneNum3').send_keys(phone3)
+    time.sleep(0.1)
 
     if gender == 'male':
         browser.find_element(By.CSS_SELECTOR, '#sexM').click()
+        
     else:
         browser.find_element(By.CSS_SELECTOR, '#sexF').click()
+
+    time.sleep(0.1)
 
     if foreigner == '내국인':
         browser.execute_script("""$('select[name="localDiv"]').val('1').prop('selected', true)""")
     else:
         browser.execute_script("""$('select[name="localDiv"]').val('2').prop('selected', true)""")
     
+    time.sleep(0.1)
+
     if agency == 'skt':
         browser.find_element(By.CSS_SELECTOR, '#aSkt').click()
     elif agency == 'kt':
@@ -230,6 +248,8 @@ def selfCompareAPIStep1(request):
         browser.find_element(By.CSS_SELECTOR, '#arKt').click()
     else:
         browser.find_element(By.CSS_SELECTOR, '#arLg').click()
+
+    time.sleep(0.1)
 
     if phone1 == '010':
         browser.execute_script("""$('select[name="phoneNum1"]').val('010').prop('selected', true)""")
@@ -244,19 +264,22 @@ def selfCompareAPIStep1(request):
     elif phone1 == '019':
         browser.execute_script("""$('select[name="phoneNum1"]').val('019').prop('selected', true)""")
 
+    time.sleep(0.1)
+
     trigger = True
     while trigger:
 
         try:
-            browser.find_element(By.CSS_SELECTOR, '#authInfo > div.btn_set > button:nth-child(2)').click()
+            browser.find_element(By.CSS_SELECTOR, '#authInfo > div.btn_set > button:nth-child(2)').send_keys(Keys.ENTER)
             browser.implicitly_wait(2)
+            time.sleep(0.1)
             browser.find_element(By.CSS_SELECTOR, '#authNo > div > ul > li:nth-child(1) > button')
             trigger = False
 
         except NoSuchElementException:
             browser.find_element(By.CSS_SELECTOR, '#authInfo > div.btn_set > button:nth-child(2)').send_keys(Keys.ESCAPE)
-            browser.implicitly_wait(2)
-            time.sleep(0.5)
+            browser.implicitly_wait(1)
+            time.sleep(0.1)
 
     return HttpResponse(json.dumps({}))
 
@@ -270,8 +293,9 @@ def selfCompareAPIStep2(request):
 
     browser.find_element(By.ID, 'authNumber').clear()
     browser.find_element(By.ID, 'authNumber').send_keys(authNum)
-    browser.find_element(By.CSS_SELECTOR, '#authNo > div > ul > li:nth-child(1) > button').click()
-    browser.implicitly_wait(5)
+    browser.find_element(By.CSS_SELECTOR, '#authNo > div > ul > li:nth-child(1) > button').send_keys(Keys.ENTER)
+    browser.implicitly_wait(10)
+    time.sleep(0.1)
 
     try:
         browser.find_element(By.CSS_SELECTOR, '#ifArea > div.con02_story.con_new > div.inq_before > div.insub_btn > a')
@@ -293,21 +317,23 @@ def selfCompareAPIStep3(request):
     nowDate = request.GET.get('nowDate')
     nextDate = request.GET.get('nextDate')
 
-    browser.find_element(By.CSS_SELECTOR, '#ifArea > div.con02_story.con_new > div.inq_before > div.insub_btn > a').click()
+    browser.find_element(By.CSS_SELECTOR, '#ifArea > div.con02_story.con_new > div.inq_before > div.insub_btn > a').send_keys(Keys.ENTER)
     browser.implicitly_wait(5)
-    # print(f"""
-    #     document.getElementById('insStartDtPicker').value = '{nowDate}';
-    #     document.getElementById('datepicker2').value = '{nextDate}';
-    # """)
-    browser.execute_script(f"""
-        document.getElementById('insStartDtPicker').value = "{nowDate}";
-        document.getElementById('datepicker2').value = "{nextDate}";
-    """)
 
-    # CAnextDate = document.querySelector('#datepicker2');CAnextDate.value = '2023-12-30';
+    trigger = True
+    while trigger:
+        try:
+            time.sleep(0.1)
+            browser.execute_script(f"""
+                document.getElementById('insStartDtPicker').value = "{nowDate}";
+                document.getElementById('datepicker2').value = "{nextDate}";
+            """)
+            trigger = False
+        except:
+            pass
     
-    # browser.find_element(By.CSS_SELECTOR, '#newcar > div.con02_story.con_new.active > div.inq_after > div.insub_btn > a').click()
-    # browser.implicitly_wait(5)
+    browser.find_element(By.CSS_SELECTOR, '#newcar > div.con02_story.con_new.active > div.inq_after > div.insub_btn > a').send_keys(Keys.ENTER)
+    browser.implicitly_wait(5)
 
     return HttpResponse(json.dumps({}))
 
@@ -318,12 +344,33 @@ def selfCompareAPIStep4(request):
 
     return HttpResponse()
 
+
 def selfCompareAPICarMaker(request):
+
+    content = {}
 
     userIP = request.session.get('user')
     browser = browsers[userIP]
 
-    return HttpResponse()
+    trigger = True
+    while trigger:
+        try:
+            browser.find_element(By.CSS_SELECTOR, '#newcar_title_1').send_keys(Keys.ENTER)
+            browser.implicitly_wait(5)
+            time.sleep(0.1)
+            trigger = False
+
+        except:
+            pass
+
+    optionUL = browser.find_element(By.CSS_SELECTOR, '#dMaker > ul')
+    optionLIs = optionUL.find_elements(By.TAG_NAME, 'input')
+    
+    for optionLI in optionLIs:
+
+        content[optionLI.get_attribute('id')] = optionLI.get_attribute('value')
+
+    return HttpResponse(json.dumps(content))
 
 
 def selfCompareAPICarName(request):

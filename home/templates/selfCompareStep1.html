@@ -22,6 +22,12 @@
         </div>
     </div>
 </section>
+<div class="mobileChatsection" style="display: none;">
+    <div class="chatGroup">
+        <textarea id="messageMobile" type="text" oninput="resize(this, event)" spellcheck="false" placeholder="메세지를 입력해주세요"></textarea>
+        <button id="sendButtonMobile"><img src="../../static/img/sendButton.svg" alt=""></button>
+    </div>
+</div>
 <div class="step step1" style="display: block;">
     <section class="section1">
         <div class="inner">
@@ -255,39 +261,35 @@
             <div class="subTitle">신차 또는 구입예정 자동차에 대한 정보를 선택하세요. 승차정원은 10인 이하의 개인 승용차 입니다.</div>
             <div class="contentGroup">
                 <div class="content content1">
-                    <div class="title hover">제조사를 선택하세요.</div>
-                    <ul class="hover">
-                        <li>
+                    <div class="title hover" onclick="selfCompareAPICarMaker()">제조사를 선택하세요.</div>
+                    <ul class="hover" id="carMaker">
+                        <!-- <li>
                             <div class="box"></div>
                             <div class="text1">현대</div>
-                        </li>
-                        <li>
-                            2
-                        </li>
-
+                        </li> -->
                     </ul>
                 </div>
                 <div class="content content2">
                     <div class="title hover">자동차명을 선택하세요.</div>
-                    <ul class="hover">
+                    <ul class="hover" id="carName">
 
                     </ul>
                 </div>
                 <div class="content content3">
                     <div class="title hover">자동차 등록년도를 선택하세요.</div>
-                    <ul class="hover">
+                    <ul class="hover" id="carRegister">
 
                     </ul>
                 </div>
                 <div class="content content4">
                     <div class="title hover">세부차명을 선택하세요.</div>
-                    <ul class="hover">
+                    <ul class="hover" id="carSubName">
 
                     </ul>
                 </div>
                 <div class="content content5">
                     <div class="title hover">세부항목을 선택하세요.</div>
-                    <ul class="hover">
+                    <ul class="hover" id="carOption">
 
                     </ul>
                 </div>

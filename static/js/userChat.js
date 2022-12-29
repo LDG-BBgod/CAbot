@@ -8,6 +8,10 @@ var rejectMessage
 function closeChat() {
     document.getElementById('mask').style.display = 'none'
     document.getElementsByClassName('sectionFix')[0].style.display = 'none'
+
+    if (window.innerWidth <= 600) {
+        document.getElementsByClassName('mobileChatsection')[0].style.display = 'none'
+    }
 }
 
 
@@ -69,10 +73,6 @@ document.getElementById('sendButton').addEventListener('click', () => {
         if (window.innerWidth > 600) {
             textarea.style.height = '40px'
             document.getElementsByClassName('chatBoxMiddle')[0].style.height = '640px'
-        }
-        else {
-            // textarea.style.height = '40px'
-            // document.getElementsByClassName('chatBoxMiddle')[0].style.height = `calc(100% - 40px - 40px)`
         }
 
 

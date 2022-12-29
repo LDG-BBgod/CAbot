@@ -18,10 +18,10 @@ var month = ('0' + (today.getMonth() + 1)).slice(-2)
 var day = ('0' + today.getDate()).slice(-2)
 var dateString = year + '-' + month  + '-' + day
 
-var nexDay = new Date(today.setFullYear(today.getFullYear() + 1))
-var nextYear = nexDay.getFullYear();
-var nextMonth = ('0' + (nexDay.getMonth() + 1)).slice(-2)
-var nextDay = ('0' + nexDay.getDate()).slice(-2)
+var nextDay = new Date(today.setFullYear(today.getFullYear() + 1))
+var nextYear = nextDay.getFullYear();
+var nextMonth = ('0' + (nextDay.getMonth() + 1)).slice(-2)
+var nextDay = ('0' + nextDay.getDate()).slice(-2)
 var nextDateString = nextYear + '-' + nextMonth  + '-' + nextDay
 
 document.getElementById('nowDate').value = dateString
@@ -118,8 +118,9 @@ function ChangeNextDate() {
 
 
 function ChangeStep2Section() {
-    nowDate = document.getElementById('nowDate').value
-    nextDate = document.getElementById('nextDate').value
+
+    const nowDate = document.getElementById('nowDate').value
+    const nextDate = document.getElementById('nextDate').value
 
     $('#mask, #loadingImg').show()
 
@@ -133,12 +134,273 @@ function ChangeStep2Section() {
                 'nextDate': nextDate,
             },
             success: function(request) {
-                $('#mask, #loadingImg').hide()
-                $('.step2').children('.section2').hide()
-                $('.step2').children('.section3, .section4').show()
 
+                new Promise((resolve2) => {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/selfCompareAPICarMaker/',
+                        dataType: 'json',
+                        data: {},
+                        success: function(request) {
+ 
+                            CreateCarMakerList(request)
+
+                            $('#mask, #loadingImg').hide()
+                            $('.step2').children('.section2').hide()
+                            $('.step2').children('.section3, .section4').show()
+            
+                            resolve2()
+                        }
+                    })
+                })
                 resolve()
             }
         })
     })
+}
+
+
+function selfCompareAPICarMaker() {
+
+    RemoveChild()
+
+    $('#mask, #loadingImg').show()
+
+    new Promise((resolve) => {
+        $.ajax({
+            type: 'GET',
+            url: '/selfCompareAPICarMaker/',
+            dataType: 'json',
+            data: {},
+            success: function(request) {
+
+                CreateCarMakerList(request)
+                $('#mask, #loadingImg').hide()
+                resolve()
+            }
+        })
+    })
+}
+
+function selfCompareAPICarName(data) {
+    console.log(data)
+
+    // RemoveChild()
+
+    // $('#mask, #loadingImg').show()
+
+    // new Promise((resolve) => {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/selfCompareAPICarName/',
+    //         dataType: 'json',
+    //         data: {
+    //             'id': data,
+    //         },
+    //         success: function(request) {
+
+    //             CreateCarNameList(request)
+    //             $('#mask, #loadingImg').hide()
+    //             resolve()
+    //         }
+    //     })
+    // })
+}
+
+function selfCompareAPICarRegister(register) {
+    console.log(data)
+
+    // RemoveChild()
+
+    // $('#mask, #loadingImg').show()
+
+    // new Promise((resolve) => {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/selfCompareAPICarName/',
+    //         dataType: 'json',
+    //         data: {
+    //             'id': data,
+    //         },
+    //         success: function(request) {
+
+    //             CreateCarRegisterList(request)
+    //             $('#mask, #loadingImg').hide()
+    //             resolve()
+    //         }
+    //     })
+    // })
+}
+
+function selfCompareAPICarSubName(data) {
+    console.log(data)
+
+    // RemoveChild()
+
+    // $('#mask, #loadingImg').show()
+
+    // new Promise((resolve) => {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/selfCompareAPICarName/',
+    //         dataType: 'json',
+    //         data: {
+    //             'id': data,
+    //         },
+    //         success: function(request) {
+
+    //             CreateCarSubNameList(request)
+    //             $('#mask, #loadingImg').hide()
+    //             resolve()
+    //         }
+    //     })
+    // })
+}
+
+function selfCompareAPICarOption(data) {
+    console.log(data)
+
+    // RemoveChild()
+
+    // $('#mask, #loadingImg').show()
+
+    // new Promise((resolve) => {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/selfCompareAPICarName/',
+    //         dataType: 'json',
+    //         data: {
+    //             'id': data,
+    //         },
+    //         success: function(request) {
+
+    //             CreateCarOptionList(request)
+    //             $('#mask, #loadingImg').hide()
+    //             resolve()
+    //         }
+    //     })
+    // })
+}
+
+// 스탭2 UI생성, 삭제
+
+function CreateCarMakerList(data) {
+    Object.keys(data).forEach(element => {
+        CreateCarMakerTag(document.getElementById('carMaker') , element, data[element])
+    })
+}
+function CreateCarNameList(data) {
+    Object.keys(data).forEach(element => {
+        CreateCarNameTag(document.getElementById('carMaker') , element, data[element])
+    })
+}
+function CreateCarRegisterList(data) {
+    Object.keys(data).forEach(element => {
+        CreateCarRegisterTag(document.getElementById('carMaker') , element, data[element])
+    })
+}
+function CreateCarSubNameList(data) {
+    Object.keys(data).forEach(element => {
+        CreateCarSubNameTag(document.getElementById('carMaker') , element, data[element])
+    })
+}
+function CreateCarOptionList(data) {
+    Object.keys(data).forEach(element => {
+        CreateCarOptionTag(document.getElementById('carMaker') , element, data[element])
+    })
+}
+
+function CreateCarMakerTag(element , id, val, func) {
+
+    li = element.appendChild(document.createElement('li'))
+    li.setAttribute('onclick', `selfCompareAPICarName('${id}')`)
+
+    div1 = li.appendChild(document.createElement('div'))
+    div1.setAttribute('class', 'box')
+
+    div2 = li.appendChild(document.createElement('div'))
+    div2.setAttribute('class', 'text1')
+    div2.setAttribute('id', id)
+    div2.innerHTML = val
+
+}
+
+
+function CreateCarNameTag(element , id, val, func) {
+
+    li = element.appendChild(document.createElement('li'))
+    li.setAttribute('onclick', `selfCompareAPICarRegister('${id}')`)
+
+    div1 = li.appendChild(document.createElement('div'))
+    div1.setAttribute('class', 'box')
+
+    div2 = li.appendChild(document.createElement('div'))
+    div2.setAttribute('class', 'text1')
+    div2.setAttribute('id', id)
+    div2.innerHTML = val
+
+}
+
+
+function CreateCarRegisterTag(element , id, val, func) {
+
+    li = element.appendChild(document.createElement('li'))
+    li.setAttribute('onclick', `selfCompareAPICarSubName('${id}')`)
+
+    div1 = li.appendChild(document.createElement('div'))
+    div1.setAttribute('class', 'box')
+
+    div2 = li.appendChild(document.createElement('div'))
+    div2.setAttribute('class', 'text1')
+    div2.setAttribute('id', id)
+    div2.innerHTML = val
+
+}
+
+
+function CreateCarSubNameTag(element , id, val, func) {
+
+    li = element.appendChild(document.createElement('li'))
+    li.setAttribute('onclick', `selfCompareAPICarOption('${id}')`)
+
+    div1 = li.appendChild(document.createElement('div'))
+    div1.setAttribute('class', 'box')
+
+    div2 = li.appendChild(document.createElement('div'))
+    div2.setAttribute('class', 'text1')
+    div2.setAttribute('id', id)
+    div2.innerHTML = val
+
+}
+
+
+function CreateCarOptionTag(element , id, val, func) {
+
+    li = element.appendChild(document.createElement('li'))
+
+    div1 = li.appendChild(document.createElement('div'))
+    div1.setAttribute('class', 'box')
+
+    div2 = li.appendChild(document.createElement('div'))
+    div2.setAttribute('class', 'text1')
+    div2.setAttribute('id', id)
+    div2.innerHTML = val
+
+}
+
+
+
+
+
+
+
+
+
+
+function RemoveChild() {
+    document.getElementById('carMaker').innerHTML = ""
+    document.getElementById('carName').innerHTML = ""
+    document.getElementById('carRegister').innerHTML = ""
+    document.getElementById('carSubName').innerHTML = ""
+    document.getElementById('carOption').innerHTML = ""
 }
