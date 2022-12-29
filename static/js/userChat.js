@@ -86,13 +86,19 @@ document.getElementById('sendButton').addEventListener('click', () => {
                 'username': userIP,
                 'connectCheck': 'false',
             }))
-            rejectMessage = setTimeout(() => {
-                socket.send(JSON.stringify({
-                    'message': '',
-                    'username': userIP,
-                    'type': 'reject',
-                }))
-            }, 60000); //60초간 대기후 상담원 열결 안될시 함수실행
+            let now = new Date()
+            console.log(now.getHours())
+            if (now.getHours() >= 10 && now.getHours() < 19) {
+
+                rejectMessage = setTimeout(() => {
+                    socket.send(JSON.stringify({
+                        'message': '',
+                        'username': userIP,
+                        'type': 'reject',
+                    }))
+                }, 60000); //60초간 대기후 상담원 열결 안될시 함수실행
+            }
+
         }
         else {
             socket.send(JSON.stringify({

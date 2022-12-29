@@ -1,5 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from datetime import datetime
 
 from asgiref.sync import sync_to_async
 from home.models import ChatRoomName, ChatLog, SaveLog
@@ -132,16 +133,38 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         try:
             connectCheck = text_data_json['connectCheck']
-            messages = ['채팅상담원이 연결되고있습니다. 잠시만 기다려주세요.(최대 1분)', '연결중...']
+            nowHour = datetime.now()
+
+            # 상담가능시간
+            if nowHour.hour >= 10 and nowHour.hour < 19:
+                
+                messages = ['채팅상담원이 연결되고있습니다. 잠시만 기다려주세요.(최대 1분)', '연결중...']
+
+                content = '카봇 실시간채팅상담\n유저아이피 : ' + username
+                sendMessageFunc(content)
             
-            content = '카봇 실시간채팅상담\n유저아이피 : ' + username
-            sendMessageFunc(content)
+                for i in range(2):
+                    await self.send(text_data=json.dumps({
+                        'message': messages[i],
+                        'username': 'Admin',
+                    }))
+
+
+            #상담불가능시간
+            else:
+                
+                messages = "지금은 채팅서비스 이용가능 시간이 아닙니다. 전화상담 페이지에서 상담을 예약해주세요."
             
-            for i in range(2):
+                content = '카봇 실시간채팅상담\n유저아이피 : ' + username
+                sendMessageFunc(content)
+            
                 await self.send(text_data=json.dumps({
-                    'message': messages[i],
+                    'message': messages,
                     'username': 'Admin',
                 }))
+
+
+
 
         except:
             pass
