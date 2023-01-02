@@ -16,3 +16,10 @@
     width: 1000px;
     margin-bottom: 50px;
 }
+.section1 a span{
+    margin-top: 13px;
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+}

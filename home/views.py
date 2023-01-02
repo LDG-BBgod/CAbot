@@ -18,7 +18,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import UnexpectedAlertPresentException, NoSuchElementException
+from selenium.webdriver.chrome.options import Options
+import chromedriver_autoinstaller
 import subprocess
+
 
 
 def HomeView(request):
@@ -144,45 +147,61 @@ browsers = {}
 def selfCompareAPIInit(request):
 
     userIP = request.session.get('user')
+    
+    # subprocess.Popen(r'C:\Program Files\Google\Chrome\Application\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\chrometemp"')
+    # user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+    # chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
 
-    options = webdriver.ChromeOptions()
-
-    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
-    options.add_argument('user-agent=' + user_agent)
-
-    # options.add_argument("disable-gpu")
-    # options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    # options.add_experimental_option("useAutomationExtension", False)
     
 
-    subprocess.Popen(r'C:\Program Files\Google\Chrome\Application\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\chrometemp"')
-    options.add_experimental_option("debuggerAddress", "127.0.0.2:9222")
+    # options = webdriver.ChromeOptions()
+    options = Options()
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.75 Safari/537.36")
+
+
+    # options.add_experimental_option("debuggerAddress", "127.0.0.2:9222")
+
+    # options.add_argument("--proxy-server=socks5://127.0.0.1:9150")
+    # options.add_argument('user-agent=' + user_agent)  
+    options.add_argument("disable-gpu")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option("useAutomationExtension", False)
+    
+
+    print('스탭1')
+    # try:
+    #     browsers[userIP] = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe', options=options)
+    # except:
+    #     chromedriver_autoinstaller.install(True)
+    #     browsers[userIP] = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe', options=options)
 
     # options.add_experimental_option("excludeSwitches", ["enable-logging"])
     # options.add_experimental_option("detach", True)
 
 
     browsers[userIP] = webdriver.Chrome('./chromedriver_108.exe', options=options)
+    print('스탭2')
     browser = browsers[userIP]
     browser.implicitly_wait(5)
     browser.maximize_window()
 
+    print('스탭3')
     browser.get('https://www.e-insmarket.or.kr/')
     browser.implicitly_wait(5)
-    time.sleep(1)
-    browser.find_element(By.CSS_SELECTOR, '#slick-slide00 > div > div > div > a').send_keys(Keys.ENTER)
-    browser.implicitly_wait(5)
+    # time.sleep(1)
+    # browser.find_element(By.CSS_SELECTOR, '#slick-slide00 > div > div > div > a').send_keys(Keys.ENTER)
+    # browser.implicitly_wait(5)
 
 
-    browser.find_element(By.CSS_SELECTOR, '#allTermAgreeButton').send_keys(Keys.ENTER)
-    time.sleep(0.2)
-    browser.find_element(By.CSS_SELECTOR, '#story3_btn > button.mobile').send_keys(Keys.ENTER)
-    browser.implicitly_wait(5)
-    time.sleep(0.2)
-    browser.find_element(By.CSS_SELECTOR, '#authInfo > div.terms > button').send_keys(Keys.ENTER)
-    time.sleep(0.2)
-    browser.find_element(By.CSS_SELECTOR, '#agreeChk5').click()
-    time.sleep(0.2)
+    # browser.find_element(By.CSS_SELECTOR, '#allTermAgreeButton').send_keys(Keys.ENTER)
+    # time.sleep(0.2)
+    # browser.find_element(By.CSS_SELECTOR, '#story3_btn > button.mobile').send_keys(Keys.ENTER)
+    # browser.implicitly_wait(5)
+    # time.sleep(0.2)
+    # browser.find_element(By.CSS_SELECTOR, '#authInfo > div.terms > button').send_keys(Keys.ENTER)
+    # time.sleep(0.2)
+    # browser.find_element(By.CSS_SELECTOR, '#agreeChk5').click()
+    # time.sleep(0.2)
 
     return HttpResponse(json.dumps({}))
 
@@ -415,18 +434,6 @@ def selfCompareAPICarOption(request):
 
 
 
-# 추가페이지
-
-def CompanyView(request):
-    
-    return render(request, 'addCompany.html')
-
-def AgreementView(request):
-    
-    return render(request, 'addAgreement.html')
-
-
-
 # 관리자 페이지
 def CALoginView(request):
 
@@ -487,3 +494,14 @@ def CAChatView(request, userIP):
 
 
 
+
+
+# 추가페이지
+
+def CompanyView(request):
+    
+    return render(request, 'addCompany.html')
+
+def AgreementView(request):
+    
+    return render(request, 'addAgreement.html')

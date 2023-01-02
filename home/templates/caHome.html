@@ -10,7 +10,8 @@
 {% block contents %}
     <div class="section1">
         {% for chatRoomName in chatRoomNames %}
-        <a href="/caHome/{{ chatRoomName.userIP }}">{{ chatRoomName.userIP }}</a>
+        <a href="/caHome/{{ chatRoomName.userIP }}">유저 : {{ chatRoomName.userIP }} 시간 : {{ chatRoomName.registerDate|date:'Y-m-d H:i:s'}} <span class="span_{{ chatRoomName.userIP }}"></span></a>
+        <div class="registerDate {{ chatRoomName.userIP }}" style="display: none;">{{ chatRoomName.registerDate|date:'Y-m-d H:i:s'}}</div>
         {% endfor %}
     </div>
 {% endblock %}
