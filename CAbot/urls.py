@@ -38,4 +38,5 @@ urlpatterns = [
     path('caLogout/', homeViews.CALogoutView),
     path('caHome/', homeViews.CAHomeView),
     path('caHome/<str:userIP>', homeViews.CAChatView),
+    path('caData/', homeViews.CADataView),
 ]

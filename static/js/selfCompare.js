@@ -163,6 +163,7 @@ function ChangeStep2Section() {
 function selfCompareAPICarMaker() {
 
     RemoveChild()
+    RemoveTitle(5)
 
     $('#mask, #loadingImg').show()
 
@@ -183,28 +184,45 @@ function selfCompareAPICarMaker() {
 }
 
 function selfCompareAPICarName(data) {
-    console.log(data)
 
-    // RemoveChild()
+    let reqData = data
 
-    // $('#mask, #loadingImg').show()
+    $('#mask, #loadingImg').show()
+    RemoveChild()
 
-    // new Promise((resolve) => {
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/selfCompareAPICarName/',
-    //         dataType: 'json',
-    //         data: {
-    //             'id': data,
-    //         },
-    //         success: function(request) {
+    if(reqData) {
 
-    //             CreateCarNameList(request)
-    //             $('#mask, #loadingImg').hide()
-    //             resolve()
-    //         }
-    //     })
-    // })
+        let titleTag = document.getElementById('carMakerTitle')
+        titleTag.setAttribute('value', reqData)
+        titleTag.setAttribute('name', reqData)
+        titleTag.innerHTML = '제조사 : ' + reqData
+        
+    }
+    else {
+
+        RemoveTitle(4)
+        reqData = document.getElementById('carMakerTitle').value
+
+    }
+
+    new Promise((resolve) => {
+        $.ajax({
+            type: 'GET',
+            url: '/selfCompareAPICarName/',
+            dataType: 'json',
+            data: {
+                'id': reqData,
+            },
+            success: function(request) {
+
+                CreateCarNameList(request)
+                $('#mask, #loadingImg').hide()
+                resolve()
+            }
+        })
+    })    
+
+
 }
 
 function selfCompareAPICarRegister(register) {
@@ -291,22 +309,22 @@ function CreateCarMakerList(data) {
 }
 function CreateCarNameList(data) {
     Object.keys(data).forEach(element => {
-        CreateCarNameTag(document.getElementById('carMaker') , element, data[element])
+        CreateCarNameTag(document.getElementById('carName') , element, data[element])
     })
 }
 function CreateCarRegisterList(data) {
     Object.keys(data).forEach(element => {
-        CreateCarRegisterTag(document.getElementById('carMaker') , element, data[element])
+        CreateCarRegisterTag(document.getElementById('carRegister') , element, data[element])
     })
 }
 function CreateCarSubNameList(data) {
     Object.keys(data).forEach(element => {
-        CreateCarSubNameTag(document.getElementById('carMaker') , element, data[element])
+        CreateCarSubNameTag(document.getElementById('carSubName') , element, data[element])
     })
 }
 function CreateCarOptionList(data) {
     Object.keys(data).forEach(element => {
-        CreateCarOptionTag(document.getElementById('carMaker') , element, data[element])
+        CreateCarOptionTag(document.getElementById('carOption') , element, data[element])
     })
 }
 
@@ -403,4 +421,16 @@ function RemoveChild() {
     document.getElementById('carRegister').innerHTML = ""
     document.getElementById('carSubName').innerHTML = ""
     document.getElementById('carOption').innerHTML = ""
+}
+
+function RemoveTitle(count) {
+    textArray = ['세부항목을 선택하세요.', '세부차명을 선택하세요.', '자동차 등록년도를 선택하세요.', '자동차명을 선택하세요.', '제조사를 선택하세요.']
+    titleArray = ['carOptionTitle', 'carSubNameTitle', 'carRegisterTitle', 'carNameTitle', 'carMakerTitle']
+
+    for (let i = 0; i < count; i++ ) {
+        let titleTag = document.getElementById(titleArray[i])
+        titleTag.setAttribute('value', '')
+        titleTag.setAttribute('name', '')
+        titleTag.innerHTML = textArray[i]
+    }
 }

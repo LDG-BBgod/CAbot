@@ -115,53 +115,53 @@ pymysql.install_as_MySQLdb()
 
 # 개발환경
 
-# DEBUG = True
-
-# ALLOWED_HOSTS = [
-#     '*'
-# ]
-
-# STATICFILES_DIRS = (os.path.join('static'), )
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql', 
-#         'NAME' : 'cabot_test',
-#         'USER' : 'bbgod',
-#         'PASSWORD' : 'ldg8410229!', 
-#         'HOST': 'database-1.cev2vmz85jni.ap-northeast-2.rds.amazonaws.com',
-#         'PORT': '3306', 
-#         'OPTIONS':{
-#             'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
-#         }
-#     }
-# }
-# phoneNumber = '01054088229'
-
-
-#배포환경
-
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'cabot.co.kr',
-    'www.cabot.co.kr',
+    '*'
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (os.path.join('static'), )
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME' : 'cabot_exp',
+        'NAME' : 'cabot_test',
         'USER' : 'bbgod',
-        'PASSWORD' : 'ldg8410229!',
+        'PASSWORD' : 'ldg8410229!', 
         'HOST': 'database-1.cev2vmz85jni.ap-northeast-2.rds.amazonaws.com',
-        'PORT': '3306',
+        'PORT': '3306', 
         'OPTIONS':{
             'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
-phoneNumber = '01050487229'
+phoneNumber = '01054088229'
+
+
+#배포환경
+
+# DEBUG = False
+
+# ALLOWED_HOSTS = [
+#     'cabot.co.kr',
+#     'www.cabot.co.kr',
+# ]
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql', 
+#         'NAME' : 'cabot_exp',
+#         'USER' : 'bbgod',
+#         'PASSWORD' : 'ldg8410229!',
+#         'HOST': 'database-1.cev2vmz85jni.ap-northeast-2.rds.amazonaws.com',
+#         'PORT': '3306',
+#         'OPTIONS':{
+#             'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
+#         }
+#     }
+# }
+# phoneNumber = '01050487229'
 

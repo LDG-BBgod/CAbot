@@ -17,9 +17,11 @@ import requests, json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import UnexpectedAlertPresentException, NoSuchElementException
+from selenium.common.exceptions import UnexpectedAlertPresentException, NoSuchElementException, ElementNotInteractableException, StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
 import subprocess
+
+from datetime import date, timedelta
 
 
 
@@ -148,59 +150,45 @@ def selfCompareAPIInit(request):
     userIP = request.session.get('user')
     
     # subprocess.Popen(r'C:\Program Files\Google\Chrome\Application\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\chrometemp"')
-    # user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
-    # chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
-
-    
-
-    # options = webdriver.ChromeOptions()
-    options = Options()
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.75 Safari/537.36")
-
-
-    # options.add_experimental_option("debuggerAddress", "127.0.0.2:9222")
-
-    # options.add_argument("--proxy-server=socks5://127.0.0.1:9150")
     # options.add_argument('user-agent=' + user_agent)  
+    # options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    # options.add_experimental_option("useAutomationExtension", False)
+
+    options = Options()
+
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.75 Safari/537.36")
     options.add_argument("disable-gpu")
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option("useAutomationExtension", False)
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    options.add_experimental_option("detach", True)
+
+
     
 
-    print('스탭1')
-    # try:
-    #     browsers[userIP] = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe', options=options)
-    # except:
-    #     chromedriver_autoinstaller.install(True)
-    #     browsers[userIP] = webdriver.Chrome(f'./{chrome_ver}/chromedriver.exe', options=options)
-
-    # options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    # options.add_experimental_option("detach", True)
 
 
     browsers[userIP] = webdriver.Chrome('./chromedriver_108.exe', options=options)
-    print('스탭2')
+
     browser = browsers[userIP]
     browser.implicitly_wait(5)
     browser.maximize_window()
 
-    print('스탭3')
     browser.get('https://www.e-insmarket.or.kr/')
     browser.implicitly_wait(5)
-    # time.sleep(1)
-    # browser.find_element(By.CSS_SELECTOR, '#slick-slide00 > div > div > div > a').send_keys(Keys.ENTER)
-    # browser.implicitly_wait(5)
+    time.sleep(1)
+    browser.find_element(By.CSS_SELECTOR, '#slick-slide00 > div > div > div > a').send_keys(Keys.ENTER)
+    browser.implicitly_wait(5)
 
 
-    # browser.find_element(By.CSS_SELECTOR, '#allTermAgreeButton').send_keys(Keys.ENTER)
-    # time.sleep(0.2)
-    # browser.find_element(By.CSS_SELECTOR, '#story3_btn > button.mobile').send_keys(Keys.ENTER)
-    # browser.implicitly_wait(5)
-    # time.sleep(0.2)
-    # browser.find_element(By.CSS_SELECTOR, '#authInfo > div.terms > button').send_keys(Keys.ENTER)
-    # time.sleep(0.2)
-    # browser.find_element(By.CSS_SELECTOR, '#agreeChk5').click()
-    # time.sleep(0.2)
+    browser.find_element(By.CSS_SELECTOR, '#allTermAgreeButton').send_keys(Keys.ENTER)
+    time.sleep(0.2)
+    browser.find_element(By.CSS_SELECTOR, '#story3_btn > button.mobile').send_keys(Keys.ENTER)
+    browser.implicitly_wait(5)
+    time.sleep(0.2)
+    browser.find_element(By.CSS_SELECTOR, '#authInfo > div.terms > button').send_keys(Keys.ENTER)
+    time.sleep(0.2)
+    browser.find_element(By.CSS_SELECTOR, '#agreeChk5').click()
+    time.sleep(0.2)
 
     return HttpResponse(json.dumps({}))
 
@@ -367,41 +355,330 @@ def selfCompareAPIStep4(request):
 
     return HttpResponse()
 
+import random
 
 def selfCompareAPICarMaker(request):
+
+    # content = {}
+
+    # userIP = request.session.get('user')
+    # browser = browsers[userIP]
+
+    # trigger = True
+    # while trigger:
+    #     try:
+    #         browser.find_element(By.CSS_SELECTOR, '#newcar_title_1').send_keys(Keys.ENTER)
+    #         browser.implicitly_wait(5)
+    #         time.sleep(0.2)
+    #         trigger = False
+
+    #     except:
+    #         pass
+
+    # optionUL = browser.find_element(By.CSS_SELECTOR, '#dMaker > ul')
+    # optionLIs = optionUL.find_elements(By.TAG_NAME, 'input')
+    
+    # for optionLI in optionLIs:
+
+    #     content[optionLI.get_attribute('id')] = optionLI.get_attribute('value')
+
+    # return HttpResponse(json.dumps(content))
+    
+
+    userIP = request.session.get('user')
+    browser = browsers[userIP]
+
+    content = {}
+    carMakerUL = browser.find_element(By.CSS_SELECTOR, '#dMaker > ul')
+    carMakerLIs = carMakerUL.find_elements(By.TAG_NAME, 'li')
+
+    a = 0
+    b = 0
+    c = 0
+    d = 0
+    e = 0
+    for carMakerLI in carMakerLIs:
+
+        a += 1
+        b = 0
+        c = 0
+        d = 0
+        e = 0
+
+
+        trigger1_1 = True
+        while trigger1_1:
+            try:
+                time.sleep(0.4)
+                carMakerInput = carMakerLI.find_element(By.TAG_NAME, 'input')
+                carMakerLabel = carMakerLI.find_element(By.TAG_NAME, 'label')
+                browser.find_element(By.CSS_SELECTOR, '#newcar_title_1').send_keys(Keys.ENTER)
+                browser.implicitly_wait(5)
+                makerInputID = carMakerInput.get_attribute('id')
+                trigger1_1 = False
+            except StaleElementReferenceException:
+                print('s트리거1_1')
+                time.sleep(0.1)
+            except ElementNotInteractableException:
+                print('e트리거1_1')
+                time.sleep(0.1)
+
+        content[makerInputID] = []
+        content[makerInputID].append(carMakerLabel.text)
+        content[makerInputID].append({})
+
+        trigger1_2 = True
+        while trigger1_2:
+            try:
+                time.sleep(0.4)
+                carMakerInput.click()
+                browser.implicitly_wait(5)
+                trigger1_2 = False
+            except StaleElementReferenceException:
+                print('s트리거1_2')
+                time.sleep(0.1)
+            except ElementNotInteractableException:
+                print('e트리거1_2')
+                time.sleep(0.1)
+
+        trigger1_3 = True
+        while trigger1_3:
+            try:
+                carNameUL = browser.find_element(By.CSS_SELECTOR, '#dCarName > ul')
+                carNameLIs = carNameUL.find_elements(By.TAG_NAME, 'li')
+                trigger1_3 = False
+            except StaleElementReferenceException:
+                print('s트리거1_3')
+                time.sleep(0.1)
+            except ElementNotInteractableException:
+                print('e트리거1_3')
+                time.sleep(0.1)
+
+        for carNameLI in carNameLIs:
+
+            b += 1
+            c = 0
+            d = 0
+            e = 0
+
+            trigger2_1 = True
+            while trigger2_1:
+                try:
+                    time.sleep(0.4)
+                    carNameInput = carNameLI.find_element(By.TAG_NAME, 'input')
+                    carNameLabel = carNameLI.find_element(By.TAG_NAME, 'label')
+                    browser.find_element(By.CSS_SELECTOR, '#newcar_title_2').send_keys(Keys.ENTER)
+                    browser.implicitly_wait(5)
+                    NameInputID = carNameInput.get_attribute('id')
+                    trigger2_1 = False
+                    
+                except StaleElementReferenceException:
+                    print('s트리거2_1')
+                    time.sleep(0.1)
+                except ElementNotInteractableException:
+                    print('e트리거2_1')
+                    time.sleep(0.1)
+
+            
+            content[makerInputID][1][NameInputID] = []
+            content[makerInputID][1][NameInputID].append(carNameLabel.text)
+            content[makerInputID][1][NameInputID].append({})
+
+            trigger2_2 = True
+            while trigger2_2:
+                try:
+                    time.sleep(0.4)
+                    carNameInput.click()
+                    browser.implicitly_wait(5)
+                    trigger2_2 = False
+                except StaleElementReferenceException:
+                    print('s트리거2_2')
+                    time.sleep(0.1)
+                except ElementNotInteractableException:
+                    print('e트리거2_2')
+                    time.sleep(0.1)
+
+            trigger2_3 = True
+            while trigger2_3:
+                try:
+                    carRegisterUL = browser.find_element(By.CSS_SELECTOR, '#dMadeym > ul')
+                    carRegisterLIs = carRegisterUL.find_elements(By.TAG_NAME, 'li')
+                    trigger2_3 = False
+                except StaleElementReferenceException:
+                    print('s트리거2_3')
+                    time.sleep(0.1)
+                except ElementNotInteractableException:
+                    print('e트리거2_3')
+                    time.sleep(0.1)
+                    
+            print(f'진행도 {a}.{b}.{c}.{d}.{e}')
+
+
+        #     for carRegisterLI in carRegisterLIs:
+
+        #         c += 1
+        #         d = 0
+        #         e = 0
+
+        #         trigger3_1 = True
+        #         while trigger3_1:
+        #             try:
+        #                 time.sleep(0.4)
+        #                 carRegisterInput = carRegisterLI.find_element(By.TAG_NAME, 'input')
+        #                 carRegisterLabel = carRegisterLI.find_element(By.TAG_NAME, 'label')
+        #                 browser.find_element(By.CSS_SELECTOR, '#newcar_title_3').send_keys(Keys.ENTER)
+        #                 browser.implicitly_wait(5)
+        #                 RegisterInputID = carRegisterInput.get_attribute('id')
+        #                 trigger3_1 = False
+        #             except StaleElementReferenceException:
+        #                 print('s트리거3_1')
+        #                 time.sleep(0.1)
+        #             except ElementNotInteractableException:
+        #                 print('e트리거3_1')
+        #                 time.sleep(0.1)
+
+                
+        #         content[makerInputID][1][NameInputID][1][RegisterInputID] = []
+        #         content[makerInputID][1][NameInputID][1][RegisterInputID].append(carRegisterLabel.text)
+        #         content[makerInputID][1][NameInputID][1][RegisterInputID].append({})
+
+
+        #         trigger3_2 = True
+        #         while trigger3_2:
+        #             try:
+        #                 time.sleep(0.4)
+        #                 carRegisterInput.click()
+        #                 browser.implicitly_wait(5)
+        #                 trigger3_2 = False
+        #             except StaleElementReferenceException:
+        #                 print('s트리거3_2')
+        #                 time.sleep(0.1)
+        #             except ElementNotInteractableException:
+        #                 print('e트리거3_2')
+        #                 time.sleep(0.1)
+
+        #         trigger3_3 = True
+        #         while trigger3_3:
+        #             try:
+        #                 carSubNameUL = browser.find_element(By.CSS_SELECTOR, '#dCarNameDtl > ul')
+        #                 carSubNameLIs = carSubNameUL.find_elements(By.TAG_NAME, 'li')
+        #                 trigger3_3 = False
+        #             except StaleElementReferenceException:
+        #                 print('s트리거3_3')
+        #                 time.sleep(0.1)
+        #             except ElementNotInteractableException:
+        #                 print('e트리거3_3')
+        #                 time.sleep(0.1)
+
+
+        #         for carSubNameLI in carSubNameLIs:
+
+        #             d += 1
+        #             e = 0
+
+        #             trigger4_1 = True
+        #             while trigger4_1:
+        #                 try:
+        #                     time.sleep(0.4)
+        #                     carSubNameInput = carSubNameLI.find_element(By.TAG_NAME, 'input')
+        #                     carSubNameLabel = carSubNameLI.find_element(By.TAG_NAME, 'label')
+        #                     browser.find_element(By.CSS_SELECTOR, '#newcar_title_4').send_keys(Keys.ENTER)
+        #                     browser.implicitly_wait(5)
+        #                     SubNameInputID = carSubNameInput.get_attribute('id')
+        #                     trigger4_1 = False
+        #                 except StaleElementReferenceException:
+        #                     print('s트리거4_1')
+        #                     time.sleep(0.1)
+        #                 except ElementNotInteractableException:
+        #                     print('e트리거4_1')
+        #                     time.sleep(0.1)
+
+        #             content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID] = []
+        #             content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID].append(carSubNameLabel.text)
+        #             content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID].append({})
+
+        #             trigger4_2 = True
+        #             while trigger4_2:
+        #                 try:
+        #                     time.sleep(0.4)
+        #                     carSubNameInput.click()
+        #                     browser.implicitly_wait(5)
+        #                     trigger4_2 = False
+        #                 except StaleElementReferenceException:
+        #                     print('s트리거4_2')
+        #                     time.sleep(0.1)
+        #                 except ElementNotInteractableException:
+        #                     print('e트리거4_2')
+        #                     time.sleep(0.1)
+
+        #             trigger4_3 = True
+        #             while trigger4_3:
+        #                 try:
+        #                     carOptionUL = browser.find_element(By.CSS_SELECTOR, '#dOptionDtl > ul')
+        #                     carOptionLIs = carOptionUL.find_elements(By.TAG_NAME, 'li')
+        #                     trigger4_3 = False
+        #                 except StaleElementReferenceException:
+        #                     print('s트리거4_3')
+        #                     time.sleep(0.1)
+        #                 except ElementNotInteractableException:
+        #                     print('e트리거4_3')
+        #                     time.sleep(0.1)
+
+
+        #             for carOptionLI in carOptionLIs:
+        #                 time.sleep(1)
+        #                 e += 1
+
+        #                 trigger5_1 = True
+        #                 while trigger5_1:
+        #                     try:
+        #                         print(carOptionLI)
+        #                         carOptionInput = carOptionLI.find_element(By.TAG_NAME, 'input')
+        #                         carOptionLabel = carOptionLI.find_element(By.TAG_NAME, 'label')
+        #                         OptionInputID = carOptionInput.get_attribute('id')
+        #                         trigger5_1 = False
+        #                     except StaleElementReferenceException:
+        #                         print('s트리거5_1')
+        #                         time.sleep(0.1)
+        #                     except ElementNotInteractableException:
+        #                         print('e트리거5_1')
+        #                         time.sleep(0.1)
+
+        #                 content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID][1][OptionInputID] = []
+        #                 content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID][1][OptionInputID].append(carOptionLabel.text)
+        #                 print(f'진행도 {a}.{b}.{c}.{d}.{e}')
+
+
+
+    with open('test.json', 'w', encoding='UTF-8') as outfile:
+        json.dump(content, outfile, ensure_ascii=False, indent=2)
+
+
+    return HttpResponse(json.dumps({}))
+
+
+def selfCompareAPICarName(request):
 
     content = {}
 
     userIP = request.session.get('user')
     browser = browsers[userIP]
+    labelID = request.GET.get('id')
 
-    trigger = True
-    while trigger:
-        try:
-            browser.find_element(By.CSS_SELECTOR, '#newcar_title_1').send_keys(Keys.ENTER)
-            browser.implicitly_wait(5)
-            time.sleep(0.2)
-            trigger = False
+    print(labelID)
+    browser.find_element(By.CSS_SELECTOR, f'#{labelID}').click()
+    browser.implicitly_wait(5)
 
-        except:
-            pass
+    time.sleep(0.2)
 
-    optionUL = browser.find_element(By.CSS_SELECTOR, '#dMaker > ul')
+    optionUL = browser.find_element(By.CSS_SELECTOR, '#dCarName > ul')
     optionLIs = optionUL.find_elements(By.TAG_NAME, 'input')
-    
+
     for optionLI in optionLIs:
 
         content[optionLI.get_attribute('id')] = optionLI.get_attribute('value')
 
     return HttpResponse(json.dumps(content))
-
-
-def selfCompareAPICarName(request):
-
-    userIP = request.session.get('user')
-    browser = browsers[userIP]
-
-    return HttpResponse()
 
 
 def selfCompareAPICarRegister(request):
@@ -490,9 +767,40 @@ def CAChatView(request, userIP):
     return response
 
 
+@superUser_required
+def CADataView(request):
 
+    caObjects = [{
+        'registerDate': date.today(),
+        'query': CAUser.objects.filter(registerDate__range=[date.today(), date.today() + timedelta(days=1)])
+    }]
 
+    for i in range(59):
 
+        caObjects.append({
+            'registerDate': date.today() - timedelta(days=i+1),
+            'query': CAUser.objects.filter(registerDate__range=[date.today() - timedelta(days=i+1), date.today() - timedelta(days=i)])
+        })
+
+    contents = {
+        'data': []
+    }
+
+    for caObject in caObjects:
+
+        selfCompareCount = 0
+
+        for obj in caObject['query']:
+            if obj.selfCompareCount != 0:
+                selfCompareCount += 1
+
+        contents['data'].append({
+            'registerDate': caObject['registerDate'],
+            'visitCount': caObject['query'].count(),
+            'selfCompareCount': selfCompareCount
+        })
+
+    return render(request, 'caData.html', contents)
 
 
 # 추가페이지

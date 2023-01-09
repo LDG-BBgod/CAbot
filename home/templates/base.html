@@ -32,6 +32,7 @@
                 </div>
                 <ul class="menu float-right">
                     {% if request.session.superUser %}
+                    <a class="menuContent" href="/caData" style="border: solid 2px #000; padding: 8px 20px; border-radius: 5px; color: #000;">방문데이터 확인</a>
                     <a class="menuContent" href="/caLogout" style="border: solid 2px #5b8def; padding: 8px 20px; border-radius: 5px; color: #5b8def;">관리자 로그아웃</a>
                     {% else %}
                     <img class="menuBar hover" src="../../static/img/menu_bar.svg" alt="메뉴바" onclick="OpenMenu()">

@@ -87,7 +87,7 @@ document.getElementById('sendButton').addEventListener('click', () => {
                 'connectCheck': 'false',
             }))
             let now = new Date()
-            console.log(now.getHours())
+
             if (now.getHours() >= 10 && now.getHours() < 19) {
 
                 rejectMessage = setTimeout(() => {
