@@ -164,7 +164,8 @@ def selfCompareAPIInit(request):
 
 
 
-    browsers[userIP] = webdriver.Chrome('./chromedriver_108.exe', options=options)
+    # browsers[userIP] = webdriver.Chrome('./chromedriver_108.exe', options=options)
+    browsers[userIP] = webdriver.Chrome('./chromedriver', options=options)
 
     browser = browsers[userIP]
     browser.implicitly_wait(5)
