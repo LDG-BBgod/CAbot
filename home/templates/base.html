@@ -20,8 +20,13 @@
     
     <title>CAbot</title>
 </head>
+
 <body>
     <div class="container">
+        <!-- <div class="secretSection">
+            <input type="text" id="spw" placeholder="비번">
+            <button class="hover" onclick="secretSection()">확인</button>
+        </div> -->
         <div class="mask" id="mask" style="display: none;"></div>
         <img class="loading-img" id="loadingImg" style="display: none;" src="../../static/img/loadingShort.svg">
         <header>
@@ -30,7 +35,7 @@
                     <a class="logo-name" href="/">보험비서</a>
                     <a class="" href="/"><img src="../../static/img/logo.svg" alt="logo"></a>
                 </div>
-                <ul class="menu float-right">
+                <ul class="menu float-left">
                     {% if request.session.superUser %}
                     <a class="menuContent" href="/caData" style="border: solid 2px #000; padding: 8px 20px; border-radius: 5px; color: #000;">방문데이터 확인</a>
                     <a class="menuContent" href="/caLogout" style="border: solid 2px #5b8def; padding: 8px 20px; border-radius: 5px; color: #5b8def;">관리자 로그아웃</a>
@@ -38,12 +43,25 @@
                     <img class="menuBar hover" src="../../static/img/menu_bar.svg" alt="메뉴바" onclick="OpenMenu()">
                     <img class="menuX hover" src="../../static/img/menu_x.svg" alt="메뉴x" onclick="CloseMenu()">
                     <div class="menuGroup">
-                        <a class="menuContent alert" href="#" onclick="CountButton('selfCompareCount')">자동차보험료 Self비교</a>
-                        <a class="menuContent" href="/consulting" onclick="CountButton('consultingCount')">전화상담 가입</a>
-                        <div class="menuContent hover" onclick="OpenChat(); CountButton('chatCount')">실시간 채팅상담</div>
+                        <div class="contentGroup">
+                            <img src="../../static/img/header_menu1.png" alt="">
+                            <a class="menuContent" href="/selfCompareHome" onclick="CountButton('selfCompareCount')">다이렉트 보험 Self 비교가입</a>
+                        </div>
+                        <div class="contentGroup">
+                            <img src="../../static/img/header_menu2.png" alt="">
+                            <a class="menuContent" href="/consulting" onclick="CountButton('consultingCount')">전화상담 가입</a>
+                        </div>
+                        <div class="contentGroup">
+                            <img src="../../static/img/header_menu3.png" alt="">
+                            <div class="menuContent hover" onclick="OpenChat(); CountButton('chatCount')">실시간 채팅상담</div>
+                        </div>
                     </div>
                     {% endif %}
                 </ul>
+                <div class="addInfo float-right">
+                    <img src="../../static/img/header_img.svg" alt="헤더이미지">
+                    <div>금융위원회 혁신금융서비스 지정</div>
+                </div>
             </div>
         </header>
         {% block contents %}

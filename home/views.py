@@ -19,10 +19,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import UnexpectedAlertPresentException, NoSuchElementException, ElementNotInteractableException, StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import subprocess
 
 from datetime import date, timedelta
 
+
+
+
+from filecmp import cmp
+from home.tests import Sunbae_Automation
+import os
 
 
 def HomeView(request):
@@ -52,7 +61,6 @@ def HomeView(request):
 
     return response
 
-
 class ConsultingView(FormView):
     template_name = 'consulting.html'
     form_class = ConsultingForm
@@ -77,7 +85,6 @@ class ConsultingView(FormView):
         context['userIP'] = self.request.session['user']
         return context
 
-
 def ConsultingDataView(request):
     data = request.GET.get('data')
     consultingObject = Consulting.objects.filter(consultingDate=data)
@@ -92,11 +99,10 @@ def SelfCompareHomeView(request):
 
     return response
 
-
-
 def SelfCompareStep1View(request):
 
-    response = render(request, 'selfCompareStep1.html')
+    userIP = request.session['user']
+    response = render(request, 'selfCompareStep1.html', {'userIP': userIP})
     response.set_cookie(key='user', value='user')
 
     return response
@@ -148,22 +154,21 @@ browsers = {}
 def selfCompareAPIInit(request):
 
     userIP = request.session.get('user')
-    
-    # subprocess.Popen(r'C:\Program Files\Google\Chrome\Application\chrome.exe --remote-debugging-port=9222 --user-data-dir="C:\chrometemp"')
-    # options.add_argument('user-agent=' + user_agent)  
-    # options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    # options.add_experimental_option("useAutomationExtension", False)
-
     options = Options()
 
+
+    #현재창 크롬
+    # options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+
+    
+    #배포용 크롬
     options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.75 Safari/537.36")
     options.add_argument("disable-gpu")
+    options.add_argument('--incognito')
     options.add_argument('--disable-blink-features=AutomationControlled')
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     options.add_experimental_option("detach", True)
-
-
-    
+    options.add_argument('headless')
 
 
 
@@ -176,6 +181,15 @@ def selfCompareAPIInit(request):
     browser.get('https://www.e-insmarket.or.kr/')
     browser.implicitly_wait(5)
     time.sleep(1)
+
+    popup = browser.window_handles
+    for i in popup:
+        if i != popup[0]:
+            browser.switch_to.window(i)
+            browser.close()
+
+    browser.switch_to.window(popup[0])
+
     browser.find_element(By.CSS_SELECTOR, '#slick-slide00 > div > div > div > a').send_keys(Keys.ENTER)
     browser.implicitly_wait(5)
 
@@ -192,31 +206,30 @@ def selfCompareAPIInit(request):
 
     return HttpResponse(json.dumps({}))
 
-
 def selfCompareAPIStep1(request):
 
     userIP = request.session.get('user')
     browser = browsers[userIP]
 
-    # userName = request.GET.get('userName')
-    # gender = request.GET.get('gender')
-    # foreigner = request.GET.get('foreigner')
-    # ssmFront = request.GET.get('ssmFront')
-    # ssmBack = request.GET.get('ssmBack')
-    # agency = request.GET.get('agency')
-    # phone1 = request.GET.get('phone1')
-    # phone2 = request.GET.get('phone2')
-    # phone3 = request.GET.get('phone3')
+    userName = request.GET.get('userName')
+    gender = request.GET.get('gender')
+    foreigner = request.GET.get('foreigner')
+    ssmFront = request.GET.get('ssmFront')
+    ssmBack = request.GET.get('ssmBack')
+    agency = request.GET.get('agency')
+    phone1 = request.GET.get('phone1')
+    phone2 = request.GET.get('phone2')
+    phone3 = request.GET.get('phone3')
 
-    userName = '이동권'
-    gender = 'male'
-    foreigner = '내국인'
-    ssmFront = '960527'
-    ssmBack = '1157812'
-    agency = 'lg+'
-    phone1 = '010'
-    phone2 = '5408'
-    phone3 = '8229'
+    # userName = '이동권'
+    # gender = 'male'
+    # foreigner = '내국인'
+    # ssmFront = '960527'
+    # ssmBack = '1157812'
+    # agency = 'lg+'
+    # phone1 = '010'
+    # phone2 = '5408'
+    # phone3 = '8229'
 
 
     browser.find_element(By.ID, 'name').send_keys(userName)
@@ -276,8 +289,8 @@ def selfCompareAPIStep1(request):
     time.sleep(0.2)
 
     trigger = True
-    while trigger:
-
+    i = 0
+    while trigger: 
         try:
             browser.find_element(By.CSS_SELECTOR, '#authInfo > div.btn_set > button:nth-child(2)').send_keys(Keys.ENTER)
             browser.implicitly_wait(2)
@@ -289,9 +302,11 @@ def selfCompareAPIStep1(request):
             browser.find_element(By.CSS_SELECTOR, '#authInfo > div.btn_set > button:nth-child(2)').send_keys(Keys.ESCAPE)
             browser.implicitly_wait(1)
             time.sleep(0.2)
+        i += 1
+        if i > 1000:
+            break
 
     return HttpResponse(json.dumps({}))
-
 
 def selfCompareAPIStep2(request):
 
@@ -303,20 +318,17 @@ def selfCompareAPIStep2(request):
     browser.find_element(By.ID, 'authNumber').clear()
     browser.find_element(By.ID, 'authNumber').send_keys(authNum)
     browser.find_element(By.CSS_SELECTOR, '#authNo > div > ul > li:nth-child(1) > button').send_keys(Keys.ENTER)
-    browser.implicitly_wait(10)
+    browser.implicitly_wait(4)
     time.sleep(0.2)
-
     try:
-        browser.find_element(By.CSS_SELECTOR, '#ifArea > div.con02_story.con_new > div.inq_before > div.insub_btn > a')
-    
-    except NoSuchElementException:
-        browser.find_element(By.CSS_SELECTOR, '#authInfo > div.btn_set > button:nth-child(2)').send_keys(Keys.ESCAPE)
-
+        alert = browser.find_element(By.CSS_SELECTOR, 'body > div.ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-draggable.ui-resizable.ui-dialog-buttons > div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div > button')
+        time.sleep(0.5)
+        alert.click()
         return HttpResponse(json.dumps({'result': 'fail'}))
-
-
-    return HttpResponse(json.dumps({'result': 'success'}))
-
+    except:
+        browser.implicitly_wait(3)
+        time.sleep(0.2)
+        return HttpResponse(json.dumps({'result': 'success'}))
 
 def selfCompareAPIStep3(request):
 
@@ -330,13 +342,17 @@ def selfCompareAPIStep3(request):
     browser.implicitly_wait(5)
 
     trigger = True
+    i=0
     while trigger:
         try:
             sendButton = browser.find_element(By.CSS_SELECTOR, '#newcar > div.con02_story.con_new.active > div.inq_after > div.insub_btn > a')
             time.sleep(0.2)
             trigger = False
         except:
-            pass
+            time.sleep(0.1)
+        i += 1
+        if i > 1000:
+            break
 
     browser.execute_script(f"""
         document.getElementById('insStartDtPicker').value = "{nowDate}";
@@ -353,356 +369,516 @@ def selfCompareAPIStep4(request):
     userIP = request.session.get('user')
     browser = browsers[userIP]
 
-    return HttpResponse()
+    carMakerID = request.GET.get('carMakerID')
+    carNameID = request.GET.get('carNameID')
+    carRegisterID = request.GET.get('carRegisterID')
+    carSubNameID = request.GET.get('carSubNameID')
+    carOptionID = request.GET.get('carOptionID')
 
-import random
+    tr = True
+    i=0
+    while tr:
+        try:
+            # browser.find_element(By.XPATH, f'//*[@id="{carMakerID}"]').click()
+            browser.find_element(By.CSS_SELECTOR, f'#dMaker > ul > li:nth-child({carMakerID}) > input').click()
+            time.sleep(0.1)
+            tr = False
+        except:
+            time.sleep(0.1)
+        i += 1
+        if i > 100:
+            break
 
-def selfCompareAPICarMaker(request):
+    i=0
+    tr = True
+    while tr:
+        try:
+            # browser.find_element(By.XPATH, f'//*[@id="{carNameID}"]').click()
+            browser.find_element(By.CSS_SELECTOR, f'#dCarName > ul > li:nth-child({carNameID}) > input').click()
+            time.sleep(0.1)
+            tr = False
+        except:
+            time.sleep(0.1)
+        i += 1
+        if i > 100:
+            break
 
-    # content = {}
+    i=0
+    tr = True
+    while tr:
+        try:
+            # browser.find_element(By.XPATH, f'//*[@id="{carRegisterID}"]').click()
+            browser.find_element(By.CSS_SELECTOR, f'#dMadeym > ul > li:nth-child({carRegisterID}) > input').click()
+            time.sleep(0.1)
+            tr = False
+        except:
+            time.sleep(0.1)
+        i += 1
+        if i > 100:
+            break
 
-    # userIP = request.session.get('user')
-    # browser = browsers[userIP]
+    i=0
+    tr = True
+    while tr:
+        try:
+            # browser.find_element(By.XPATH, f'//*[@id="{carSubNameID}"]').click()
+            browser.find_element(By.CSS_SELECTOR, f'#dCarNameDtl > ul > li:nth-child({carSubNameID}) > input').click()
+            time.sleep(0.1)
+            tr = False
+        except:
+            time.sleep(0.1)
+        i += 1
+        if i > 100:
+            break
 
-    # trigger = True
-    # while trigger:
-    #     try:
-    #         browser.find_element(By.CSS_SELECTOR, '#newcar_title_1').send_keys(Keys.ENTER)
-    #         browser.implicitly_wait(5)
-    #         time.sleep(0.2)
-    #         trigger = False
+    i=0
+    tr = True
+    while tr:
+        try:
+            # browser.find_element(By.XPATH, f'//*[@id="{carOptionID}"]').click()
+            browser.find_element(By.CSS_SELECTOR, f'#dOptionDtl > ul > li:nth-child({carOptionID}) > input').click()
+            time.sleep(0.1)
+            tr = False
+        except:
+            time.sleep(0.1)
+        i += 1
+        if i > 100:
+            break
 
-    #     except:
-    #         pass
+    browser.find_element(By.CSS_SELECTOR, '#searchResult1_new2 > div > div > div.btn_cen > button').click()
+    browser.implicitly_wait(5)
+    time.sleep(1.5)
 
-    # optionUL = browser.find_element(By.CSS_SELECTOR, '#dMaker > ul')
-    # optionLIs = optionUL.find_elements(By.TAG_NAME, 'input')
-    
-    # for optionLI in optionLIs:
+    return HttpResponse(json.dumps({}))
 
-    #     content[optionLI.get_attribute('id')] = optionLI.get_attribute('value')
-
-    # return HttpResponse(json.dumps(content))
-    
+def selfCompareAPIStep5(request):
 
     userIP = request.session.get('user')
     browser = browsers[userIP]
 
-    content = {}
-    carMakerUL = browser.find_element(By.CSS_SELECTOR, '#dMaker > ul')
-    carMakerLIs = carMakerUL.find_elements(By.TAG_NAME, 'li')
+    stepData1 = request.GET.get('stepData1')
+    stepData2 = request.GET.get('stepData2')
+    stepData3 = request.GET.get('stepData3')
+    stepData4 = request.GET.get('stepData4')
+    stepData5 = request.GET.get('stepData5')
+    stepData6 = request.GET.get('stepData6')
+    stepData7 = request.GET.get('stepData7')
+    stepData8 = request.GET.get('stepData8')
+    stepData9 = request.GET.get('stepData9')
+    stepData10 = request.GET.get('stepData10')
+    stepData11 = request.GET.get('stepData11')
 
-    a = 0
-    b = 0
-    c = 0
-    d = 0
-    e = 0
-    for carMakerLI in carMakerLIs:
+    browser.find_element(By.CSS_SELECTOR, '#row_2 > td > a > input[type=text]').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData1}"]').click()
+    time.sleep(0.1)
+    
+    browser.find_element(By.CSS_SELECTOR, '#row_3 > td > a > input[type=text]').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData2}"]').click()
+    time.sleep(0.1)
 
-        a += 1
-        b = 0
-        c = 0
-        d = 0
-        e = 0
+    browser.find_element(By.CSS_SELECTOR, '#row_4 > td').click()
+    time.sleep(0.1)
 
+    if browser.find_element(By.CSS_SELECTOR, '#info04 > div.infoMainTxt > div.infosub > ul > li.active').is_displayed():
+        if stepData3 == 'rad43' or stepData3 == 'rad44' or stepData3 == 'rad45' or stepData3 == 'rad47':
+            browser.find_element(By.XPATH, f'//*[@id="{stepData3}"]').click()
+            time.sleep(0.1)
+        
+        elif stepData3 == 'rad66' or stepData3 == 'rad67' or stepData3 == 'rad68' or stepData3 == 'rad69':
+            browser.find_element(By.CSS_SELECTOR, '#info04 > div.infoMainTxt > div.infosub > ul > li:nth-child(2) > a').click()
+            time.sleep(0.1)
+            browser.find_element(By.XPATH, f'//*[@id="{stepData3}"]').click()
+            time.sleep(0.1)
 
-        trigger1_1 = True
-        while trigger1_1:
-            try:
-                time.sleep(0.4)
-                carMakerInput = carMakerLI.find_element(By.TAG_NAME, 'input')
-                carMakerLabel = carMakerLI.find_element(By.TAG_NAME, 'label')
-                browser.find_element(By.CSS_SELECTOR, '#newcar_title_1').send_keys(Keys.ENTER)
-                browser.implicitly_wait(5)
-                makerInputID = carMakerInput.get_attribute('id')
-                trigger1_1 = False
-            except StaleElementReferenceException:
-                print('s트리거1_1')
-                time.sleep(0.1)
-            except ElementNotInteractableException:
-                print('e트리거1_1')
-                time.sleep(0.1)
+        elif stepData3 == 'rad99':
+            browser.find_element(By.CSS_SELECTOR, '#info04 > div.infoMainTxt > div.infosub > ul > li:nth-child(3) > a').click()
+            time.sleep(0.1)
 
-        content[makerInputID] = []
-        content[makerInputID].append(carMakerLabel.text)
-        content[makerInputID].append({})
+    elif browser.find_element(By.CSS_SELECTOR, '#info04_1 > div.infoMainTxt > div.infosub > ul > li:nth-child(1) > a').is_displayed():
+        if stepData3 == 'rad43' or stepData3 == 'rad44' or stepData3 == 'rad45' or stepData3 == 'rad47':
+            browser.find_element(By.CSS_SELECTOR, '#info04_1 > div.infoMainTxt > div.infosub > ul > li:nth-child(1) > a').click()
+            time.sleep(0.1)
+            browser.find_element(By.XPATH, f'//*[@id="{stepData3}"]').click()
+            time.sleep(0.1)
+        
+        elif stepData3 == 'rad66' or stepData3 == 'rad67' or stepData3 == 'rad68' or stepData3 == 'rad69':
+            browser.find_element(By.XPATH, f'//*[@id="{stepData3}"]').click()
+            time.sleep(0.1)
 
-        trigger1_2 = True
-        while trigger1_2:
-            try:
-                time.sleep(0.4)
-                carMakerInput.click()
-                browser.implicitly_wait(5)
-                trigger1_2 = False
-            except StaleElementReferenceException:
-                print('s트리거1_2')
-                time.sleep(0.1)
-            except ElementNotInteractableException:
-                print('e트리거1_2')
-                time.sleep(0.1)
+        elif stepData3 == 'rad99':
+            browser.find_element(By.CSS_SELECTOR, '#info04_1 > div.infoMainTxt > div.infosub > ul > li:nth-child(3) > a').click()
+            time.sleep(0.1)
+    
+    elif browser.find_element(By.CSS_SELECTOR, '#info04_2 > div.infoMainTxt > div.infosub > ul > li:nth-child(1) > a').is_displayed():
+        if stepData3 == 'rad43' or stepData3 == 'rad44' or stepData3 == 'rad45' or stepData3 == 'rad47':
+            browser.find_element(By.CSS_SELECTOR, '#info04_2 > div.infoMainTxt > div.infosub > ul > li:nth-child(1) > a').click()
+            time.sleep(0.1)
+            browser.find_element(By.XPATH, f'//*[@id="{stepData3}"]').click()
+            time.sleep(0.1)
+        
+        elif stepData3 == 'rad66' or stepData3 == 'rad67' or stepData3 == 'rad68' or stepData3 == 'rad69':
+            browser.find_element(By.CSS_SELECTOR, '#info04_2 > div.infoMainTxt > div.infosub > ul > li:nth-child(2) > a').click()
+            time.sleep(0.1)
+            browser.find_element(By.XPATH, f'//*[@id="{stepData3}"]').click()
+            time.sleep(0.1)
 
-        trigger1_3 = True
-        while trigger1_3:
-            try:
-                carNameUL = browser.find_element(By.CSS_SELECTOR, '#dCarName > ul')
-                carNameLIs = carNameUL.find_elements(By.TAG_NAME, 'li')
-                trigger1_3 = False
-            except StaleElementReferenceException:
-                print('s트리거1_3')
-                time.sleep(0.1)
-            except ElementNotInteractableException:
-                print('e트리거1_3')
-                time.sleep(0.1)
+        elif stepData3 == 'rad99':
+            pass
 
-        for carNameLI in carNameLIs:
+    browser.find_element(By.CSS_SELECTOR, '#row_5 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData4}"]').click()
+    time.sleep(0.1)
 
-            b += 1
-            c = 0
-            d = 0
-            e = 0
+    browser.find_element(By.CSS_SELECTOR, '#row_6 > td > a > input[type=text]').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData5}"]').click()
+    time.sleep(0.1)
 
-            trigger2_1 = True
-            while trigger2_1:
-                try:
-                    time.sleep(0.4)
-                    carNameInput = carNameLI.find_element(By.TAG_NAME, 'input')
-                    carNameLabel = carNameLI.find_element(By.TAG_NAME, 'label')
-                    browser.find_element(By.CSS_SELECTOR, '#newcar_title_2').send_keys(Keys.ENTER)
-                    browser.implicitly_wait(5)
-                    NameInputID = carNameInput.get_attribute('id')
-                    trigger2_1 = False
-                    
-                except StaleElementReferenceException:
-                    print('s트리거2_1')
-                    time.sleep(0.1)
-                except ElementNotInteractableException:
-                    print('e트리거2_1')
-                    time.sleep(0.1)
+    browser.find_element(By.CSS_SELECTOR, '#row_7 > td > a > input[type=text]').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData6}"]').click()
+    time.sleep(0.1)
 
-            
-            content[makerInputID][1][NameInputID] = []
-            content[makerInputID][1][NameInputID].append(carNameLabel.text)
-            content[makerInputID][1][NameInputID].append({})
+    browser.find_element(By.CSS_SELECTOR, '#row_8 > td > a > input[type=text]').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData7}"]').click()
+    time.sleep(0.1)
 
-            trigger2_2 = True
-            while trigger2_2:
-                try:
-                    time.sleep(0.4)
-                    carNameInput.click()
-                    browser.implicitly_wait(5)
-                    trigger2_2 = False
-                except StaleElementReferenceException:
-                    print('s트리거2_2')
-                    time.sleep(0.1)
-                except ElementNotInteractableException:
-                    print('e트리거2_2')
-                    time.sleep(0.1)
-
-            trigger2_3 = True
-            while trigger2_3:
-                try:
-                    carRegisterUL = browser.find_element(By.CSS_SELECTOR, '#dMadeym > ul')
-                    carRegisterLIs = carRegisterUL.find_elements(By.TAG_NAME, 'li')
-                    trigger2_3 = False
-                except StaleElementReferenceException:
-                    print('s트리거2_3')
-                    time.sleep(0.1)
-                except ElementNotInteractableException:
-                    print('e트리거2_3')
-                    time.sleep(0.1)
-                    
-            print(f'진행도 {a}.{b}.{c}.{d}.{e}')
+    browser.find_element(By.CSS_SELECTOR, '#row_9 > td > a > input[type=text]').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData8}"]').click()
+    time.sleep(0.1)
 
 
-        #     for carRegisterLI in carRegisterLIs:
-
-        #         c += 1
-        #         d = 0
-        #         e = 0
-
-        #         trigger3_1 = True
-        #         while trigger3_1:
-        #             try:
-        #                 time.sleep(0.4)
-        #                 carRegisterInput = carRegisterLI.find_element(By.TAG_NAME, 'input')
-        #                 carRegisterLabel = carRegisterLI.find_element(By.TAG_NAME, 'label')
-        #                 browser.find_element(By.CSS_SELECTOR, '#newcar_title_3').send_keys(Keys.ENTER)
-        #                 browser.implicitly_wait(5)
-        #                 RegisterInputID = carRegisterInput.get_attribute('id')
-        #                 trigger3_1 = False
-        #             except StaleElementReferenceException:
-        #                 print('s트리거3_1')
-        #                 time.sleep(0.1)
-        #             except ElementNotInteractableException:
-        #                 print('e트리거3_1')
-        #                 time.sleep(0.1)
-
-                
-        #         content[makerInputID][1][NameInputID][1][RegisterInputID] = []
-        #         content[makerInputID][1][NameInputID][1][RegisterInputID].append(carRegisterLabel.text)
-        #         content[makerInputID][1][NameInputID][1][RegisterInputID].append({})
+    browser.find_element(By.CSS_SELECTOR, '#row_10 > td > a > input[type=text]').click()
+    time.sleep(0.1)
+    browser.find_element(By.CSS_SELECTOR, '#info10 > div.infoMainTxt > div.newcar_dateArea > span > input').send_keys(stepData9)
+    time.sleep(0.1)
 
 
-        #         trigger3_2 = True
-        #         while trigger3_2:
-        #             try:
-        #                 time.sleep(0.4)
-        #                 carRegisterInput.click()
-        #                 browser.implicitly_wait(5)
-        #                 trigger3_2 = False
-        #             except StaleElementReferenceException:
-        #                 print('s트리거3_2')
-        #                 time.sleep(0.1)
-        #             except ElementNotInteractableException:
-        #                 print('e트리거3_2')
-        #                 time.sleep(0.1)
+    if stepData8 == 'famradio04':
 
-        #         trigger3_3 = True
-        #         while trigger3_3:
-        #             try:
-        #                 carSubNameUL = browser.find_element(By.CSS_SELECTOR, '#dCarNameDtl > ul')
-        #                 carSubNameLIs = carSubNameUL.find_elements(By.TAG_NAME, 'li')
-        #                 trigger3_3 = False
-        #             except StaleElementReferenceException:
-        #                 print('s트리거3_3')
-        #                 time.sleep(0.1)
-        #             except ElementNotInteractableException:
-        #                 print('e트리거3_3')
-        #                 time.sleep(0.1)
+        browser.find_element(By.CSS_SELECTOR, '#row_11 > td > a > input[type=text]').click()
+        time.sleep(0.1)
+        browser.find_element(By.CSS_SELECTOR, '#info11 > div.infoMainTxt > div.newcar_dateArea > span > input').send_keys(stepData11)
+        time.sleep(0.1)
+
+        
+    elif stepData8 == 'famradio02':
+
+        browser.find_element(By.CSS_SELECTOR, '#row_11 > td > a > input[type=text]').click()
+        time.sleep(0.1)
+        browser.find_element(By.CSS_SELECTOR, '#info11 > div.infoMainTxt > div.newcar_dateArea > span > input').send_keys(stepData10)
+        time.sleep(0.1)
 
 
-        #         for carSubNameLI in carSubNameLIs:
+    browser.find_element(By.CSS_SELECTOR, '#searchResult2 > div.btn_cen > button').click()
+    time.sleep(0.1)
 
-        #             d += 1
-        #             e = 0
-
-        #             trigger4_1 = True
-        #             while trigger4_1:
-        #                 try:
-        #                     time.sleep(0.4)
-        #                     carSubNameInput = carSubNameLI.find_element(By.TAG_NAME, 'input')
-        #                     carSubNameLabel = carSubNameLI.find_element(By.TAG_NAME, 'label')
-        #                     browser.find_element(By.CSS_SELECTOR, '#newcar_title_4').send_keys(Keys.ENTER)
-        #                     browser.implicitly_wait(5)
-        #                     SubNameInputID = carSubNameInput.get_attribute('id')
-        #                     trigger4_1 = False
-        #                 except StaleElementReferenceException:
-        #                     print('s트리거4_1')
-        #                     time.sleep(0.1)
-        #                 except ElementNotInteractableException:
-        #                     print('e트리거4_1')
-        #                     time.sleep(0.1)
-
-        #             content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID] = []
-        #             content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID].append(carSubNameLabel.text)
-        #             content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID].append({})
-
-        #             trigger4_2 = True
-        #             while trigger4_2:
-        #                 try:
-        #                     time.sleep(0.4)
-        #                     carSubNameInput.click()
-        #                     browser.implicitly_wait(5)
-        #                     trigger4_2 = False
-        #                 except StaleElementReferenceException:
-        #                     print('s트리거4_2')
-        #                     time.sleep(0.1)
-        #                 except ElementNotInteractableException:
-        #                     print('e트리거4_2')
-        #                     time.sleep(0.1)
-
-        #             trigger4_3 = True
-        #             while trigger4_3:
-        #                 try:
-        #                     carOptionUL = browser.find_element(By.CSS_SELECTOR, '#dOptionDtl > ul')
-        #                     carOptionLIs = carOptionUL.find_elements(By.TAG_NAME, 'li')
-        #                     trigger4_3 = False
-        #                 except StaleElementReferenceException:
-        #                     print('s트리거4_3')
-        #                     time.sleep(0.1)
-        #                 except ElementNotInteractableException:
-        #                     print('e트리거4_3')
-        #                     time.sleep(0.1)
-
-
-        #             for carOptionLI in carOptionLIs:
-        #                 time.sleep(1)
-        #                 e += 1
-
-        #                 trigger5_1 = True
-        #                 while trigger5_1:
-        #                     try:
-        #                         print(carOptionLI)
-        #                         carOptionInput = carOptionLI.find_element(By.TAG_NAME, 'input')
-        #                         carOptionLabel = carOptionLI.find_element(By.TAG_NAME, 'label')
-        #                         OptionInputID = carOptionInput.get_attribute('id')
-        #                         trigger5_1 = False
-        #                     except StaleElementReferenceException:
-        #                         print('s트리거5_1')
-        #                         time.sleep(0.1)
-        #                     except ElementNotInteractableException:
-        #                         print('e트리거5_1')
-        #                         time.sleep(0.1)
-
-        #                 content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID][1][OptionInputID] = []
-        #                 content[makerInputID][1][NameInputID][1][RegisterInputID][1][SubNameInputID][1][OptionInputID].append(carOptionLabel.text)
-        #                 print(f'진행도 {a}.{b}.{c}.{d}.{e}')
-
-
-
-    with open('test.json', 'w', encoding='UTF-8') as outfile:
-        json.dump(content, outfile, ensure_ascii=False, indent=2)
-
+    trigger = True
+    i=0
+    while trigger:
+        try:
+            browser.find_element(By.CSS_SELECTOR, '#special1_Y').click()
+            trigger = False
+        except:
+            time.sleep(0.1)
+        i += 1
+        if i > 1000:
+            break
 
     return HttpResponse(json.dumps({}))
 
+def selfCompareAPIStep6(request):
+
+    # options = Options()
+    # options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+    # browser = webdriver.Chrome('./chromedriver_108.exe', options=options)
+    
+    userIP = request.session.get('user')
+    browser = browsers[userIP]
+
+    stepData1 = request.GET.get('stepData1')
+    stepData2 = request.GET.get('stepData2')
+    stepData3 = request.GET.get('stepData3')
+    stepData4 = request.GET.get('stepData4')
+    stepData5 = request.GET.get('stepData5')
+    stepData6 = request.GET.get('stepData6')
+    stepData7 = request.GET.get('stepData7')
+    stepData8 = request.GET.get('stepData8')
+    stepData9 = request.GET.get('stepData9')
+    stepData10 = request.GET.get('stepData10')
+    stepData11 = request.GET.get('stepData11')
+
+    stepData1_1 = request.GET.get('stepData1_1')
+    stepData2_1 = request.GET.get('stepData2_1')
+    stepData2_2 = request.GET.get('stepData2_2')
+    stepData2_3 = request.GET.get('stepData2_3')
+    stepData3_1 = request.GET.get('stepData3_1')
+    stepData3_2 = request.GET.get('stepData3_2')
+    stepData5_1 = request.GET.get('stepData5_1')
+    stepData6_1 = request.GET.get('stepData6_1')
+    stepData7_1 = request.GET.get('stepData7_1')
+    stepData7_2 = request.GET.get('stepData7_2')
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_1 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData1}"]').click()
+    time.sleep(0.1)
+    if stepData1 == 'special1_Y':
+        selectBox1 = Select(browser.find_element(By.ID, 'joinbirth'))
+        selectBox1.select_by_value(f'{stepData1_1}')
+        time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_2 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData2}"]').click()
+    time.sleep(0.1)
+    if stepData2 == 'special2_Y':
+        selectBox2_1 = Select(browser.find_element(By.ID, 'chgSpecial2Y'))
+        selectBox2_1.select_by_value(f'{stepData2_1}')
+        time.sleep(0.1)
+        selectBox2_2 = Select(browser.find_element(By.ID, 'chgSpecial2M'))
+        selectBox2_2.select_by_value(f'{stepData2_2}')
+        time.sleep(0.1)
+        browser.find_element(By.ID, 'specinput').clear()
+        time.sleep(0.1)
+        browser.find_element(By.ID, 'specinput').send_keys(stepData2_3)
+        time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_3 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData3}"]').click()
+    time.sleep(0.1)
+    if stepData3 == 'special3_Y':
+        selectBox3 = Select(browser.find_element(By.ID, 'cChildGb'))
+        selectBox3.select_by_value(f'{stepData3_1}')
+        time.sleep(0.1)
+        if stepData3_1 == 'c':
+            browser.find_element(By.ID, 'childBirthday').clear()
+            time.sleep(0.1)
+            browser.find_element(By.ID, 'childBirthday').send_keys(stepData3_2)
+            time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_4 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData4}"]').click()
+    time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_5 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData5}"]').click()
+    time.sleep(0.1)
+    if stepData5 == 'special5_Y':
+        browser.find_element(By.XPATH, f'//*[@id="{stepData5_1}"]').click()
+        time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_6 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData6}"]').click()
+    time.sleep(0.1)
+    if stepData6 == 'special6_Y':
+        browser.find_element(By.ID, 'chgSpecial6Opt').clear()
+        time.sleep(0.1)
+        browser.find_element(By.ID, 'chgSpecial6Opt').send_keys(stepData6_1)
+        time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_7 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData7}"]').click()
+    time.sleep(0.1)
+    if stepData7 == 'special7_Y':
+        browser.find_element(By.CSS_SELECTOR, '#spec07 > div.infoMainTxt > div > div.joininput > div:nth-child(2) > input').clear()
+        time.sleep(0.1)
+        browser.find_element(By.CSS_SELECTOR, '#spec07 > div.infoMainTxt > div > div.joininput > div:nth-child(2) > input').send_keys(stepData7_1)
+        time.sleep(0.1)
+        browser.find_element(By.CSS_SELECTOR, '#spec07 > div.infoMainTxt > div > div.joininput > div:nth-child(3) > input').clear()
+        time.sleep(0.1)
+        browser.find_element(By.CSS_SELECTOR, '#spec07 > div.infoMainTxt > div > div.joininput > div:nth-child(3) > input').send_keys(stepData7_2)
+        time.sleep(0.1)
+        
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_8 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData8}"]').click()
+    time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_9 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData9}"]').click()
+    time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_10 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData10}"]').click()
+    time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#spec_row_11 > td').click()
+    time.sleep(0.1)
+    browser.find_element(By.XPATH, f'//*[@id="{stepData11}"]').click()
+    time.sleep(0.1)
+
+    browser.find_element(By.CSS_SELECTOR, '#searchResult2_1 > div.btn_cen.stepSpecNextBtn > button').click()
+    time.sleep(0.1)
+
+    content = {
+        'error': 'Y',
+        'front': {
+            'others': {},
+            'carrot': {},
+        },
+        'back': {
+            'others': {},
+        },
+    }
+
+    try:
+        WebDriverWait(browser,timeout=10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#searchResult4 > div.sort_tabs')))
+        time.sleep(0.3)
+        WebDriverWait(browser,timeout=10).until(EC.invisibility_of_element_located((By.CSS_SELECTOR, '.blockOverlay')))
+        time.sleep(0.3)
+
+        browser.find_element(By.CSS_SELECTOR, '#allTab').click()
+        WebDriverWait(browser,timeout=10).until(EC.invisibility_of_element_located((By.CSS_SELECTOR, '.spinner')))
+        time.sleep(0.3)
+
+    except:
+        browser.quit()
+        del browsers[userIP]
+        return HttpResponse(json.dumps(content))
+
+
+
+    for i in range(11):
+        try:
+            src = browser.find_element(By.CSS_SELECTOR, f'#O > table:nth-child(2) > tbody > tr:nth-child({i+1}) > td:nth-child(2) > img').screenshot_as_base64
+            text = browser.find_element(By.CSS_SELECTOR, f'#O > table:nth-child(2) > tbody > tr:nth-child({i+1}) > td.txt_r').text
+            content['front']['others'][src] = text
+        except:
+            pass
+
+    try:
+        src = browser.find_element(By.CSS_SELECTOR, f'#O > table:nth-child(5) > tbody > tr > td:nth-child(1) > img').screenshot_as_base64
+        text = browser.find_element(By.CSS_SELECTOR, f'#O > table:nth-child(5) > tbody > tr > td.txt_r').text
+        content['front']['carrot'][src] = text
+    except:
+        pass
+
+    
+    browser.find_element(By.CSS_SELECTOR, '#onlineTab').click()
+    WebDriverWait(browser,timeout=10).until(EC.invisibility_of_element_located((By.CSS_SELECTOR, '.spinner')))
+    time.sleep(0.3)
+
+
+    for i in range(12):
+        try:
+            src = browser.find_element(By.CSS_SELECTOR, f'#A > table > tbody > tr:nth-child({i+1}) > td:nth-child(2) > img').screenshot_as_base64
+            text = browser.find_element(By.CSS_SELECTOR, f'#A > table > tbody > tr:nth-child({i+1}) > td.txt_r').text
+            content['back']['others'][src] = text
+        except:
+            pass
+
+    content['error'] = 'N'
+
+
+    browser.quit()
+    del browsers[userIP]
+
+    return HttpResponse(json.dumps(content))
+
+
+
+
+
+
+def selfCompareAPICarInit(request):
+
+    content = {}
+
+    with open ("./carData.json", "rt", encoding="UTF8") as f:
+        carData = json.load(f)
+
+    for key in carData.keys():
+        content[key] = carData[key][0]
+
+    return HttpResponse(json.dumps(content))
+
+
+def selfCompareAPICarMaker(request):
+
+    content = {}
+    makerId = request.GET.get('carMakerID')
+
+    with open ("./carData.json", "rt", encoding="UTF8") as f:
+        carData = json.load(f)
+
+    carNames = carData[makerId][1]
+
+    for key in carNames.keys():
+        content[key] = carNames[key][0]
+
+    return HttpResponse(json.dumps(content))
+    
 
 def selfCompareAPICarName(request):
 
     content = {}
+    makerId = request.GET.get('carMakerID')
+    nameId = request.GET.get('carNameID')
 
-    userIP = request.session.get('user')
-    browser = browsers[userIP]
-    labelID = request.GET.get('id')
+    with open ("./carData.json", "rt", encoding="UTF8") as f:
+        carData = json.load(f)
 
-    print(labelID)
-    browser.find_element(By.CSS_SELECTOR, f'#{labelID}').click()
-    browser.implicitly_wait(5)
+    carRegisters = carData[makerId][1][nameId][1]
 
-    time.sleep(0.2)
-
-    optionUL = browser.find_element(By.CSS_SELECTOR, '#dCarName > ul')
-    optionLIs = optionUL.find_elements(By.TAG_NAME, 'input')
-
-    for optionLI in optionLIs:
-
-        content[optionLI.get_attribute('id')] = optionLI.get_attribute('value')
+    for key in carRegisters.keys():
+        content[key] = carRegisters[key][0]
 
     return HttpResponse(json.dumps(content))
 
 
 def selfCompareAPICarRegister(request):
 
-    userIP = request.session.get('user')
-    browser = browsers[userIP]
+    content = {}
+    makerId = request.GET.get('carMakerID')
+    nameId = request.GET.get('carNameID')
+    registerId = request.GET.get('carRegisterID')
 
-    return HttpResponse()
+    with open ("./carData.json", "rt", encoding="UTF8") as f:
+        carData = json.load(f)
+
+    carSubNames = carData[makerId][1][nameId][1][registerId][1]
+
+    for key in carSubNames.keys():
+        content[key] = carSubNames[key][0]
+
+    return HttpResponse(json.dumps(content))
 
 
 def selfCompareAPICarSubName(request):
 
-    userIP = request.session.get('user')
-    browser = browsers[userIP]
+    content = {}
+    makerId = request.GET.get('carMakerID')
+    nameId = request.GET.get('carNameID')
+    registerId = request.GET.get('carRegisterID')
+    subNameId = request.GET.get('carSubNameID')
 
-    return HttpResponse()
+    with open ("./carData.json", "rt", encoding="UTF8") as f:
+        carData = json.load(f)
+
+    carOptions = carData[makerId][1][nameId][1][registerId][1][subNameId][1]
+
+    for key in carOptions.keys():
+        content[key] = carOptions[key][0]
+
+    return HttpResponse(json.dumps(content))
 
 
 def selfCompareAPICarOption(request):
 
-    userIP = request.session.get('user')
-    browser = browsers[userIP]
-
-    return HttpResponse()
+    return HttpResponse(json.dumps({}))
 
 
 
@@ -738,14 +914,12 @@ def CALogoutView(request):
 
     return redirect('/')
 
-
 @superUser_required
 def CAHomeView(request):
 
     chatRoomNames = ChatRoomName.objects.all()
 
     return render(request, 'caHome.html', {'chatRoomNames': chatRoomNames})
-
 
 @superUser_required
 def CAChatView(request, userIP):
@@ -765,7 +939,6 @@ def CAChatView(request, userIP):
     response.set_cookie(key='user', value='LDJ')
 
     return response
-
 
 @superUser_required
 def CADataView(request):
@@ -812,3 +985,51 @@ def CompanyView(request):
 def AgreementView(request):
     
     return render(request, 'addAgreement.html')
+
+def SCCalc1View(request):
+
+    return render(request, 'addSCCalc1.html')
+
+def SCCalc2View(request):
+
+    return render(request, 'addSCCalc2.html')
+
+def SCAuth1View(request):
+
+    return render(request, 'addSCAuth1.html')
+
+def SCAuth2View(request):
+
+    return render(request, 'addSCAuth2.html')
+
+def SCAuth3View(request):
+
+    return render(request, 'addSCAuth3.html')
+
+def SCAuth4View(request):
+
+    return render(request, 'addSCAuth4.html')
+
+def SCAuth5View(request):
+
+    return render(request, 'addSCAuth5.html')
+
+def SCAuth6View(request):
+
+    return render(request, 'addSCAuth6.html')
+
+def SCAuth7View(request):
+
+    return render(request, 'addSCAuth7.html')
+
+def SCAuth8View(request):
+
+    return render(request, 'addSCAuth8.html')
+
+def SCAuth9View(request):
+
+    return render(request, 'addSCAuth9.html')
+
+def SCAuth10View(request):
+
+    return render(request, 'addSCAuth10.html')

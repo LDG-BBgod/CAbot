@@ -6,6 +6,18 @@ from asgiref.sync import sync_to_async
 from home.models import ChatRoomName, ChatLog, SaveLog
 from home.apis import sendMessageFunc
 
+from home.views import browsers
+
+@sync_to_async
+def exit_chrome(userIP):
+
+    try:
+        print('들어옴')
+        browser = browsers[userIP]
+        browser.close()
+    
+    except:
+        print('예외')
 
 @sync_to_async
 def save_chatRoomName(userIP):
@@ -87,6 +99,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         user = self.scope['cookies']['user']
 
+        # await exit_chrome(self.room_name[0:-1])
+        # print(self.room_name)
+        # try:
+        #     print('들어옴')
+        #     browser = browsers[self.room_name[0:-1]]
+        #     browser.close()
+    
+        # except:
+        #     print('예외')
+        # print(self.room_name)
+
         if (user == 'user'):
             try:
                 await self.channel_layer.group_send(
@@ -117,7 +140,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 )
             except:
                 pass
-
+        
 
         # 룸 그룹 나가기
         await self.channel_layer.group_discard(

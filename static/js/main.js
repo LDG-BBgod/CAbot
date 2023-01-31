@@ -1,3 +1,13 @@
+if(sessionStorage.getItem('spw') == '7530'){
+    $('.secretSection').hide()
+}
+function secretSection(){
+    if ($('#spw').val() == '7530') {
+        $('.secretSection').hide()
+        sessionStorage.setItem('spw', '7530')
+    }
+}
+
 function CountButton(data) {
     $.ajax({type: 'GET', url: '/userCount/', dataType: 'json', data: {'data': data}})
 }
