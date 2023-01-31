@@ -26,14 +26,6 @@ import subprocess
 
 from datetime import date, timedelta
 
-
-
-
-from filecmp import cmp
-from home.tests import Sunbae_Automation
-import os
-
-
 def HomeView(request):
 
     def get_client_ip(request):
