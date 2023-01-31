@@ -146,8 +146,14 @@ browsers = {}
 def selfCompareAPIInit(request):
 
     userIP = request.session.get('user')
-    options = Options()
 
+    # try:
+    #     browsers[userIP].close()
+    # except:
+    #     pass
+
+    options = Options()
+    
 
     #현재창 크롬
     # options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
@@ -164,8 +170,8 @@ def selfCompareAPIInit(request):
 
 
 
-    # browsers[userIP] = webdriver.Chrome('./chromedriver_108.exe', options=options)
-    browsers[userIP] = webdriver.Chrome('./chromedriver', options=options)
+    browsers[userIP] = webdriver.Chrome('./chromedriver_108.exe', options=options)
+    # browsers[userIP] = webdriver.Chrome('./chromedriver', options=options)
 
     browser = browsers[userIP]
     browser.implicitly_wait(5)
