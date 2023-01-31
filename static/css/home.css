@@ -173,35 +173,66 @@
     width: 650px;
     height: 80px;
     display: grid;
-    grid-template-columns: 1fr 1.6fr;
+    grid-template-columns: 1fr 1.8fr;
     background-color: #FBFBFB;
     border: solid 1px #8E8E8E;
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.6s;
 }
-.section4 .contentGroup .content:hover{
-    height: 300px;
+.section4 .contentGroup .content:nth-child(1):hover{
+    height: 400px;
+}
+.section4 .contentGroup .content:nth-child(2):hover{
+    height: 420px;
+}
+.section4 .contentGroup .content:nth-child(3):hover{
+    height: 400px;
+}
+.section4 .contentGroup .content:nth-child(4):hover{
+    height: 420px;
+}
+.section4 .contentGroup .content:nth-child(5):hover{
+    height: 450px;
+}
+.section4 .contentGroup .content:nth-child(6):hover{
+    height: 420px;
+}
+.section4 .contentGroup .content:nth-child(7):hover{
+    height: 530px;
+}
+.section4 .contentGroup .content:nth-child(8):hover{
+    height: 350px;
+}
+.section4 .contentGroup .content .imgBox{
+    height: 80px;
+    width: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .section4 .contentGroup .content img{
-    height: 60px;
-    margin: 10px 0 0 20px;
+    width: 180px;
+
 }
 .section4 .contentGroup .content .commentGroup{
     
 }
 .section4 .contentGroup .content .commentGroup .subject{
+    padding-right: 10px;
     display: flex;
     align-items: center;
     height: 80px;
-    font-size: 19px;
+    font-size: 16px;
     line-height: 30px;
     font-weight: bold;
 }
 .section4 .contentGroup .content .commentGroup .comment{
+    padding-right: 10px;
     margin-top: 7px;
-    font-size: 16px;
+    font-size: 14px;
     color: #34464B;
+    line-height: 20px;
 }
 .section4 .contentGroup .content .commentGroup .comment span{
     color: #FF5246;
@@ -420,9 +451,16 @@
     .section4 .contentGroup .content:hover{
         height: 35px;
     }
+    .section4 .contentGroup .content .imgBox{
+        height: 35px;
+        width: 130px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     .section4 .contentGroup .content img{
-        height: 25px;
-        margin-top: 5px;
+        width: 90px;
+        margin-top: 0;
     }
     .section4 .contentGroup .content .commentGroup{
         display: none;
