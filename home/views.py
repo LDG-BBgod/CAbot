@@ -4,6 +4,7 @@ from django.views.generic.edit import FormView
 from django.core import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
+from django.views.decorators.csrf import csrf_exempt
 
 
 from .forms import ConsultingForm
@@ -790,42 +791,48 @@ browsers = {}
 
 
 
-
+@csrf_exempt
 def selfCompareAPIInit(request):
     
     return HttpResponse(json.dumps({}))
 
+
+@csrf_exempt
 def selfCompareAPIStep1(request):
 
-    userName = request.GET.get('userName')
-    ssm = request.GET.get('ssm')
-    agency = request.GET.get('agency')
-    phoneNum = request.GET.get('phoneNum')
+    userName = request.POST.get('userName')
+    ssm = request.POST.get('ssm')
+    agency = request.POST.get('agency')
+    phoneNum = request.POST.get('phoneNum')
 
     codefSession()
     content = codefAuth(userName, ssm, agency, phoneNum)
 
     return HttpResponse(json.dumps(content))
 
+
+@csrf_exempt
 def selfCompareAPIStep2(request):
 
-    userName = request.GET.get('userName')
-    ssm = request.GET.get('ssm')
-    agency = request.GET.get('agency')
-    phoneNum = request.GET.get('phoneNum')
-    authNum = request.GET.get('authNum')
-    jobIndex = request.GET.get('jobIndex')
-    threadIndex = request.GET.get('threadIndex')
-    jti = request.GET.get('jti')
-    twoWayTimestamp = request.GET.get('twoWayTimestamp')
+    userName = request.POST.get('userName')
+    ssm = request.POST.get('ssm')
+    agency = request.POST.get('agency')
+    phoneNum = request.POST.get('phoneNum')
+    authNum = request.POST.get('authNum')
+    jobIndex = request.POST.get('jobIndex')
+    threadIndex = request.POST.get('threadIndex')
+    jti = request.POST.get('jti')
+    twoWayTimestamp = request.POST.get('twoWayTimestamp')
 
     content = codefAuthSubmit(userName, ssm, agency, phoneNum, authNum, jobIndex, threadIndex, jti, twoWayTimestamp)
 
     return HttpResponse(json.dumps(content))
 
+
+@csrf_exempt
 def selfCompareAPIStep3(request):
 
-    reponseData = codefCalc(request.GET)
+    reponseData = codefCalc(request.POST)
 
     content = {
         'resData': json.loads(parse.unquote(reponseData)).get('data'),
@@ -837,6 +844,8 @@ def selfCompareAPIStep3(request):
     
     return HttpResponse(json.dumps(content))
 
+
+@csrf_exempt
 def selfCompareAPIStep4(request):
 
     reponseData = codefCalc2(request.GET)

@@ -331,7 +331,7 @@ function SendAuth() {
         $('#mask, #loadingImg').show()
         new Promise((resolve) => {
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '/selfCompareAPIStep1/',
                 dataType: 'json',
                 data: {
@@ -364,7 +364,7 @@ function AuthSubmit() {
 
     new Promise((resolve) => {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: '/selfCompareAPIStep2/',
             dataType: 'json',
             data: {
@@ -1382,7 +1382,7 @@ function Step4Submit() {
 
         new Promise((resolve) => {
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '/selfCompareAPIStep3/',
                 dataType: 'json',
                 data: ajaxData,
