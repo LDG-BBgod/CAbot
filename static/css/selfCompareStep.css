@@ -1010,7 +1010,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .step5 .section4 .table ul li:first-child{
     border-left: none;
 }
-.step5 .section4 .table ul li button{
+.step5 .section4 .table ul li .button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #F26D00;
     color: #fff;
     font-size: 20px;

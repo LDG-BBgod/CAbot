@@ -34,7 +34,7 @@
         <button id="sendButtonMobile"><img src="../../static/img/sendButton.svg" alt=""></button>
     </div>
 </div>
-<div class="step step1" style="display: block;">
+<div class="step step1" style="display: none;">
     <section class="section1">
         <div class="inner">
             <div class="titleGroup">
@@ -227,7 +227,7 @@
         </div>
     </section>
 </div>
-<div class="step step2" style="display: none;">
+<div class="step step2" style="display: block;">
     <section class="section1">
         <div class="inner">
             <div class="titleGroup">
@@ -817,14 +817,14 @@
                     <div class="text1">예상 주행거리</div>
                     <select class="childInput" name="step4s1selectbox" id="step4s1selectbox" disabled>
                         <option value="선택" disabled selected>선택</option>
-                        <option value="2000">2,000km</option>
-                        <option value="3000">3,000km</option>
-                        <option value="4000">4,000km</option>
-                        <option value="5000">5,000km</option>
-                        <option value="6000">6,000km</option>
-                        <option value="7000">7,000km</option>
-                        <option value="8000">8,000km</option>
-                        <option value="9000">9,000km</option>
+                        <option value="02000">2,000km</option>
+                        <option value="03000">3,000km</option>
+                        <option value="04000">4,000km</option>
+                        <option value="05000">5,000km</option>
+                        <option value="06000">6,000km</option>
+                        <option value="07000">7,000km</option>
+                        <option value="08000">8,000km</option>
+                        <option value="09000">9,000km</option>
                         <option value="10000">10,000km</option>
                         <option value="11000">11,000km</option>
                         <option value="12000">12,000km</option>
@@ -1003,14 +1003,14 @@
                         </ul>
                     </div>
                     <div class="subject">대중교통이용실적 - 1인 한정 가입자</div>
-                    <div class="radioGroup" id="trafficGroup">
+                    <div class="radioGroup">
                         <div class="content">
-                            <input class="childRadio childInput" type="radio" name="step4sect5b" id="step4sect5b_1" value="1" disabled>
-                            <label for="step4sect5b_1" class="hover" id="trafficA">6만원 이상</label>
+                            <input class="childRadio childInput" type="radio" name="step4sect5b" id="step4sect5b_1" value="blue01" disabled>
+                            <label for="step4sect5b_1" class="hover">6만원 이상</label>
                         </div>
                         <div class="content">
-                            <input class="childRadio childInput" type="radio" name="step4sect5b" id="step4sect5b_2" value="2" disabled>
-                            <label for="step4sect5b_2" class="hover" id="trafficB">12만원 이상</label>
+                            <input class="childRadio childInput" type="radio" name="step4sect5b" id="step4sect5b_2" value="blue02" disabled>
+                            <label for="step4sect5b_2" class="hover">12만원 이상</label>
                         </div>
                     </div>
                     <div class="describtionGroup">
@@ -1289,7 +1289,7 @@
                 <button class="button hover active" id="mileOffButton" onclick="mileOff()">마일리지 적용 전</button>
                 <button class="button hover" id="mileOnButton" onclick="mileOn()">마일리지 적용 후</button>
             </div>
-            <div class="text">총 <span id="insuCount">12</span>건</div>
+            <div class="text">총 <span id="insuCount">0</span>건</div>
         </div>
     </div>
     <div class="section4">
