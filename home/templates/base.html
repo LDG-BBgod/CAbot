@@ -23,10 +23,10 @@
 
 <body>
     <div class="container">
-        <div class="secretSection">
+        <!-- <div class="secretSection">
             <input type="text" id="spw" placeholder="비번">
             <button class="hover" onclick="secretSection()">확인</button>
-        </div>
+        </div> -->
         <div class="mask" id="mask" style="display: none;"></div>
         <img class="loading-img" id="loadingImg" style="display: none;" src="../../static/img/loadingShort.svg">
         <header>
@@ -64,8 +64,10 @@
                 </div>
             </div>
         </header>
-        {% block contents %}
-        {% endblock %}
+        <div class="middle">
+            {% block contents %}
+            {% endblock %}
+        </div>
         <footer>
             <div class="inner">
                 <!-- <div class="left-side float-left">

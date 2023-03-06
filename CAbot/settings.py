@@ -126,10 +126,10 @@ pymysql.install_as_MySQLdb()
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql', 
-#         'NAME' : 'cabot_test',
-#         'USER' : 'bbgod',
+#         'NAME' : 'cabot_dev',
+#         'USER' : 'admin',
 #         'PASSWORD' : 'ldg8410229!', 
-#         'HOST': 'database-1.cev2vmz85jni.ap-northeast-2.rds.amazonaws.com',
+#         'HOST': 'bbgodd.cnbiolxtzcku.ap-northeast-2.rds.amazonaws.com',
 #         'PORT': '3306', 
 #         'OPTIONS':{
 #             'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
@@ -153,10 +153,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME' : 'cabot_exp',
-        'USER' : 'bbgod',
+        'NAME' : 'cabot',
+        'USER' : 'admin',
         'PASSWORD' : 'ldg8410229!',
-        'HOST': 'database-1.cev2vmz85jni.ap-northeast-2.rds.amazonaws.com',
+        'HOST': 'bbgodd.cnbiolxtzcku.ap-northeast-2.rds.amazonaws.com',
         'PORT': '3306',
         'OPTIONS':{
             'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"

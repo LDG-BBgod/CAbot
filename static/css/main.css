@@ -98,7 +98,7 @@ a {
     border-radius: 0.7em;
     border: none;
     font-weight: bold;
-    box-shadow: 3px 3px 10px #60606060;
+    box-shadow: 2px 2px 10px #6060604d;
 }
 
 /***** Input *****/
@@ -191,12 +191,19 @@ header .addInfo div{
     font-weight: bold;
     color: #34464B;
 }
+/***** 미들 *****/
+.middle{
+    min-height: 100%;
+}
+
 /***** 푸터 *****/
 footer{
     background: #34464B;
     height: 150px;
+    width: 100%;
 }
 footer .inner{
+    position: relative;
     height: 150px;
     padding-top: 20px;
 }

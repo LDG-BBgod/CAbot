@@ -223,7 +223,7 @@
             <input class="inputText" type="number" placeholder="3분이내 입력해주세요" id="authNum">
             <button class="button hover" onclick="AuthSubmit()">인증 확인</button>
             <button class="button hover" style="display: none;">재전송</button>
-            <div class="error"></div>
+            <div class="error">문자가 전송되는대 약 15초 소요됩니다</div>
         </div>
     </section>
 </div>
@@ -240,31 +240,69 @@
     </section>
     <section class="section2">
         <div class="stepInner">
-            <ul>
-                <li>
-                    <img src="../../static/img/selfCompare_step2_img1.svg" alt="">
-                    <div class="title">갱신계약</div>
-                    <div class="contentGroup">
-                        <div class="content">서비스 준비중입니다.<br>전화상담이나 채팅상담을 이용해주세요.</div>
-                    </div>
-                </li>
-                <li>
-                    <img src="../../static/img/selfCompare_step2_img2.svg" alt="">
-                    <div class="title">신규계약</div>
-                    <div class="contentGroup">
-                        <div class="contentBox">
-                            <div class="text1">보험 시작일</div>
-                            <input class="inputText" type="date" id="nowDate" onchange="ChangeNextDate()">
+            <div class="sect2_1">
+                <ul>
+                    <li class="on">
+                        <img src="../../static/img/selfCompare_step2_img1_1.svg" alt="">
+                        <div class="title">갱신계약</div>
+                        <div class="contentGroup">
+                            <div class="content"><span class="customerName">test</span>님<br>자동차보험이 1개월내에 만기 예정인가요?<br>피보험자로 가입되어 있는 자동차는 총<span class="carCount">x</span>대<br>보험료 계산이 가능한 자동차는 총<span class="carCount">x</span>대</div>
                         </div>
-                        <div class="contentBox">
-                            <div class="text1">보험 종료일</div>
-                            <input class="inputText noneDate" type="date" id="nextDate">
+                    </li>
+                    <li>
+                        <img src="../../static/img/selfCompare_step2_img1_2.svg" alt="">
+                        <div class="title">신규계약</div>
+                        <div class="contentGroup">
+                            <div class="content"><span class="customerName">test</span>님<br>자동차를 새로 구입했거나 구입예정이신가요?</div>
+                            <button class="button hover button1" onclick="changeSection2_1(2)">신규 계약 비교</button>
                         </div>
-                        <div class="text2">보험기간은 보험시작일로 부터 1년입니다.</div>
-                        <button class="button hover" onclick="ChangeStep2Section()">보험료 비교하기</button>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="sect2_2" style="display: none;">
+                <ul>
+                    <li>
+                        <img src="../../static/img/selfCompare_step2_img2_1.svg" alt="">
+                        <div class="title">갱신계약</div>
+                        <div class="contentGroup">
+                            <div class="content"><span class="customerName">test</span>님<br>자동차보험이 1개월내에 만기 예정인가요?</div>
+                            <button class="button hover button1" onclick="changeSection2_1(1)">갱신 계약 비교</button>
+                        </div>
+                    </li>
+                    <li class="on">
+                        <img src="../../static/img/selfCompare_step2_img2_2.svg" alt="">
+                        <div class="title">신규계약</div>
+                        <div class="contentGroup">
+                            <div class="contentBox">
+                                <div class="text1">보험 시작일</div>
+                                <input class="inputText" type="date" id="nowDate" onchange="ChangeNextDate()">
+                            </div>
+                            <div class="contentBox on">
+                                <div class="text1">보험 종료일</div>
+                                <input class="inputText noneDate" type="date" id="nextDate">
+                            </div>
+                            <div class="text2">보험기간은 보험시작일로 부터 1년입니다.</div>
+                            <button class="button hover" onclick="ChangeStep2Section()">보험료 비교하기</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="sect2_3">
+                <div class="gridul gridHead">
+                    <div class="gridli">보험사</div>
+                    <div class="gridli">자동차 번호</div>
+                    <div class="gridli">차명</div>
+                    <div class="gridli">만기 일자</div>
+                    <div class="gridli">보험료 계산</div>
+                </div>
+                <!-- <div class="gridul">
+                    <div class="gridli">test</div>
+                    <div class="gridli">test</div>
+                    <div class="gridli">test</div>
+                    <div class="gridli">test</div>
+                    <div class="gridli"><button class="hover button">조회</button></div>
+                </div> -->
+            </div>
         </div>
     </section>
     <section class="section3" style="display: none;">
@@ -1328,4 +1366,504 @@
     </div>
     <div class="section6"></div>
 </div>
+<div class="step step6 step34" style="display: none;">
+    <section class="section1">
+        <div class="inner">
+            <div class="titleGroup">
+                <span class="title">개인용 자동차 보험비교</span>
+                <span class="titleSide">(갱신계약은 만기30일 이내만 조회)</span>
+            </div>
+            <img src="../../static/img/selfCompare_step3.svg" alt="">
+            <div class="currentStep">STEP3 가입 정보 ( 3 / 5 )</div>
+        </div>
+    </section>
+    <section class="section2">
+        <div class="inner">
+            <div class="title">자동차 정보</div>
+            <div class="subTitle">
+                <span id="stcarName3">test</span>
+                <span>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</span>
+                <span id="stRegister3">test</span>
+            </div>
+            <div class="title">Self설계</div>
+            <div class="contentGroup" id="step6contentGroup">
+                <div class="contentBox1 s6c1">
+                    <div class="sortName">대인배상Ⅰ</div>
+                    <div class="contentSection">
+                        <ul>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect1" id="step6sect1_1" value="가입" checked="checked">
+                                <label for="step6sect1_1">가입</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">누구나 의무적으로 가입해야 하는 보험으로, 자동차사고로 다른 사람을 다치게하거나 사망하게 한 경우 보상합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Next(1)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c2" style="display: none;">
+                    <div class="sortName">대인배상Ⅱ</div>
+                    <div class="contentSection">
+                        <ul>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect2" id="step6sect2_1" value="가입" checked="checked">
+                                <label for="step6sect2_1">가입</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect2" id="step6sect2_2" value="미가입">
+                                <label for="step6sect2_2">미가입</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">자동차사고로 다른 사람을 다치게 하거나 사망하게 한 경우 대인배상Ⅰ의 보상한도를 초과하는 손해를 보상합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(2)">이전</button>
+                        <button class="button hover" onclick="S6Next(2)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c3" style="display: none;">
+                    <div class="sortName">대물배상</div>
+                    <div class="contentSection">
+                        <ul>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect3" id="step6sect3_1" value="2천만원">
+                                <label for="step6sect3_1">2천만원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect3" id="step6sect3_2" value="3천만원">
+                                <label for="step6sect3_2">3천만원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect3" id="step6sect3_3" value="5천만원">
+                                <label for="step6sect3_3">5천만원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect3" id="step6sect3_4" value="1억원">
+                                <label for="step6sect3_4">1억원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect3" id="step6sect3_5" value="2억원" checked="checked">
+                                <label for="step6sect3_5">2억원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect3" id="step6sect3_6" value="3억원">
+                                <label for="step6sect3_6">3억원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect3" id="step6sect3_7" value="5억원">
+                                <label for="step6sect3_7">5억원</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">자동차사고로 다른 사람의 자동차 또는 재물에 끼친 손해를 보상하며, 대물배상은 2천만원까지 반드시 가입해야 하는 의무보험입니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(3)">이전</button>
+                        <button class="button hover" onclick="S6Next(3)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c4" style="display: none;">
+                    <div class="sortName">자기신체손해 / 자동차상해 (택일)</div>
+                    <div class="sect4content1" style="display: none;">
+                        <div class="contentSection">
+                            <div class="contentHead">
+                                <button class="button hover select" onclick="MoveTargetContent2(1)">자기신체손해</button>
+                                <button class="button hover" onclick="MoveTargetContent2(2)">자동차상해</button>
+                                <button class="button hover" onclick="MoveTargetContent2(3)">미가입</button>
+                            </div>
+                            <ul>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_1_1" value="1천5백만원/1천5백만원" onclick="ChangeSortName(1)">
+                                    <label for="step6sect4_1_1">1천5백만원/1천5백만원</label>
+                                </li>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_1_2" value="3천만원/1천5백만원" onclick="ChangeSortName(1)">
+                                    <label for="step6sect4_1_2">3천만원/1천5백만원</label>
+                                </li>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_1_3" value="5천만원/1천5백만원" onclick="ChangeSortName(1)">
+                                    <label for="step6sect4_1_3">5천만원/1천5백만원</label>
+                                </li>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_1_4" value="1억원/1천5백만원" onclick="ChangeSortName(1)">
+                                    <label for="step6sect4_1_4">1억원/1천5백만원</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="describtionGroup">
+                            <div class="describtion1">부상 및 후유장해시 가입한도액 내에서 상해(장해)급수별 지급금액 한도로 보상</div>
+                            <div class="describtion2">보험에 가입한 자동차의 사고로 피보험자 본인 또는 그 가족(부모, 배우자 및 자녀)등이 다치거나 사망한 경우에 보상합니다.</div>
+                        </div>
+                    </div>
+                    <div class="sect4content2">
+                        <div class="contentSection">
+                            <div class="contentHead">
+                                <button class="button hover" onclick="MoveTargetContent2(1)">자기신체손해</button>
+                                <button class="button hover select" onclick="MoveTargetContent2(2)">자동차상해</button>
+                                <button class="button hover" onclick="MoveTargetContent2(3)">미가입</button>
+                            </div>
+                            <ul>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_2_1" value="1억원/2천만원" onclick="ChangeSortName(2)">
+                                    <label for="step6sect4_2_1">1억원/2천만원</label>
+                                </li>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_2_2" value="1억원/3천만원" checked="checked" onclick="ChangeSortName(2)">
+                                    <label for="step6sect4_2_2">1억원/3천만원</label>
+                                </li>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_2_3" value="2억원/2천만원" onclick="ChangeSortName(2)">
+                                    <label for="step6sect4_2_3">2억원/2천만원</label>
+                                </li>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_2_4" value="2억원/3천만원" onclick="ChangeSortName(2)">
+                                    <label for="step6sect4_2_4">2억원/3천만원</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="describtionGroup">
+                            <div class="describtion1">부상 및 후유장해시 가입한도액 내에서 치료비가 보상되며, 이외에도 장례비, 위자료, 상실수익액, 휴업손해 등을 포괄적으로 보상</div>
+                            <div class="describtion2">보험에 가입한 자동차의 사고로 피보험자 본인 또는 그 가족(부모, 배우자 및 자녀)등이 다치거나 사망한 경우에 보상합니다.</div>
+                        </div>
+                    </div>
+                    <div class="sect4content3" style="display: none;">
+                        <div class="contentSection">
+                            <div class="contentHead">
+                                <button class="button hover" onclick="MoveTargetContent2(1)">자기신체손해</button>
+                                <button class="button hover" onclick="MoveTargetContent2(2)">자동차상해</button>
+                                <button class="button hover select" onclick="MoveTargetContent2(3)">미가입</button>
+                            </div>
+                            <ul>
+                                <li>
+                                    <input class="radio" type="radio" name="step6sect4" id="step6sect4_3_1" value="미가입">
+                                    <label for="step6sect4_3_1">미가입</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="describtionGroup">
+                            <div class="describtion2">보험에 가입한 자동차의 사고로 피보험자 본인 또는 그 가족(부모, 배우자 및 자녀)등이 다치거나 사망한 경우에 보상을 받지 못합니다. 따라서, 자기신체손해나 자동차상해를 별도로 가입하여야 보상을 받을 수 있습니다.</div>
+                        </div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(4)">이전</button>
+                        <button class="button hover" onclick="S6Next(4)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c5" style="display: none;">
+                    <div class="sortName">무보험차상해</div>
+                    <div class="contentSection">
+                        <ul>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect5" id="step6sect5_1" value="가입(2억원)" checked="checked">
+                                <label for="step6sect5_1">가입(2억원)</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect5" id="step6sect5_2" value="미가입">
+                                <label for="step6sect5_2">미가입</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">피보험자가 무보험자동차에 의하여 생긴 사고로 사망하거나 부상한 경우 보상합니다.(차량탑승여부와 무관) 사망/부상/후유장해에 대하여 배상의무자 (가해자)의 과실에 해당하는 금액을 대인배상지급기준에 따라 보상합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(5)">이전</button>
+                        <button class="button hover" onclick="S6Next(5)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c6" style="display: none;">
+                    <div class="sortName">자기차량손해</div>
+                    <div class="contentSection">
+                        <ul>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect6" id="step6sect6_1" value="가입" checked="checked">
+                                <label for="step6sect6_1">가입</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect6" id="step6sect6_2" value="미가입">
+                                <label for="step6sect6_2">미가입</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">자동차사고로 인해 피보험자동차에 생긴 직접적인 손해를 보상하며, 이 경우 사고발생 당시의 개발원이 정한 최근의 차량가액으로 보상합니다. 다만, 일부 도난으로 인한 손해와 추가로 가입하지 않은 부속품은 사고시 보상하지 않습니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(6)">이전</button>
+                        <button class="button hover" onclick="S6Next(6)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c7" style="display: none;">
+                    <div class="sortName">긴급출동서비스</div>
+                    <div class="contentSection">
+                        <ul>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect7" id="step6sect7_1" value="가입" checked="checked">
+                                <label for="step6sect7_1">가입</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect7" id="step6sect7_2" value="미가입">
+                                <label for="step6sect7_2">미가입</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">긴급상황 발생시 긴급견인, 비상급유, 잠금해제, 배터리 충전, 긴급구난 등 다양한 서비스 제공합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(7)">이전</button>
+                        <button class="button hover" onclick="S6Next(7)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c8" style="display: none;">
+                    <div class="sortName">물적사고 할증금액</div>
+                    <div class="contentSection">
+                        <ul>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect8" id="step6sect8_1" value="50만원">
+                                <label for="step6sect8_1">50만원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect8" id="step6sect8_2" value="100만원">
+                                <label for="step6sect8_2">100만원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect8" id="step6sect8_3" value="150만원">
+                                <label for="step6sect8_3">150만원</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect8" id="step6sect8_4" value="200만원" checked="checked">
+                                <label for="step6sect8_4">200만원</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion1">※ 자기차량손해담보에 가입한 경우 할증기준금액 선택에 따라 자기차량 사고발생시 소비자가 부담하는 자기부담금액이 일부 상이할 수 있습니다.</div>
+                        <div class="describtion2">갱신계약 체결시, 물(物)적 사고로 인한 보험금 수준에 따라 할인할증 적용등급 변동여부를 결정하는 기준금액을 말합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(8)">이전</button>
+                        <button class="button hover" onclick="S6Next(8)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c9" style="display: none;">
+                    <div class="sortName">운전자 범위</div>
+                    <div class="contentSection">
+                        <ul>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect9" id="step6sect9_1" value="피보험자 1인" checked="checked" onclick="SelectRange(1)">
+                                <label for="step6sect9_1">피보험자 1인</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect9" id="step6sect9_2" value="부부한정" onclick="SelectRange(2)">
+                                <label for="step6sect9_2">부부한정</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect9" id="step6sect9_3" value="피보험자 1인 + 지정 1인" onclick="SelectRange(3)">
+                                <label for="step6sect9_3">피보험자 1인 + 지정 1인</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect9" id="step6sect9_4" value="가족한정(형제자매 제외)" onclick="SelectRange(1)">
+                                <label for="step6sect9_4">가족한정(형제자매 제외)</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect9" id="step6sect9_5" value="누구나" onclick="SelectRange(1)">
+                                <label for="step6sect9_5">누구나</label>
+                            </li>
+                            <li>
+                                <input class="radio" type="radio" name="step6sect9" id="step6sect9_6" value="가족 + 형제자매" onclick="SelectRange(1)">
+                                <label for="step6sect9_6">가족 + 형제자매</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">자동차 운전자 범위를 선택합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(9)">이전</button>
+                        <button class="button hover" onclick="S6Next(9)">다음</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c10" style="display: none;">
+                    <div class="sortName">최소운전자 생년월일</div>
+                    <div class="contentSection">
+                        <div class="inputBox">
+                            <div class="text1">생년월일</div>
+                            <input class="inputBirth inputBirth0" type="text" placeholder="예) 19960527">
+                        </div>
+                        <div class="error"></div>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">운전자 중 나이가 가장 어린 분의 생년월일을 입력합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(10)">이전</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c11" style="display: none;">
+                    <div class="sortName">지정1인 생년월일</div>
+                    <div class="contentSection">
+                        <div class="inputBox">
+                            <div class="text1">생년월일</div>
+                            <input class="inputBirth inputBirth1" type="text" placeholder="예) 19960527">
+                        </div>
+                        <div class="error"></div>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">지정1인 또는 부부한정(배우자) 분의 생년월일을 입력합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(11)">이전</button>
+                    </div>
+                </div>
+                <div class="contentBox1 s6c12" style="display: none;">
+                    <div class="sortName">배우자 생년월일</div>
+                    <div class="contentSection">
+                        <div class="inputBox">
+                            <div class="text1">생년월일</div>
+                            <input class="inputBirth inputBirth2" type="text" placeholder="예) 19960527">
+                        </div>
+                        <div class="error"></div>
+                    </div>
+                    <div class="describtionGroup">
+                        <div class="describtion2">지정1인 또는 부부한정(배우자) 분의 생년월일을 입력합니다.</div>
+                    </div>
+                    <div class="buttonGroup">
+                        <button class="button hover" onclick="S6Prev(12)">이전</button>
+                    </div>
+                </div>
+                <div class="contentBox2">
+                    <ul>
+                        <li>
+
+                        </li>
+                        <li>
+                            <div class="contentBox2Title">기존 가입담보</div>
+                        </li>
+                        <li>
+                            <div class="contentBox2Title">선택 가입담보</div>
+                        </li>
+                        <li>
+                            <div class="sortName">대인배상Ⅰ</div>
+                        </li>
+                        <li>
+                            <div>가입</div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(1)">
+                            <div class="sortContent">가입</div>
+                        </li>
+                        <li>
+                            <div class="sortName">대인배상Ⅱ</div>
+                        </li>
+                        <li>
+                            <div id="RBAA1"></div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(2)">
+                            <div class="sortContent">가입</div>
+                        </li>
+                        <li>
+                            <div class="sortName">대물배상</div>
+                        </li>
+                        <li>
+                            <div id="RBAA2"></div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(3)">
+                            <div class="sortContent">2억원</div>
+                        </li>
+                        <li>
+                            <div class="sortName" id="csn2">자동차상해</div>
+                        </li>
+                        <li>
+                            <div id="RBAA3"></div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(4)">
+                            <div class="sortContent">1억원/3천만원</div>
+                        </li>
+                        <li>
+                            <div class="sortName">무보험차상해</div>
+                        </li>
+                        <li>
+                            <div id="RBAA4"></div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(5)">
+                            <div class="sortContent">가입(2억원)</div>
+                        </li>
+                        <li>
+                            <div class="sortName">자기차량손해</div>
+                        </li>
+                        <li>
+                            <div id="RBAA6"></div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(6)">
+                            <div class="sortContent">가입</div>
+                        </li>
+                        <li>
+                            <div class="sortName">긴급출동서비스</div>
+                        </li>
+                        <li>
+                            <div id="RBAA5"></div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(7)">
+                            <div class="sortContent">가입</div>
+                        </li>
+                        <li>
+                            <div class="sortName">물적사고 할증금액</div>
+                        </li>
+                        <li>
+                            <div id="RBAA7"></div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(8)">
+                            <div class="sortContent">200만원</div>
+                        </li>
+                        <li>
+                            <div class="sortName">운전자범위</div>
+                        </li>
+                        <li>
+                            <div id="RBAA8"></div>
+                        </li>
+                        <li  onclick="Step6MoveTargetSect(9)">
+                            <div class="sortContent">피보험자 1인</div>
+                        </li>
+                        <li>
+                            <div class="sortName">최소운전자 생년월일</div>
+                        </li>
+                        <li>
+                            <div></div>
+                        </li>
+                        <li onclick="Step6MoveTargetSect(10)">
+                            <div class="sortContent">반드시 입력해 주세요.</div>
+                        </li>
+                        <li class="one1" style="display: none;">
+                            <div class="sortName">지정1인 생년월일</div>
+                        </li>
+                        <li class="one1" style="display: none;" >
+                            <div></div>
+                        </li>
+                        <li class="one1" onclick="Step6MoveTargetSect(11)" style="display: none;">
+                            <div class="sortContent">반드시 입력해 주세요.</div>
+                        </li>
+                        <li class="one2" style="display: none;">
+                            <div class="sortName">배우자 생년월일</div>
+                        </li>
+                        <li class="one2" style="display: none;">
+                            <div></div>
+                        </li>
+                        <li class="one2" onclick="Step6MoveTargetSect(12)" style="display: none;">
+                            <div class="sortContent">반드시 입력해 주세요.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button class="button hover step6Submit" onclick="Step6Submit()">다음 단계</button>
+        </div>
+    </section>
+</div>
+<input type="text" id="carNumCheck" style="display: none;">
+<input type="text" id="refreshDate" style="display: none;">
 {% endblock %}

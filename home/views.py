@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import ConsultingForm
 from .models import ChatRoomName, ChatLog, Consulting, CAUser
 from .apis import sendMessageFunc
-from .apis import codefSession, codefAuth, codefAuthSubmit, codefCalc, codefCalc2
+from .apis import codefSession, codefAuth, codefAuthSubmit, codefCalc, codefCalc2, codefDetailCarInfo
 from .decorators import superUser_required
 
 import hashlib, hmac, base64, time
@@ -793,6 +793,7 @@ browsers = {}
 
 @csrf_exempt
 def selfCompareAPIInit(request):
+
     
     return HttpResponse(json.dumps({}))
 
@@ -832,6 +833,8 @@ def selfCompareAPIStep2(request):
 @csrf_exempt
 def selfCompareAPIStep3(request):
 
+    print(request.POST)
+
     reponseData = codefCalc(request.POST)
 
     content = {
@@ -864,10 +867,19 @@ def selfCompareAPIStep4(request):
     return HttpResponse(json.dumps(content))
 
 
-
+@csrf_exempt
 def selfCompareAPIStep5(request):
 
-    return HttpResponse(json.dumps({}))
+    userName = request.POST.get('userName')
+    ssm = request.POST.get('ssm')
+    agency = request.POST.get('agency')
+    phoneNum = request.POST.get('phoneNum')
+    carNum = request.POST.get('carNum')
+    DetailParam = request.POST.get('DetailParam')
+
+    content = codefDetailCarInfo(userName, ssm, agency, phoneNum, carNum, DetailParam)
+
+    return HttpResponse(json.dumps(content))
 
 def selfCompareAPIStep6(request):
 

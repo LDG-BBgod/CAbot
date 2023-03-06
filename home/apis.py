@@ -6,14 +6,14 @@ from CAbot.settings import phoneNumber
 from easycodefpy import Codef, ServiceType
 
 # 내꺼
-# demo_client_id = '36bdc4e6-6205-4a50-8278-3a74cfedfb5d'
-# demo_client_secret = 'c5a3c128-6eff-4ea0-9ef4-dc1da41613e2'
-# public_key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxLn6OMfLFVvHmg1w4ej49LUSdHmB3knSSqENZ/bjVAWmiM0Bxi+RsOBOyzmJmN94K3woR3FXIraCg18mkDZqvXfotrhJ/wlQzCdFm7CfmHDJSuTyYlm5lZaVV069EeKsYin7AAQQC5aUZINTNod/yU3OaMkbwOW7JRiq4ka6lQMznD8BriA6eIkjBIGrsRcMe01ppa38MG9KyS68DixBFF5+yQu5pHw8IGsPVWk58Pl2JvQR5yW494IO3XCYnpEhFej4Hyp4K95IllV+fWJ0Ek9cQ6hwqf+377nxOeayZ26JR3N0jvYKK0x0rgqp371zjQ7nYpIG6BlPdNHDiHIQaQIDAQAB'
+demo_client_id = '36bdc4e6-6205-4a50-8278-3a74cfedfb5d'
+demo_client_secret = 'c5a3c128-6eff-4ea0-9ef4-dc1da41613e2'
+public_key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxLn6OMfLFVvHmg1w4ej49LUSdHmB3knSSqENZ/bjVAWmiM0Bxi+RsOBOyzmJmN94K3woR3FXIraCg18mkDZqvXfotrhJ/wlQzCdFm7CfmHDJSuTyYlm5lZaVV069EeKsYin7AAQQC5aUZINTNod/yU3OaMkbwOW7JRiq4ka6lQMznD8BriA6eIkjBIGrsRcMe01ppa38MG9KyS68DixBFF5+yQu5pHw8IGsPVWk58Pl2JvQR5yW494IO3XCYnpEhFej4Hyp4K95IllV+fWJ0Ek9cQ6hwqf+377nxOeayZ26JR3N0jvYKK0x0rgqp371zjQ7nYpIG6BlPdNHDiHIQaQIDAQAB'
 
 # 엄마꺼
-demo_client_id = 'c31eb870-a6cd-4090-8a57-a1f58b125f99'
-demo_client_secret = '0a634ad8-5d50-4087-acf3-e591054f0359'
-public_key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgiyaIQVVBQljCvnDC3toMYFBfZBQBppi3KQJ7a5r3X/N6uJxA6mNLmQVWlPAJfLQLGsbq5xBXdQ//wx3WjZfsL+sszYHG2GA2bsykxeKl1x6MXtuEgRPizLT2p1ZexWV/GLYf/LO0Oa6lN1zDjpOrPtzlWpu8/Ol94Eok49hbQN/FHcohhFS9afXBO3YQ5/YOT52ucp9OIHwpkJ8kZvRDvgcRUkfWnm+ncS7cIvJnJeK0TO7kon/+MQM8ixmuqccLh3zWf7p2MPxQAJHyx1c3SdboAvX5kWIcWnf0KiYr9spftEu1bH0GFpUB7SiZM2WSdiEG9rc6HZiotABSdiU+wIDAQAB'
+# demo_client_id = 'c31eb870-a6cd-4090-8a57-a1f58b125f99'
+# demo_client_secret = '0a634ad8-5d50-4087-acf3-e591054f0359'
+# public_key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgiyaIQVVBQljCvnDC3toMYFBfZBQBppi3KQJ7a5r3X/N6uJxA6mNLmQVWlPAJfLQLGsbq5xBXdQ//wx3WjZfsL+sszYHG2GA2bsykxeKl1x6MXtuEgRPizLT2p1ZexWV/GLYf/LO0Oa6lN1zDjpOrPtzlWpu8/Ol94Eok49hbQN/FHcohhFS9afXBO3YQ5/YOT52ucp9OIHwpkJ8kZvRDvgcRUkfWnm+ncS7cIvJnJeK0TO7kon/+MQM8ixmuqccLh3zWf7p2MPxQAJHyx1c3SdboAvX5kWIcWnf0KiYr9spftEu1bH0GFpUB7SiZM2WSdiEG9rc6HZiotABSdiU+wIDAQAB'
 
 
 
@@ -143,11 +143,25 @@ def codefAuthSubmit(userName, ssm, agency, phoneNum, authNum, jobIndex, threadIn
 
     product_url = '/v1/kr/insurance/0003/damoa/maycar-list-info'
     res3 = codef.request_certification(product_url, ServiceType.DEMO , parameter)
-    dictRes3 = json.loads(res3)
-    dictRes2Data = dictRes3.get('data')
-    commDetailParam = dictRes2Data.get('commDetailParam')
 
-    content = {}
+    dictRes3 = json.loads(res3)
+    dictRes3Data = dictRes3.get('data')
+    
+    content = {
+        'carInfo': [],
+    }
+
+    if str(type(dictRes3Data)) == "<class 'dict'>":
+        dictRes3Data = dictRes3.get('data')
+        content['carInfo'].append(dictRes3Data)
+    else:
+        dictRes3Data = dictRes3.get('data')[0]
+        for data in dictRes3.get('data'):
+            content['carInfo'].append(data)
+
+    commDetailParam = dictRes3Data.get('commDetailParam')
+
+
 
     if dictRes3.get('result').get('code') == 'CF-00000':
         content['result'] = 'S'
@@ -155,7 +169,6 @@ def codefAuthSubmit(userName, ssm, agency, phoneNum, authNum, jobIndex, threadIn
     else:
         content['result'] = 'F'
         content['commDetailParam'] = ""
-
     print(res3)
     return content
 
@@ -183,8 +196,8 @@ def codefCalc(query):
         "regYear": query['carRegisterID'].replace('+', ' '),
         "regYearDetail": "",
         "detailCarName": query['carSubNameID'].replace('+', ' '),
-        "carNo": "",
-        "baseCarType": "3",
+        "carNo": query['carNo'],
+        "baseCarType": query['baseCarType'],
         "foreignCarYN": "0",
 
         "basicAgreement1": query['basicAgreement1'],
@@ -221,6 +234,8 @@ def codefCalc(query):
         "type": "1",
     }
 
+    print(parameter)
+
     product_url = '/v1/kr/insurance/0003/damoa/insurance-fee'
     res = codef.request_product(product_url, ServiceType.DEMO , parameter)
 
@@ -253,8 +268,8 @@ def codefCalc2(query):
         "regYear": query['carRegisterID'].replace('+', ' '),
         "regYearDetail": "",
         "detailCarName": query['carSubNameID'].replace('+', ' '),
-        "carNo": "",
-        "baseCarType": "3",
+        "carNo": query['carNo'],
+        "baseCarType": query['baseCarType'],
         "foreignCarYN": "0",
 
         "basicAgreement1": query['basicAgreement1'],
@@ -291,10 +306,52 @@ def codefCalc2(query):
         "type": "3",
     }
 
+    print(parameter)
+
     product_url = '/v1/kr/insurance/0003/damoa/insurance-fee'
     res = codef.request_product(product_url, ServiceType.DEMO , parameter)
 
     print(res)
 
     return res
+
+def codefDetailCarInfo(userName, ssm, agency, phoneNum, carNum, DetailParam):
+
+    codef = Codef()
+    codef.public_key = public_key
+    codef.set_demo_client_info(demo_client_id, demo_client_secret)
+
+    parameter = {
+        "organization":"0003",
+        "identity": ssm,
+        "userName": userName,
+        "phoneNo": phoneNum,
+        "telecom": agency,
+        "detailParam": DetailParam,
+        "timeOut": "170",
+        "carNo": carNum,
+    }
+
+    product_url = '/v1/kr/insurance/0003/damoa/car-insurance-info'
+    res = codef.request_product(product_url, ServiceType.DEMO , parameter)
+
+    dictRes = json.loads(res)
+    dictResData = dictRes.get('data')
+    print(dictResData)
+    content = {
+        'resCarNo': dictResData['resCarNo'],
+        'resBasicAgreementAmt1': dictResData['reqBasicAgreement1'],
+        'resBasicAgreementAmt2': dictResData['reqBasicAgreement2'],
+        'resBasicAgreementAmt3': dictResData['reqBasicAgreement3'],
+        'resBasicAgreementAmt4': dictResData['reqBasicAgreement4'],
+        'resBasicAgreementAmt5': dictResData['reqBasicAgreement5'],
+        'resBasicAgreementAmt6': dictResData['reqBasicAgreement6'],
+        'resBasicAgreementAmt7': dictResData['reqBasicAgreement7'],
+        'resDriverRange': dictResData['reqDriverRange'],
+        'commDetailParam': dictResData['commDetailParam'],
+    }
+
+    print(content)
+
+    return content
 

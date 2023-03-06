@@ -212,20 +212,20 @@ document.getElementById('nowDate').value = dateString
 document.getElementById('nextDate').value = nextDateString
 
 
-// window.onload = () => {
-//     new Promise((resolve) => {
-//         $.ajax({
-//             type: 'GET',
-//             url: '/selfCompareAPIInit/',
-//             dataType: 'json',
-//             data: {},
-//             success: function(request) {
+window.onload = () => {
+    new Promise((resolve) => {
+        $.ajax({
+            type: 'GET',
+            url: '/selfCompareAPIInit/',
+            dataType: 'json',
+            data: {},
+            success: function(request) {
 
-//                 resolve()
-//             }
-//         })
-//     })
-// }
+                resolve()
+            }
+        })
+    })
+}
 
 
 
@@ -327,8 +327,10 @@ function SendAuth() {
     }
 
     if(submitCheck){
-
-        $('#mask, #loadingImg').show()
+        $('#sendAuthPhone').hide()
+        $('#sectionAuth').show()
+        $('html, body').animate({scrollTop : $("#sectionAuth").offset().top}, 0);
+        // $('#mask, #loadingImg').show()
         new Promise((resolve) => {
             $.ajax({
                 type: 'POST',
@@ -345,10 +347,8 @@ function SendAuth() {
                     threadIndex = request.threadIndex
                     jti = request.jti
                     twoWayTimestamp = request.twoWayTimestamp
-                    $('#mask, #loadingImg').hide()
-                    $('#sendAuthPhone').hide()
-                    $('#sectionAuth').show()
-                    $('html, body').animate({scrollTop : $("#sectionAuth").offset().top}, 0);
+                    // $('#mask, #loadingImg').hide()
+
                     resolve()
                 }
             })
@@ -386,6 +386,21 @@ function AuthSubmit() {
                 }
                 else {
                     commDetailParam = request.commDetailParam
+                    document.querySelectorAll('.customerName').forEach(element => {
+                        element.innerHTML = document.getElementById('userName').value
+                    })
+                    if (request.carInfo[0].resCompanyNm == "") {
+                        document.getElementsByClassName('carCount')[0].innerHTML = "0"
+                        document.getElementsByClassName('carCount')[1].innerHTML = "0"
+                    }
+                    else {
+                        document.getElementsByClassName('carCount')[0].innerHTML = request.carInfo.length
+                        document.getElementsByClassName('carCount')[1].innerHTML = request.carInfo.length
+                        request.carInfo.forEach(element => {
+                            CreateStep2List(element)
+                        })
+                    }
+
                     $('.step1').hide()
                     $('.step2').show()
                 }
@@ -396,10 +411,93 @@ function AuthSubmit() {
     
 }
 
+function CreateStep2List(dict) {
+    const sect2_3 = document.getElementsByClassName('sect2_3')[0]
+    div1 = sect2_3.appendChild(document.createElement('div'))
+    div1.setAttribute('class', `gridul`)
 
+    li1 = div1.appendChild(document.createElement('div'))
+    li1.setAttribute('class', `gridli`)
+    li1.innerHTML = dict.resCompanyNm
+
+    li2 = div1.appendChild(document.createElement('div'))
+    li2.setAttribute('class', `gridli`)
+    li2.innerHTML = dict.resVehicleIdNo
+
+    li3 = div1.appendChild(document.createElement('div'))
+    li3.setAttribute('class', `gridli`)
+    li3.innerHTML = dict.resCarInfoList[0].commCarName
+
+    li4 = div1.appendChild(document.createElement('div'))
+    li4.setAttribute('class', `gridli`)
+    li4.innerHTML = dict.resAccountEndDate.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3')
+
+    li5 = div1.appendChild(document.createElement('div'))
+    li5.setAttribute('class', `gridli`)
+    
+    button = li5.appendChild(document.createElement('button'))
+    button.setAttribute('class', `button hover`)
+    button.setAttribute('onclick', `DetailCarInfo('${dict.resVehicleIdNo}', '${dict.resAccountEndDate}')`)
+    button.innerHTML = "조회"
+}
+
+function DetailCarInfo(carNum, refDate) {
+    $('#mask, #loadingImg').show()
+
+    new Promise((resolve) => {
+        $.ajax({
+            type: 'POST',
+            url: '/selfCompareAPIStep5/',
+            dataType: 'json',
+            data: {
+                'userName': $('#userName').val(),
+                'ssm': $("#ssmFront").val() + $("#ssmBack").val(),
+                'agency': ChangeAgency($("input[name='phone']:checked").val()),
+                'phoneNum': $("#phone1").val() + $("#phone2").val() + $("#phone3").val(),
+                'carNum': carNum,
+                'DetailParam': commDetailParam,
+
+            },
+            success: function(request) {
+
+                document.getElementById('RBAA1').innerHTML = request.resBasicAgreementAmt1
+                document.getElementById('RBAA2').innerHTML = request.resBasicAgreementAmt2
+                document.getElementById('RBAA3').innerHTML = request.resBasicAgreementAmt3
+                document.getElementById('RBAA4').innerHTML = request.resBasicAgreementAmt4
+                document.getElementById('RBAA5').innerHTML = request.resBasicAgreementAmt5
+                document.getElementById('RBAA6').innerHTML = request.resBasicAgreementAmt6
+                document.getElementById('RBAA7').innerHTML = request.resBasicAgreementAmt7
+                document.getElementById('RBAA8').innerHTML = request.resDriverRange
+                commDetailParam = request.commDetailParam
+
+                document.getElementsByClassName('step6')[0].getElementsByClassName('subTitle')[0].innerHTML = request.resCarNo
+                document.getElementsByClassName('step4')[0].getElementsByClassName('subTitle')[0].innerHTML = request.resCarNo
+                document.getElementById('carNumCheck').value = request.resCarNo
+                document.getElementById('refreshDate').value = refDate
+
+                $('#mask, #loadingImg').hide()
+                $('.step2').hide()
+                $('.step6').show()
+                resolve()
+            }
+        })
+    })
+}
 
 
 // 스탭2
+function changeSection2_1(value) {
+    if(value == 1) {
+        document.getElementsByClassName('sect2_1')[0].style.display = "block"
+        document.getElementsByClassName('sect2_2')[0].style.display = "none"
+        document.getElementsByClassName('sect2_3')[0].style.display = "block"
+    }
+    else {
+        document.getElementsByClassName('sect2_1')[0].style.display = "none"
+        document.getElementsByClassName('sect2_2')[0].style.display = "block"
+        document.getElementsByClassName('sect2_3')[0].style.display = "none"
+    }
+}
 
 function leftPad(value) {
     if (value >= 10) {
@@ -940,6 +1038,7 @@ function Step2Submit() {
 
 // 스탭3
 const step3Section = document.getElementsByClassName('step3')[0]
+const step6Section = document.getElementsByClassName('step6')[0]
 function S3Next(sect){
     step3Section.getElementsByClassName(`s3c${sect}`)[0].style.display = 'none'
     step3Section.getElementsByClassName(`s3c${sect + 1}`)[0].style.display = 'block'
@@ -1323,51 +1422,109 @@ function Step4Submit() {
 
         $('#mask, #loadingImg').show()
         $('.step5wait').show()
-        let ajaxData = {
-            'userName': $('#userName').val(),
-            'ssm': $("#ssmFront").val() + $("#ssmBack").val(),
-            'agency': ChangeAgency($("input[name='phone']:checked").val()),
-            'phoneNum': $("#phone1").val() + $("#phone2").val() + $("#phone3").val(),
+        let ajaxData = {}
+        console.log(document.getElementById('carNumCheck').value)
+        if (document.getElementById('carNumCheck').value == "") {
+            ajaxData = {
+                'userName': $('#userName').val(),
+                'ssm': $("#ssmFront").val() + $("#ssmBack").val(),
+                'agency': ChangeAgency($("input[name='phone']:checked").val()),
+                'phoneNum': $("#phone1").val() + $("#phone2").val() + $("#phone3").val(),
+    
+                'detailParam': commDetailParam,
+    
+                'startDate': document.getElementById('nowDate').value.replace(/-/g, ''),
+                'carMakerID': $('#carMakerTitle').attr('value'),
+                'carNameID': $('#carNameTitle').attr('value'),
+                'carRegisterID': $('#carRegisterTitle').attr('value'),
+                'carSubNameID': $('#carSubNameTitle').attr('value'),
+                'carOptionID': $('#carOptionTitle').attr('value'),
 
-            'detailParam': commDetailParam,
-
-            'startDate': document.getElementById('nowDate').value.replace(/-/g, ''),
-            'carMakerID': $('#carMakerTitle').attr('value'),
-            'carNameID': $('#carNameTitle').attr('value'),
-            'carRegisterID': $('#carRegisterTitle').attr('value'),
-            'carSubNameID': $('#carSubNameTitle').attr('value'),
-            'carOptionID': $('#carOptionTitle').attr('value'),
-
-            'basicAgreement1': ValueToId('대인배상2', step3Section.querySelector(`input[name="step3sect2"]:checked`).value),
-            'basicAgreement2': ValueToId('대물배상', step3Section.querySelector(`input[name="step3sect3"]:checked`).value),
-            'basicAgreement3': ValueToId('자손자상', step3Section.querySelector(`input[name="step3sect4"]:checked`).value),
-            'basicAgr3Detail': ValueToId('자손자상디테일', step3Section.querySelector(`input[name="step3sect4"]:checked`).value),
-            'basicAgreement4': ValueToId('무보험차', step3Section.querySelector(`input[name="step3sect5"]:checked`).value),
-            'basicAgreement6': ValueToId('자기차량', step3Section.querySelector(`input[name="step3sect6"]:checked`).value),
-            'basicAgreement5': ValueToId('긴급출동', step3Section.querySelector(`input[name="step3sect7"]:checked`).value),
-            'basicAgreement7': ValueToId('할증금액', step3Section.querySelector(`input[name="step3sect8"]:checked`).value),
-            'driverRange': ValueToId('운전범위', step3Section.querySelector(`input[name="step3sect9"]:checked`).value),
-            'youngestBirth': document.getElementsByClassName('step3')[0].getElementsByClassName('inputBirth')[0].value,
-
-            'specialDc1': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect1"]:checked`).value),
-            'blackBoxDc': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect2"]:checked`).value),
-            'specialDc3': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect3"]:checked`).value),
-            'specialDc8': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect4"]:checked`).value),
-            'specialDc4': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect5"]:checked`).value),
-            'specialDc10': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect6"]:checked`).value),
-            'specialDc7': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect7"]:checked`).value),
-            'specialDc2': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect8"]:checked`).value),
-            'specialDc9': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect9"]:checked`).value),
-            'specialDc12': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect10"]:checked`).value),
-            'specialDc13': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect11"]:checked`).value),
-            'specialDcDetail1': $('#step4s1selectbox > option:selected').val(),
-            'purchaseYear': $('#step4s2selectbox1 > option:selected').val() + $('#step4s2selectbox2 > option:selected').val(),
-            'purchaseAmt': $('#s4c2input1').val(),
-            'specialDcDetail3': $('#s4c3input1').val(),
-            'specialDcDetail10': $('#s4c6input1').val(),
-            'specialDcDetail71': $('#s4c7input1').val(),
-            'specialDcDetail72': $('#s4c7input2').val(),
+                'carNo': '',
+                'baseCarType': '3',
+    
+                'basicAgreement1': ValueToId('대인배상2', step3Section.querySelector(`input[name="step3sect2"]:checked`).value),
+                'basicAgreement2': ValueToId('대물배상', step3Section.querySelector(`input[name="step3sect3"]:checked`).value),
+                'basicAgreement3': ValueToId('자손자상', step3Section.querySelector(`input[name="step3sect4"]:checked`).value),
+                'basicAgr3Detail': ValueToId('자손자상디테일', step3Section.querySelector(`input[name="step3sect4"]:checked`).value),
+                'basicAgreement4': ValueToId('무보험차', step3Section.querySelector(`input[name="step3sect5"]:checked`).value),
+                'basicAgreement6': ValueToId('자기차량', step3Section.querySelector(`input[name="step3sect6"]:checked`).value),
+                'basicAgreement5': ValueToId('긴급출동', step3Section.querySelector(`input[name="step3sect7"]:checked`).value),
+                'basicAgreement7': ValueToId('할증금액', step3Section.querySelector(`input[name="step3sect8"]:checked`).value),
+                'driverRange': ValueToId('운전범위', step3Section.querySelector(`input[name="step3sect9"]:checked`).value),
+                'youngestBirth': document.getElementsByClassName('step3')[0].getElementsByClassName('inputBirth')[0].value,
+    
+                'specialDc1': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect1"]:checked`).value),
+                'blackBoxDc': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect2"]:checked`).value),
+                'specialDc3': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect3"]:checked`).value),
+                'specialDc8': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect4"]:checked`).value),
+                'specialDc4': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect5"]:checked`).value),
+                'specialDc10': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect6"]:checked`).value),
+                'specialDc7': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect7"]:checked`).value),
+                'specialDc2': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect8"]:checked`).value),
+                'specialDc9': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect9"]:checked`).value),
+                'specialDc12': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect10"]:checked`).value),
+                'specialDc13': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect11"]:checked`).value),
+                'specialDcDetail1': $('#step4s1selectbox > option:selected').val(),
+                'purchaseYear': $('#step4s2selectbox1 > option:selected').val() + $('#step4s2selectbox2 > option:selected').val(),
+                'purchaseAmt': $('#s4c2input1').val(),
+                'specialDcDetail3': $('#s4c3input1').val(),
+                'specialDcDetail10': $('#s4c6input1').val(),
+                'specialDcDetail71': $('#s4c7input1').val(),
+                'specialDcDetail72': $('#s4c7input2').val(),
+            }
         }
+        else {
+            ajaxData = {
+                'userName': $('#userName').val(),
+                'ssm': $("#ssmFront").val() + $("#ssmBack").val(),
+                'agency': ChangeAgency($("input[name='phone']:checked").val()),
+                'phoneNum': $("#phone1").val() + $("#phone2").val() + $("#phone3").val(),
+    
+                'detailParam': commDetailParam,
+    
+                'startDate': document.getElementById('refreshDate').value,
+                'carMakerID': $('#carMakerTitle').attr('value'),
+                'carNameID': $('#carNameTitle').attr('value'),
+                'carRegisterID': $('#carRegisterTitle').attr('value'),
+                'carSubNameID': $('#carSubNameTitle').attr('value'),
+                'carOptionID': $('#carOptionTitle').attr('value'),
+
+                'carNo': document.getElementById('carNumCheck').value,
+                'baseCarType': '0',
+    
+                'basicAgreement1': ValueToId('대인배상2', step6Section.querySelector(`input[name="step6sect2"]:checked`).value),
+                'basicAgreement2': ValueToId('대물배상', step6Section.querySelector(`input[name="step6sect3"]:checked`).value),
+                'basicAgreement3': ValueToId('자손자상', step6Section.querySelector(`input[name="step6sect4"]:checked`).value),
+                'basicAgr3Detail': ValueToId('자손자상디테일', step6Section.querySelector(`input[name="step6sect4"]:checked`).value),
+                'basicAgreement4': ValueToId('무보험차', step6Section.querySelector(`input[name="step6sect5"]:checked`).value),
+                'basicAgreement6': ValueToId('자기차량', step6Section.querySelector(`input[name="step6sect6"]:checked`).value),
+                'basicAgreement5': ValueToId('긴급출동', step6Section.querySelector(`input[name="step6sect7"]:checked`).value),
+                'basicAgreement7': ValueToId('할증금액', step6Section.querySelector(`input[name="step6sect8"]:checked`).value),
+                'driverRange': ValueToId('운전범위', step6Section.querySelector(`input[name="step6sect9"]:checked`).value),
+                'youngestBirth': document.getElementsByClassName('step6')[0].getElementsByClassName('inputBirth')[0].value,
+    
+                'specialDc1': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect1"]:checked`).value),
+                'blackBoxDc': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect2"]:checked`).value),
+                'specialDc3': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect3"]:checked`).value),
+                'specialDc8': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect4"]:checked`).value),
+                'specialDc4': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect5"]:checked`).value),
+                'specialDc10': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect6"]:checked`).value),
+                'specialDc7': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect7"]:checked`).value),
+                'specialDc2': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect8"]:checked`).value),
+                'specialDc9': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect9"]:checked`).value),
+                'specialDc12': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect10"]:checked`).value),
+                'specialDc13': ValueToId2('스탭YN', document.querySelector(`input[name="step4sect11"]:checked`).value),
+                'specialDcDetail1': $('#step4s1selectbox > option:selected').val(),
+                'purchaseYear': $('#step4s2selectbox1 > option:selected').val() + $('#step4s2selectbox2 > option:selected').val(),
+                'purchaseAmt': $('#s4c2input1').val(),
+                'specialDcDetail3': $('#s4c3input1').val(),
+                'specialDcDetail10': $('#s4c6input1').val(),
+                'specialDcDetail71': $('#s4c7input1').val(),
+                'specialDcDetail72': $('#s4c7input2').val(),
+            }
+        }
+        
         if(ValueToId2('스탭YN', document.querySelector(`input[name="step4sect3"]:checked`).value) == 1) {
             if ($('#step4s3selectbox1 > option:selected').val() == 'c') {
                 ajaxData.specialDc3 = '1'
@@ -1536,4 +1693,225 @@ function makeTable2(data){
 }
 
 
-
+// 스탭6
+function S6Next(sect){
+    step6Section.getElementsByClassName(`s6c${sect}`)[0].style.display = 'none'
+    step6Section.getElementsByClassName(`s6c${sect + 1}`)[0].style.display = 'block'
+    for(let i = 0; i < 12; i++) {
+        step6Section.getElementsByClassName('sortContent')[i].style.color = '#5E5E5E'
+    }
+    step6Section.getElementsByClassName('sortContent')[sect].style.color = '#5B8DEF'
+}
+function S6Prev(sect){
+    for(let i = 0; i < 12; i++) {
+        step6Section.getElementsByClassName('sortContent')[i].style.color = '#5E5E5E'
+    }
+    if(sect == 12) {
+        step6Section.getElementsByClassName(`s6c${sect}`)[0].style.display = 'none'
+        step6Section.getElementsByClassName(`s6c${sect - 2}`)[0].style.display = 'block'
+        step6Section.getElementsByClassName('sortContent')[sect - 3].style.color = '#5B8DEF'
+    }
+    else{
+        step6Section.getElementsByClassName(`s6c${sect}`)[0].style.display = 'none'
+        step6Section.getElementsByClassName(`s6c${sect - 1}`)[0].style.display = 'block'
+        step6Section.getElementsByClassName('sortContent')[sect - 2].style.color = '#5B8DEF'
+    }
+}
+function Step6MoveTargetSect(sect){
+    for(let i = 0; i < 12; i++) {
+        step6Section.getElementsByClassName('sortContent')[i].style.color = '#5E5E5E'
+    }
+    for(let i = 1; i < 13; i++) {
+        step6Section.getElementsByClassName(`s6c${i}`)[0].style.display = 'none'
+    }
+    step6Section.getElementsByClassName(`s6c${sect}`)[0].style.display = 'block'
+    step6Section.getElementsByClassName('sortContent')[sect-1].style.color = '#5B8DEF'
+}
+function MoveTargetContent2(sect) {
+    for(let i = 1; i < 4; i++) {
+        step6Section.getElementsByClassName(`sect4content${i}`)[0].style.display = 'none'
+    }
+    step6Section.getElementsByClassName(`sect4content${sect}`)[0].style.display = 'block'
+}
+Object.values(document.getElementById('step6contentGroup').getElementsByClassName('radio')).forEach(element => {
+    element.addEventListener('change', () => {
+        let sortContents = step6Section.getElementsByClassName('sortContent')
+        for(let i = 0; i < 9; i++) {
+            sortContents[i].innerHTML = step6Section.querySelector(`input[name="step6sect${i+1}"]:checked`).value
+        }
+    })
+})
+Object.values(document.getElementById('step6contentGroup').getElementsByClassName('inputBirth')).forEach(element => {
+    element.addEventListener('change', () => {
+        let sortContents = step6Section.getElementsByClassName('sortContent')
+        for(let i = 9, j = 0; i < 12; i++, j++) {
+            let text = document.getElementsByClassName('step6')[0].getElementsByClassName('inputBirth')[j].value
+            if (text == ""){
+                sortContents[i].innerHTML = "반드시 입력해 주세요."
+            }
+            else{
+                sortContents[i].innerHTML = text
+            }
+            
+        }
+    })
+})
+function ChangeSortName(i) {
+    if(i == 1) {
+        document.getElementById('csn2').innerHTML = "자기신체손해"
+    }
+    else {
+        document.getElementById('csn2').innerHTML = "자동차상해"
+    }
+}
+function SelectRange(i){
+    if(i == 1) {
+        document.getElementsByClassName('one1')[0].style.display = 'none'
+        document.getElementsByClassName('one1')[1].style.display = 'none'
+        document.getElementsByClassName('one1')[2].style.display = 'none'
+        document.getElementsByClassName('one2')[0].style.display = 'none'
+        document.getElementsByClassName('one2')[1].style.display = 'none'
+        document.getElementsByClassName('one2')[2].style.display = 'none'
+    }
+    else if(i == 2) {
+        document.getElementsByClassName('one1')[0].style.display = 'none'
+        document.getElementsByClassName('one1')[1].style.display = 'none'
+        document.getElementsByClassName('one1')[2].style.display = 'none'
+        document.getElementsByClassName('one2')[0].style.display = 'flex'
+        document.getElementsByClassName('one2')[1].style.display = 'flex'
+        document.getElementsByClassName('one2')[2].style.display = 'flex'
+    }
+    else {
+        document.getElementsByClassName('one1')[0].style.display = 'flex'
+        document.getElementsByClassName('one1')[1].style.display = 'flex'
+        document.getElementsByClassName('one1')[2].style.display = 'flex'
+        document.getElementsByClassName('one2')[0].style.display = 'none'
+        document.getElementsByClassName('one2')[1].style.display = 'none'
+        document.getElementsByClassName('one2')[2].style.display = 'none'
+    }
+}
+function Step6Submit() {
+    let submitCheck = true
+    // 무보험차 상해 체크
+    if (submitCheck) {
+        if (step6Section.querySelector(`input[name="step6sect5"]:checked`).value == '가입(2억원)') {
+            if (step6Section.querySelector(`input[name="step6sect2"]:checked`).value == '가입' && step6Section.querySelector(`input[name="step6sect4"]:checked`).value != '미가입') {
+                submitCheck = true
+            }
+            else {
+                submitCheck = false
+                alert('무보험차상해 가입은 [대인배상II]와 [자기신체손해/자동차상해]를 가입한 경우에 가능합니다.')
+            }
+        }
+    }
+    // 생년월일 체크
+    if (submitCheck) {
+        let sect9Value = step6Section.querySelector(`input[name="step6sect9"]:checked`).value
+        // let defaultBirty = 19960527  // 스탭1에서 받은 생년월일 활용 기명피보험자 생년월일 받아오기 ssmFront
+        let defaultBirty = ChangeBirth($('#ssmFront').val())  // 스탭1에서 받은 생년월일 활용 기명피보험자 생년월일 받아오기 ssmFront
+        
+        if(sect9Value == '피보험자 1인') {
+            let birth0 = step6Section.getElementsByClassName('inputBirth0')[0].value
+            if(birth0 == "") {
+                submitCheck = false
+                alert('최소운전자 생년월일을 입력해주세요.')
+            }
+            else if (!FormCheck('birth', birth0)) {
+                submitCheck = false
+                alert('최소운전자 생년월일을 형식에맞게 입력해주세요.')
+            }
+            else if (birth0 != defaultBirty) {
+                submitCheck = false
+                alert('[운전자범위] 피보험자1인 가입시 [최소운전자 생년월일]은 가입자의 생년월일과 같아야 합니다.')
+            }
+        }
+        else if (sect9Value == '부부한정') {
+            let birth0 = step6Section.getElementsByClassName('inputBirth0')[0].value
+            let birth2 = step6Section.getElementsByClassName('inputBirth2')[0].value
+            if(birth0 == "") {
+                submitCheck = false
+                alert('최소운전자 생년월일을 입력해주세요.')
+            }
+            else if (!FormCheck('birth', birth0)) {
+                submitCheck = false
+                alert('최소운전자 생년월일을 형식에맞게 입력해주세요.')
+            }
+            else if (birth2 == "") {
+                submitCheck = false
+                alert('배우자 생년월일을 입력해주세요.')
+            }
+            else if (!FormCheck('birth', birth2)) {
+                submitCheck = false
+                alert('배우자 생년월일을 형식에맞게 입력해주세요.')
+            }
+            else if (CompareBirth(birth0, defaultBirty) == 'right') {
+                submitCheck = false
+                alert('최소운전자연령은 기명 피보험자 연령보다 높을 수 없습니다.')
+            }
+            else if (CompareBirth(birth0, birth2) == 'right') {
+                submitCheck = false
+                alert('배우자의 연령은 최소운전자 연령보다 낮을 수 없습니다. 배우자 연령이 더 낮은경우 최소운전자 생년월일을 배우자 생년월일로 입력바랍니다.')
+            }
+        }
+        else if (sect9Value == '피보험자 1인 + 지정 1인') {
+            let birth0 = step6Section.getElementsByClassName('inputBirth0')[0].value
+            let birth1 = step6Section.getElementsByClassName('inputBirth1')[0].value
+            if(birth0 == "") {
+                submitCheck = false
+                alert('최소운전자 생년월일을 입력해주세요.')
+            }
+            else if (!FormCheck('birth', birth0)) {
+                submitCheck = false
+                alert('최소운전자 생년월일을 형식에맞게 입력해주세요.')
+            }
+            else if (birth1 == "") {
+                submitCheck = false
+                alert('배우자 생년월일을 입력해주세요.')
+            }
+            else if (!FormCheck('birth', birth1)) {
+                submitCheck = false
+                alert('배우자 생년월일을 형식에맞게 입력해주세요.')
+            }
+            else if (CompareBirth(birth0, defaultBirty) == 'right') {
+                submitCheck = false
+                alert('최소 운전자연령은 기명 피보험자 연령보다 높을 수 없습니다.')
+            }
+            else if (CompareBirth(birth0, birth1) == 'right') {
+                submitCheck = false
+                alert('지정1인의 연령은 최소운전자 연령보다 낮을 수 없습니다. 지정1인의 연령이 더 낮은경우 최소운전자 생년월일을 지정1인의 생년월일로 입력바랍니다.')
+            }
+        }
+        else {
+            let birth0 = step6Section.getElementsByClassName('inputBirth0')[0].value
+            if(birth0 == "") {
+                submitCheck = false
+                alert('최소운전자 생년월일을 입력해주세요.')
+            }
+            else if (!FormCheck('birth', birth0)) {
+                submitCheck = false
+                alert('최소운전자 생년월일을 형식에맞게 입력해주세요.')
+            }
+            else if (CompareBirth(birth0, defaultBirty) == 'right') {
+                submitCheck = false
+                alert('최소운전자 연령은 기명 피보험자 연령보다 높을 수 없습니다.')
+            }
+        }
+        
+    }
+    if (submitCheck) {
+        let sect9Value = step6Section.querySelector(`input[name="step6sect9"]:checked`).value
+        if (sect9Value == '피보험자 1인') {
+            document.getElementById('trafficA').innerHTML = '6만원 이상'
+            document.getElementById('trafficB').innerHTML = '12만원 이상'
+        }
+        else if (sect9Value == '부부한정') {
+            document.getElementById('trafficA').innerHTML = '12만원 이상'
+            document.getElementById('trafficB').innerHTML = '24만원 이상'
+        }
+        else {
+            $('#trafficGroup').hide()
+        }
+        $('.step6').hide()
+        $('.step4').show()
+    }
+}
