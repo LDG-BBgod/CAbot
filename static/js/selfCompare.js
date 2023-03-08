@@ -487,18 +487,41 @@ function DetailCarInfo(carNum, refDate) {
 
 // 스탭2
 function changeSection2_1(value) {
+    const button1 = document.getElementById('s2s2b1')
+    const button2 = document.getElementById('s2s2b2')
     if(value == 1) {
+        button2.classList.add('on')
+        button1.classList.remove('on')
         document.getElementsByClassName('sect2_1')[0].style.display = "block"
         document.getElementsByClassName('sect2_2')[0].style.display = "none"
         document.getElementsByClassName('sect2_3')[0].style.display = "block"
     }
     else {
+        button1.classList.add('on')
+        button2.classList.remove('on')
         document.getElementsByClassName('sect2_1')[0].style.display = "none"
         document.getElementsByClassName('sect2_2')[0].style.display = "block"
         document.getElementsByClassName('sect2_3')[0].style.display = "none"
     }
 }
-
+function ChangeSection2_1B(value) {
+    const button1 = document.getElementById('s2s2b1')
+    const button2 = document.getElementById('s2s2b2')
+    if(value == 1) {
+        button1.classList.add('on')
+        button2.classList.remove('on')
+        document.getElementsByClassName('sect2_1')[0].style.display = "none"
+        document.getElementsByClassName('sect2_2')[0].style.display = "block"
+        document.getElementsByClassName('sect2_3')[0].style.display = "none"
+    }
+    else {
+        button2.classList.add('on')
+        button1.classList.remove('on')
+        document.getElementsByClassName('sect2_1')[0].style.display = "block"
+        document.getElementsByClassName('sect2_2')[0].style.display = "none"
+        document.getElementsByClassName('sect2_3')[0].style.display = "block"
+    }
+}
 function leftPad(value) {
     if (value >= 10) {
         return value;

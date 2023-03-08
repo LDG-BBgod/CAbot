@@ -314,7 +314,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 /***** 스탭2 *****/
-
+.step2 .sectMenu{
+    display: none;
+}
 .step2 .section2{
     margin-top: 130px;
     margin-bottom: 120px;
@@ -1516,6 +1518,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         margin-top: 60px;
         margin-bottom: 120px;
     }
+    .step2 .sectMenu{
+        display: flex;
+        margin-bottom: 20px;
+    }
+    .step2 .sectMenu button{
+        background-color: #CCCCCC;
+        padding: 0;
+        width: 100%;
+        height: 35px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        border-radius: 0;
+        box-shadow: 2px 2px 5px #a1a1a143;
+    }
+    .step2 .sectMenu button:first-child{
+        margin-right: 7px;
+    }
+    .step2 .sectMenu button:last-child{
+        margin-left: 7px;
+    }
+    .step2 .sectMenu button.on{
+        background-color: #5b8def;
+    }
     .step2 .section2 ul{
         display: flex;
         flex-direction: column;
@@ -1534,7 +1560,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     }
     .step2 .section2 ul li:last-child{
         order: 1;
-        border-top: solid 5px #5b8def;
         margin-left: 0;
     }
     .step2 .section2 ul li img{
@@ -1593,6 +1618,55 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         height: 40px;
     }
 
+    .step2 .sect2_3{
+        margin-top: -10px;
+    }
+    .step2 .sect2_3 .gridul{
+        text-align: center;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        border-bottom: solid 1px #C5C5C5;
+    }
+    .step2 .sect2_3 .gridul.gridHead{
+        background-color: #5b8def;
+        border-top: solid 2px #3B3B3B;
+        border-bottom: solid 2px #3B3B3B;
+    }
+    .step2 .sect2_3 .gridul:last-child{
+        border-bottom: solid 2px #3B3B3B;
+    }
+    .step2 .sect2_3 .gridli{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: solid 1px #C5C5C5;
+        height: 60px;
+        line-height: 60px;
+        font-size: 12px;
+    }
+    .step2 .sect2_3 .gridli:nth-child(1),
+    .step2 .sect2_3 .gridli:nth-child(3){
+        display: none;
+    }
+    .step2 .sect2_3 .gridul.gridHead .gridli{
+        height: 35px;
+        line-height: 35px;
+        color: #fff;
+        font-weight: bold;
+    
+    }
+    .step2 .sect2_3 .gridul .gridli:last-child{
+        border-right: none;
+    }
+    .step2 .sect2_3 .gridli button{
+        padding: 0;
+        height: 32px;
+        width: 65px;
+        border-radius: 6px;
+        font-size: 12px;
+        color: #fff;
+        background-color: #22D800;
+    }
 
     .step2 .section3{
         padding: 0 15px;
